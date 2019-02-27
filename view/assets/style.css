@@ -1,0 +1,11 @@
+.row{
+    float: left;
+    border: black;
+}
+
+.card-product{
+    width: 100%;
+}
+.info-wrap{
+    width: 300px;
+}

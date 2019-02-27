@@ -30,5 +30,17 @@ class ProductDao extends AbstractDao {
         return $result;
 
     }
+    public function getProductsBySubID($id){
+        $db = self::getDb();
+        $sql="SELECT p.id, p.name as category,p.price , concat(b.name,' ', p.model)  as model 
+              FROM products as p
+              join brands as b
+                on b.id = p.brand_id
+              where sub_categories_id = ?";
+        $pstmt =$db->prepare($sql);
+        $pstmt->execute([$id]);
+        $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $result;
+    }
 
 }

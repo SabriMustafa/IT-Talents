@@ -6,8 +6,6 @@ require_once "../model/ProductDao.php";
 $categories = new \model\ProductDao();
 $results = $categories->getAllCategories();
 
-
-
 ?>
 
 
