@@ -1,7 +1,6 @@
 <?php
 namespace controller;
 use model\ProductModel;
-use function view\homeView as HomeView;
 
 class BaseController{
 
@@ -11,10 +10,8 @@ class BaseController{
 
         $messageHandler = \Message\MessageHandler::getInstance();
         $messages = $messageHandler->getMessages();
-
         $categories=$productModel->getCategories();
-        require_once __DIR__."/../view/Home.php";
-        homeView($categories);
+        include __DIR__."/../view/Home.php";
 
     }
 }

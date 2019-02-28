@@ -17,7 +17,6 @@ class ProductDao
     public function addProduct(Product $product)
     {
 
-        $product->overrideTis();
         try {
 
             $stmtdb = $this->db;

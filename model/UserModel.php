@@ -4,7 +4,6 @@ namespace model;
 
 use Message\MessageHandler;
 use Validator\UserValidator;
-use Entity\User;
 
 class UserModel extends JsonObject {
 

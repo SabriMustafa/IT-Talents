@@ -1,6 +1,5 @@
 <?php
 namespace model;
-use Entity\User;
 use PDO;
 
 class UserDao{

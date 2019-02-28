@@ -1,9 +1,8 @@
 <?php
 
-use model\ProductDao;
+use \model\ProductDao as Dao;
 
-//$$categories=getAllCategories();
-$productDao=new ProductDao();
+$productDao=new Dao();
 $brands=$productDao->getAllBrands();
 var_dump($brands);
 $selected_brand=null;
