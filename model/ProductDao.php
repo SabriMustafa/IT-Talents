@@ -2,8 +2,7 @@
 
 namespace model;
 
-class ProductDao
-{
+class ProductDao{
     /**
      * @var PDO|null
      */
@@ -76,7 +75,7 @@ class ProductDao
 
     public function getAllCategories(){
 
-        $sql="SELECT id,name from categories";
+        $sql = "SELECT id,name from categories";
         $pstmt = $this->db->prepare($sql);
         $pstmt->execute();
         $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -108,18 +107,42 @@ class ProductDao
 
 
     public function getProductsBySubID($id){
-        $db = self::getDb();
+
         $sql="SELECT p.id, p.name as category,p.price , concat(b.name,' ', p.model)  as model 
           FROM products as p
           join brands as b
             on b.id = p.brand_id
           where sub_categories_id = ?";
-        $pstmt =$db->prepare($sql);
+        $pstmt =$this->db->prepare($sql);
         $pstmt->execute([$id]);
         $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
         return $result;
     }
 
+    public function getProductSpecification($id){
+
+        $sql="SELECT concat(p.name,' ', p.value) as performance ,i.product_url  as images 
+            FROM product_specifications_value as p 
+            inner join images as i
+		     on p.product_id = i.product_id 
+            where p.product_id = ?";
+        $pstmt =$this->db->prepare($sql);
+        $pstmt->execute([$id]);
+        $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function getProductModel($id){
+        $sql="SELECT  concat(p.name,' ',b.name,' ', p.model)  as model 
+              FROM products as p
+              join brands as b
+               on b.id = p.brand_id
+              where  p.id = ?";
+        $pstmt =$this->db->prepare($sql);
+        $pstmt->execute([$id]);
+        $result = $pstmt->fetch(\PDO::FETCH_ASSOC);
+        return $result;
+    }
 
 }
 
