@@ -5,7 +5,7 @@
 
 
 $productDao = new \model\ProductDao();
-$categories=$productDao->getAllCategories();
+$subCategories=$productDao->getAllSubCategories();
 
 $productDao=new \model\ProductDao();
 $brands=$productDao->getAllBrands();
@@ -32,7 +32,7 @@ $selected_category=null;
         </tr>
         <tr>
             <td>Price</td>
-            <td><input type="password" name="price" ></td>
+            <td><input type="text" name="price" ></td>
         </tr>
         <tr>
             <td>Product Model</td>
@@ -46,9 +46,9 @@ $selected_category=null;
             <td>Category</td>
             <td><select name="category">
             <option value="Choose" <?php echo $selected_category == null ? "selected " : "" ?>>Choose</option>
-            <?php foreach ($categories as $category){ ?>
-                <option value="<?= $category["name"] ?>" <?php echo $selected_category == $category["name"] ? "selected " : ""; ?> >
-                    <?= $category["name"] ?></option>
+            <?php foreach ($subCategories as $subCategory){ ?>
+                <option value="<?= $subCategory["name"] ?>" <?php echo $selected_category == $subCategory["name"] ? "selected " : ""; ?> >
+                    <?= $subCategory["name"] ?></option>
             <?php }; ?>
                 </select></td>
         </tr>

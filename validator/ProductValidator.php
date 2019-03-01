@@ -21,6 +21,7 @@ class ProductValidator{
                 }
 
             }
+            return true;
 
             }else{
 

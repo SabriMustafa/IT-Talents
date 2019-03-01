@@ -2,6 +2,7 @@
 namespace controller;
 
 use model\UserModel;
+use Validator\UserValidator;
 
 class UserController
 {
@@ -21,6 +22,13 @@ class UserController
     {
         require_once __DIR__ . '\..\view\Login.html';
     }
+
+    public function editProfile(){
+        $validator=new UserValidator();
+
+
+    }
+
 
 }
 
