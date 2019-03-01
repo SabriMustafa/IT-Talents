@@ -1,0 +1,38 @@
+
+.row{
+   float: left;
+    border: 1px solid gray;
+    background: white;
+}
+
+.card-product{
+    width: 100%;
+}
+.info-wrap{
+    width: 300px;
+
+}
+.img-char{
+     float: left;
+    width: 30%;
+    text-align: center;
+
+}
+.img-char img{
+    width:100%;
+}
+.characteristic{
+    float: left;
+    margin-left: 30px;
+}
+.bodyChar{
+    width: 80%;
+}
+.img-wrap{
+    width: 250px;
+    height: 30vh;
+    float: left;
+}
+.col-md-4{
+    float: left;
+}
