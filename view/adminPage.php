@@ -1,7 +1,7 @@
 <?php
 //require_once "../model/AbstractDao.php";
 //require_once "../model/ProductDao.php";
-
+//TODO mahni go tva ot tuk
 
 
 $productDao = new \model\ProductDao();

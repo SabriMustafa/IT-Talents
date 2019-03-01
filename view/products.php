@@ -1,10 +1,6 @@
 <?php
-require_once "../model/AbstractDao.php";
-require_once "../model/ProductDao.php";
-
-$id = $_GET["subcategory"];
-$products = new \model\ProductDao();
-$allProducts = $products->getProductsBySubID($id);
+//require_once "../model/AbstractDao.php";
+//require_once "../model/ProductDao.php";
 
 ?>
 <!doctype html>

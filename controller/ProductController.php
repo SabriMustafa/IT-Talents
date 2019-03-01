@@ -38,6 +38,14 @@ class ProductController
         return true;
     }
 
+    public function getSubcategory(){
+        $id = $_GET["subcategory"];
+        $products = new ProductDao();
+        $allProducts = $products->getProductsBySubID($id);
+        var_dump($allProducts);
+        include __DIR__."/../view/products.php";
+    }
+
 
 }
 

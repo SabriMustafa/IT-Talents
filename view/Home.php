@@ -36,7 +36,7 @@
                         foreach ($category['subcategories'] as $sub) {
                             ?>
                             <li>
-                                <a href="products.php?subcategory=<?php echo $sub["id"] ?>"><?php echo $sub["name"] ?></a>
+                                <a href="index.php?target=product&action=getSubcategory&subcategory=<?php echo $sub["id"] ?>"><?php echo $sub["name"] ?></a>
                             </li>
                             <?php
                         }

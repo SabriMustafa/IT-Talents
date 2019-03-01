@@ -10,6 +10,7 @@ class UserController
     {
         $user = new UserModel();
         return $user->register($_POST);
+
     }
 
     public function login(){
@@ -23,10 +24,12 @@ class UserController
         require_once __DIR__ . '\..\view\Login.html';
     }
 
+    public function registerView(){
+        require_once __DIR__ . '\..\view\Register.html';
+    }
+
     public function editProfile(){
         $validator=new UserValidator();
-
-
     }
 
 
