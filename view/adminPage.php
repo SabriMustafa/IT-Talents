@@ -1,8 +1,13 @@
 <?php
+//require_once "../model/AbstractDao.php";
+//require_once "../model/ProductDao.php";
 
-use \model\ProductDao as Dao;
 
-$productDao=new Dao();
+
+$productDao = new \model\ProductDao();
+$categories=$productDao->getAllCategories();
+
+$productDao=new \model\ProductDao();
 $brands=$productDao->getAllBrands();
 var_dump($brands);
 $selected_brand=null;
@@ -38,11 +43,12 @@ $selected_category=null;
             <td><input type="text" name="quantity" ></td>
         </tr>
         <tr>
-            <td>Sub Category</td>
+            <td>Category</td>
             <td><select name="category">
             <option value="Choose" <?php echo $selected_category == null ? "selected " : "" ?>>Choose</option>
             <?php foreach ($categories as $category){ ?>
-                <option value="<?= $category ?>" <?php echo $selected_category == $category ? "selected " : ""; ?> > <?= $category ?></option>
+                <option value="<?= $category["name"] ?>" <?php echo $selected_category == $category["name"] ? "selected " : ""; ?> >
+                    <?= $category["name"] ?></option>
             <?php }; ?>
                 </select></td>
         </tr>
@@ -53,7 +59,8 @@ $selected_category=null;
 
                     <option value="Choose-brand" <?php echo $selected_brand == null ? "selected " : "" ?>>Choose</option>
                     <?php foreach ($brands as $brand){ ?>
-                        <option value="<?= $brand ?>" <?php echo $selected_brand == $brand ? "selected " : ""; ?> > <?= $brand ?></option>
+                        <option value="<?= $brand["name"] ?>" <?php echo $selected_brand == $brand["name"] ? "selected " : ""; ?> >
+                            <?= $brand["name"] ?></option>
                     <?php }; ?>
 
 

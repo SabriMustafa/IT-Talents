@@ -5,7 +5,7 @@ use controller\ProductController;
 
 spl_autoload_register(function ($class) {
     $class = str_replace('\\', DIRECTORY_SEPARATOR, $class) . '.php';
-    require_once __DIR__ . DIRECTORY_SEPARATOR . $class;
+        require_once __DIR__ . DIRECTORY_SEPARATOR . $class;
 });
 
 
@@ -13,12 +13,39 @@ spl_autoload_register(function ($class) {
 
 session_start();
 
+if (isset($_GET['page'])) {
+//    if ($_GET['page']=="adminPage"){
+//        if (isset($_SESSION) && $_SESSION["user"]["is_admin"]==1){
+//            if (file_exists(__DIR__ . '\view\\'. $_GET['page'] . '.php')) {
+//                require_once __DIR__ . '\view\\'. $_GET['page'] . '.php';
+//
+//                die;
+//
+//        }
+//
+//    }else{
+//
+//        require_once __DIR__.'\view\\'.'unauthrized'.'html';
+//
+//
+//
+//        }
+    }
+    if (file_exists(__DIR__ . '\view\\'. $_GET['page'] . '.php')) {
+        require_once __DIR__ . '\view\\'. $_GET['page'] . '.php';
+
+        die;
+    }elseif (file_exists(__DIR__ . '\view\\'. $_GET['page'] . '.html')){
+        require_once __DIR__.'\view\\'.$_GET['page'].'html';
+    die;
+  //  }
+}
+
 $FileNotFound = false;
 $controllerName = isset($_REQUEST["target"]) ? $_REQUEST["target"] : "base";
 $methodName = isset($_REQUEST["action"]) ? $_REQUEST["action"] : "index";
 
 $controllerClassName = '\\controller\\' . ucfirst($controllerName) . 'Controller';
-
 if (class_exists($controllerClassName)) {
 
     $controller = new $controllerClassName();
@@ -52,6 +79,10 @@ if (class_exists($controllerClassName)) {
 } else {
     $fileNotFound = true;
 }
+
+
+
+
 
 if ($FileNotFound){
     echo "target or action invalid: target= ".$controllerName."and action= ".$methodName ;
