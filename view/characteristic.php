@@ -22,9 +22,13 @@ $productModel = $characteristics->getProductModel($id);
     <title>Техномаркет</title>
 </head>
 <body>
+    <nav class="nav-box">
+    <img src="https://cdn.technomarket.bg/uploads/BG/tm-logo.png" width="500px" alt="">
+</nav>
+    <hr>
     <div class="bodyCharacteristic">
     <div  class="img-char">
-        <span> <?php echo $productModel["model"]; ?></span>
+        <h4> <?php echo $productModel["model"]; ?></h4>
         <img  src=" <?php echo $allCharacteristics["0"]["images"]; ?>" alt="">
     </div>
 
@@ -43,6 +47,12 @@ $productModel = $characteristics->getProductModel($id);
         </div>
 
     </div>
+    <article class="char-article">
+        <h3>Цена:</h3>
+       <h5> <?php echo $productModel["price"]; ?> лв.</h5>
+        <a href="#" class="btn btn-sm btn-primary " style="background-color: red " >Купи</a>
+
+    </article>
 
 </body>
 </html>

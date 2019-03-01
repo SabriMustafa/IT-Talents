@@ -21,36 +21,33 @@ $allProducts = $products->getProductsBySubID($id);
     <title>Product</title>
 </head>
 <body>
+<nav class="nav-box">
+    <img src="https://cdn.technomarket.bg/uploads/BG/tm-logo.png" width="500px" alt="">
+</nav>
+<aside class="aside-products">
 
-<div class="container" >
-
+</aside>
+<main class="main-products">
     <?php foreach ($allProducts as $product){
-        $getImg = $products->getProductSpecification($product["id"])
-        ?>
-        <div class="row">
-            <div class="col-md-4">
-                    <div class="img-wrap"><img class="img-wrap" src="<?php echo $getImg[0]["images"] ?>"></div>
-                    <figcaption class="info-wrap">
-                        <h4 class="title"><?php echo $product["category"] ?> </h4>
-                        <p class="desc"><?php echo $product["model"] ?> </p>
-                    </figcaption>
-                    <div class="bottom-wrap">
-                        <div class="price-wrap h5">
-                            <span class="price-new"><?php echo $product["price"]."лв." ?>
-
-                            </span>
-
-                        </div>
-                        <a href="characteristic.php?productID= <?php echo $product["id"] ?>" class="btn btn-sm btn-primary float-right">Виж</a>
-                    </div>
-            </div> <!-- col // -->
-
-        </div> <!-- row.// -->
-   <?php } ?>
+    $getImg = $products->getProductSpecification($product["id"])
+    ?>
+    <div class="container" >
+        <div class="div-product-img">
+            <img src="<?php echo $getImg[0]["images"] ?>" alt="">
+         </div>
+        <div style="text-align: center">
+            <h4 class="title"><?php echo $product["category"] ?> </h4>
+            <p class="desc"><?php echo $product["name"]." ".$product["model"] ?> </p>
+            <a href="characteristic.php?productID= <?php echo $product["id"] ?>" class="btn btn-sm btn-primary ">Виж</a>
+        </div>
 
 
 
-</div>
+
+    </div>
+    <?php } ?>
+</main>
+
 
 </article>
 </body>
