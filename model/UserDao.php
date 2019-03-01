@@ -52,7 +52,9 @@ class UserDao{
         $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$email]);
         $result = $pstmt->fetch(PDO::FETCH_OBJ);
+        var_dump($result);
         return empty($result) ? null : new User($result->id, $result->first_name,
+
             $result->last_name,
             $result->email,
             $result->password,

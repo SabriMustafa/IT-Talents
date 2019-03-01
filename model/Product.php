@@ -52,10 +52,87 @@ class Product extends JsonObject {
     public function getId()
     {
         return $this->id;
+
+    }
+    public function setName($name){
+
+    }
+
+    /**
+     * @param mixed $price
+     */
+    public function setPrice($price): void
+    {
+        $this->price = $price;
+    }
+
+    /**
+     * @param mixed $model
+     */
+    public function setModel($model): void
+    {
+        $this->model = $model;
+    }
+
+    /**
+     * @param mixed $quantity
+     */
+    public function setQuantity($quantity): void
+    {
+        $this->quantity = $quantity;
+    }
+
+    /**
+     * @param mixed $sub_categories_id
+     */
+    public function setSubCategoriesId($sub_categories_id): void
+    {
+        $this->sub_categories_id = $sub_categories_id;
+    }
+
+    /**
+     * @param mixed $brand_id
+     */
+    public function setBrandId($brand_id): void
+    {
+        $this->brand_id = $brand_id;
+    }
+
+    /**
+     * @param mixed $firstImg
+     */
+    public function setFirstImg($firstImg): void
+    {
+        $this->firstImg = $firstImg;
+    }
+
+    /**
+     * @param null $secondImg
+     */
+    public function setSecondImg($secondImg): void
+    {
+        $this->secondImg = $secondImg;
+    }
+
+    /**
+     * @param null $thirdImg
+     */
+    public function setThirdImg($thirdImg): void
+    {
+        $this->thirdImg = $thirdImg;
+    }
+
+    /**
+     * @param null $fourthImg
+     */
+    public function setFourthImg($fourthImg): void
+    {
+        $this->fourthImg = $fourthImg;
     }
 
     /**
      * @return mixed
+     *
      */
     public function getName()
     {

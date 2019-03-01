@@ -10,19 +10,32 @@ namespace controller;
 
 
 use model\Product;
+use model\ProductDao;
+use Validator\ProductValidator;
 
 class ProductController
 {
 
     public function insertProduct()
     {
-        $validator = new UserValidator();
-        if ( $validator->validateRegisterUserData($_POST)) {
+        $validator = new ProductValidator();
+        if (!$validator->validateProduct($_POST)) {
             return false;
         }
-        
+        $product = new Product();
+        $product->getName($_POST["name"]);
+        $product->getPrice($_POST["price"]);
+        $product->getModel($_POST["model"]);
+        $product->getSubCategoriesId($_POST["categoties"]);
+        $product->getBrandId($_POST["brand"]);
+        $product->getFourthImg($_POST["first-image"]);
+        $product->getSecondImg($_POST["second-image"]);
+        $product->getThirdImg($_POST["third-image"]);
+        $product->getFourthImg($_POST["fourth-image"]);
 
-
+        $productDao = new ProductDao();
+        $productDao->addProduct($product);
+        return true;
     }
 
 

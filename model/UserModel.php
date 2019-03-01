@@ -13,6 +13,7 @@ class UserModel extends JsonObject {
     {
         $validator = new UserValidator();
         if (! $validator->validateRegisterUserData($data)) {
+            echo "hahah";
             return false;
         }
 
