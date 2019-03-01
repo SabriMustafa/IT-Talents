@@ -108,7 +108,7 @@ class ProductDao{
 
     public function getProductsBySubID($id){
 
-        $sql="SELECT p.id, p.name as category,p.price , concat(b.name,' ', p.model)  as model 
+        $sql="SELECT p.id, p.name as category,p.price ,b.name,p.model  as model 
           FROM products as p
           join brands as b
             on b.id = p.brand_id
@@ -133,7 +133,7 @@ class ProductDao{
     }
 
     public function getProductModel($id){
-        $sql="SELECT  concat(p.name,' ',b.name,' ', p.model)  as model 
+        $sql="SELECT  concat(p.name,' ',b.name,' ', p.model)  as model, p.price
               FROM products as p
               join brands as b
                on b.id = p.brand_id
