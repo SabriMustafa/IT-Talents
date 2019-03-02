@@ -1,23 +1,57 @@
 <?php
 namespace controller;
-
-use model\UserModel;
+use message\MessageHandler;
+use model\UserDao;
 use Validator\UserValidator;
-
+use model\User;
 class UserController
 {
     public function register()
     {
-        $user = new UserModel();
-        return $user->register($_POST);
 
+        $validator = new UserValidator();
+        if ( !$validator->validateRegisterUserData($_POST)) {
+            echo "hahah";
+            return false;
+        }
+echo "opa";
+        $user = new User();
+        $user->setEmail($_POST['email']);
+        $user->setPassword(password_hash($_POST['password'],PASSWORD_BCRYPT));
+        $user->setFirstName($_POST['first_name']);
+        $user->setLastName($_POST['last_name']);
+        $user->setGender($_POST['gender']);
+        $user->setAge($_POST['age']);
+
+        $userDao = new UserDao();
+        $userDao->addUser($user);
+        $_SESSION['user'] = $user;
+        $messageHandler = MessageHandler::getInstance();
+        $messageHandler->addMessage(sprintf('%s, вие се регистрирахте успешно!', $user->getFirstName()), MessageHandler::MESSAGE_TYPE_SUCCESS);
+        return true;
     }
 
     public function login(){
-        $user= new UserModel();
-        require_once __DIR__ . '\..\view\adminPage.php';
-        return $user->login($_POST);
+        $messageHandler = MessageHandler::getInstance();
+
+        $validator=new UserValidator();
+        if (!$validator->validateLoginUserData($_POST)){
+            $messageHandler->addMessage(sprintf('Грешни креденшъли!'), MessageHandler::MESSAGE_TYPE_SUCCESS);
+            echo "Грешни креденшъли!";
+            return false;
+        }
+
+
+        $userDao= new UserDao();
+        $user=$userDao->getByEmail($_POST["email"]);
+
+        $_SESSION["user"]=$user;
+
+
+        $messageHandler->addMessage(sprintf('%s, вие се логнахте успешно!', $user->getFirstName()), MessageHandler::MESSAGE_TYPE_SUCCESS);
+        return true;
     }
+
 
     public function loginView()
     {

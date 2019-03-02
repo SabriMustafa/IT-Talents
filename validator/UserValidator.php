@@ -10,60 +10,66 @@ class UserValidator
 {
     public function validateRegisterUserData(array $data)
     {
-        $userDao=new UserDao();
-        $user=$userDao;
-        if (! isset($data['email']) ||
-            ! isset($data['password']) ||
-            ! strlen($data['password']) >= 5 ||
-            ! isset($data['first_name']) ||
-            ! isset($data['last_name']) ||
-            ! isset($data['gender']) ||
-            ! isset($data['age']) ||
-            ! is_numeric($data['age'])
-        ){
+
+        $userDao = new UserDao();
+        $user = $userDao;
+
+        if (!isset($data['email']) ||
+            !isset($data['password']) ||
+            !strlen($data['password']) >= 5 ||
+            !isset($data['first_name']) ||
+            !isset($data['last_name']) ||
+            !isset($data['gender']) ||
+            !isset($data['age']) ||
+            !is_numeric($data['age'])
+        ) {
+
             $messageHandler = MessageHandler::getInstance();
             $messageHandler->addMessage('Проблем с подадените параметри!', MessageHandler::MESSAGE_TYPE_ERROR);
             return false;
-        }elseif (!$user->getByEmail($data['email']==null)){
-
-
-            $messageHandler=MessageHandler::getInstance();
-            $messageHandler->addMessage("Потребителят вече съществува ",MessageHandler::MESSAGE_TYPE_ERROR);
+        } elseif ($user->getByEmail($data['email'])) {
+            var_dump($user);
+            echo "\"Потребителят вече съществува \"";
+            $messageHandler = MessageHandler::getInstance();
+            $messageHandler->addMessage("Потребителят вече съществува ", MessageHandler::MESSAGE_TYPE_ERROR);
             return false;
+        } else {
+            return true;
         }
-        return true;
+
     }
 
     public function validateLoginUserData(array $data)
     {
         $email = $data["email"];
         $password = $data["password"];
-        if (isset($email)&&
+        if (isset($email) &&
             $email != '' &&
-            isset($password) && $password != ''){
-            $userDao=new UserDao();
-            $user=$userDao->getByEmail($email);
+            isset($password) && $password != '') {
 
-            if ($user != null ){
-                if (password_verify($password,$user->getPassword())){
+            $userDao = new UserDao();
+            $user = $userDao;
 
-                  //  $_SESSION["user"] = $user;
-                   // require_once "view/Home.php";
+            if ($user->getByEmail($email)) {
+
+var_dump($user);
+                if (password_verify($password, $user->password)) {
+
+
                     return true;
-                }else{
-                   // echo "try again!!";
+                } else {
+                    echo "try again!!";
                     return false;
                 }
-            }else{
+            } else {
                 return false;
-                //echo "try again!!";
+                echo "try again!!";
             }
-        }else{
+        } else {
             return false;
         }
 
     }
-
 
 
 }

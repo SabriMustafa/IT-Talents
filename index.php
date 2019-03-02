@@ -12,6 +12,7 @@ $controllerName = isset($_REQUEST["target"]) ? $_REQUEST["target"] : "base";
 $methodName = isset($_REQUEST["action"]) ? $_REQUEST["action"] : "index";
 try{
     $controllerClassName = '\\controller\\' . ucfirst($controllerName) . 'Controller';
+
     if (class_exists($controllerClassName)) {
 
         $controller = new $controllerClassName();
@@ -32,7 +33,6 @@ try{
         echo "target or action invalid: target= " . $controllerName . "and action= " . $methodName;
     }
 }catch (Exception $e){
-    echo $e->getMessage();
-    //include 500.html
+    file_put_contents(__DIR__."/application_log.txt", $e->getMessage() . "\n", FILE_APPEND);
 }
 

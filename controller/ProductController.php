@@ -35,16 +35,18 @@ class ProductController
 
         $productDao = new ProductDao();
         $productDao->addProduct($product);
-        return true;
+        include __DIR__."/../view/adminPage.php";
     }
 
     public function getSubcategory(){
         $id = $_GET["subcategory"];
         $products = new ProductDao();
         $allProducts = $products->getProductsBySubID($id);
-        var_dump($allProducts);
+        $images=new ProductDao();
+
         include __DIR__."/../view/products.php";
     }
+
 
 
 }

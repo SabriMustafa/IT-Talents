@@ -1,20 +1,3 @@
-<?php
-//require_once "../model/AbstractDao.php";
-//require_once "../model/ProductDao.php";
-//TODO mahni go tva ot tuk
-
-
-$productDao = new \model\ProductDao();
-$subCategories=$productDao->getAllSubCategories();
-
-$productDao=new \model\ProductDao();
-$brands=$productDao->getAllBrands();
-var_dump($brands);
-$selected_brand=null;
-$selected_category=null;
-?>
-
-
 
 <!DOCTYPE html>
 <html lang="en">
@@ -23,7 +6,7 @@ $selected_category=null;
     <title>Title</title>
 </head>
 <body>
-<form action="../index.php?target=product&action=insertProduct" method="post" enctype="multipart/form-data">
+<form action="/IT-Talents/index.php?target=product&action=insertProduct" method="post" enctype="multipart/form-data">
     <input type="hidden" name="target" value="user">
     <table>
         <tr>
@@ -45,7 +28,7 @@ $selected_category=null;
         <tr>
             <td>Category</td>
             <td><select name="category">
-            <option value="Choose" <?php echo $selected_category == null ? "selected " : "" ?>>Choose</option>
+            <option value="Choose" >Choose</option>
             <?php foreach ($subCategories as $subCategory){ ?>
                 <option value="<?= $subCategory["name"] ?>" <?php echo $selected_category == $subCategory["name"] ? "selected " : ""; ?> >
                     <?= $subCategory["name"] ?></option>
@@ -57,7 +40,7 @@ $selected_category=null;
             <td><select name="brand">
 
 
-                    <option value="Choose-brand" <?php echo $selected_brand == null ? "selected " : "" ?>>Choose</option>
+                    <option value="Choose-brand" >Choose</option>
                     <?php foreach ($brands as $brand){ ?>
                         <option value="<?= $brand["name"] ?>" <?php echo $selected_brand == $brand["name"] ? "selected " : ""; ?> >
                             <?= $brand["name"] ?></option>
@@ -67,22 +50,9 @@ $selected_category=null;
                 </select></td>
         </tr>
         <tr>
-            <td>Image1</td>
-            <td><input type="file" name="first-image" ></td>
+            <td>Upload images</td>
+            <td><input type="file" name="files[]" multiple/></td>
         </tr>
-        <tr>
-            <td>Image2</td>
-            <td><input type="file" name="second-image" ></td>
-        </tr>
-        <tr>
-            <td>Image3</td>
-            <td><input type="file" name="third-image" ></td>
-        </tr>
-        <tr>
-            <td>Image4</td>
-            <td><input type="file" name="fourth-image" ></td>
-        </tr>
-
 
         <tr>
             <td>

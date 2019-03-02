@@ -39,13 +39,11 @@ class ProductDao{
                 $product->getBrandId()]);
 
 
-            $sql2 = "INSERT INTO images(first_url,product_id,second_url,third_url,fourth_url) VALUES (?,?,?,?,?)";
+            $sql2 = "INSERT INTO images(first_url,product_id) VALUES (?,?)";
             $pstmt = $this->db->prepare($sql2);
             $pstmt->execute([$product->getFirstImg(),
-                $this->db->lastInsertId(),
-                $product->getSecondImg(),
-                $product->getThirdImg(),
-                $product->getFourthImg()]);
+                $this->db->lastInsertId()
+                ]);
 
 
             $stmtdb->commit();
