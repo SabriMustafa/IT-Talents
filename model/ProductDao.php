@@ -154,6 +154,20 @@ class ProductDao
         return $result;
     }
 
+    public function filterHome ($name){
+
+        $sql="SELECT p.id, p.name as category,p.price ,b.name,p.model  as model 
+          FROM products as p
+          join brands as b
+            on b.id = p.brand_id
+          where b.name = ?";
+
+        $pstmt =$this->db->prepare($sql);
+        $pstmt->execute([$name]);
+        $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $result;
+    }
+
 }
 
 

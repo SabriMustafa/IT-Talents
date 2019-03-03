@@ -23,8 +23,8 @@ $categories=$productModel->getCategories();
 <img src="https://cdn.technomarket.bg/uploads/BG/tm-logo.png" width="500px" style="margin-left: 450px">
 
 <div class="form-group has-search">
-    <form>
-        <input type="text" class="form-control" placeholder="Search" style="width: 200px">
+    <form action="index.php?target=product&action=searchHome" method="post">
+        <input type="text" class="form-control" placeholder="Search" style="width: 200px" name="searchValue">
         <input type="submit" name="search" value="Search">
     </form>
 </div>

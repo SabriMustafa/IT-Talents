@@ -72,6 +72,21 @@ class ProductController
 
     }
 
+    public function searchHome(){
+
+        $name = $_POST["searchValue"];
+        $product = new ProductDao();
+
+        $allProducts = $product->filterHome($name);
+        foreach ($allProducts as $key => $product1) {
+            $specification = $product->getProductSpecification($product1["id"]);
+            $allImg[$key]["spec"] = $specification;
+        }
+        include_once __DIR__."/../view/Home.php";
+
+
+
+    }
 
 
 }
