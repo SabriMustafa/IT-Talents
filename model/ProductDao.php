@@ -115,6 +115,13 @@ class ProductDao
           join brands as b
             on b.id = p.brand_id
           where sub_categories_id = ?";
+
+        if (isset($_GET["brands"])){
+            if ($_GET["brands"] != "All"){
+                $here = $_GET["brands"];
+                $sql .= " and b.name = '$here' ";
+            }
+        }
         $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$id]);
         $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);

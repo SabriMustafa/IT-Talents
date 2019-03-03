@@ -11,10 +11,10 @@ class UserController
 
         $validator = new UserValidator();
         if ( !$validator->validateRegisterUserData($_POST)) {
-            echo "hahah";
+
             return false;
         }
-echo "opa";
+
         $user = new User();
         $user->setEmail($_POST['email']);
         $user->setPassword(password_hash($_POST['password'],PASSWORD_BCRYPT));
@@ -76,16 +76,16 @@ echo "opa";
 
     public function loginView()
     {
-        require_once __DIR__ . '\..\view\Login.html';
+        require_once __DIR__ . '\..\view\login.php';
     }
 
     public function registerView(){
-        require_once __DIR__ . '\..\view\Register.html';
+        require_once __DIR__ . '\..\view\register.php';
     }
 
-//    public function editProfile(){
-//        $validator=new UserValidator();
-//    }
+    public function editProfileView(){
+        require_once __DIR__ . '\..\view\editProfile.php';
+    }
 
 
 }

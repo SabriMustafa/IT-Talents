@@ -50,7 +50,8 @@ class ProductController
             $specification = $products->getProductSpecification($product["id"]);
             $allProducts[$key]["spec"] = $specification;
         }
-//        var_dump($allProducts);
+
+;
         $productDao = new ProductDao();
 
 
@@ -63,7 +64,7 @@ class ProductController
 
         $allCharacteristics=$product->getProductSpecification($productId);
 
-        $productModel = $product->getProductModel($productId);
+        $productModell = $product->getProductModel($productId);
 
         include __DIR__ . "/../view/characteristic.php";
 

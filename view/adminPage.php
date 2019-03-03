@@ -1,10 +1,7 @@
+<?php
+require_once "navigation.php";
+?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
 <body>
 <form action="/IT-Talents/index.php?target=product&action=insertProduct" method="post" enctype="multipart/form-data">
     <input type="hidden" name="target" value="user">
@@ -30,7 +27,7 @@
             <td><select name="category">
             <option value="Choose" >Choose</option>
             <?php
-echo "hdja";
+
             var_dump($subCategories);
             foreach ($subCategories as $subCategory){ ?>
                 <option value="<?= $subCategory["id"] ?>" <?php echo $selected_category == $subCategory["name"] ? "selected " : ""; ?> >

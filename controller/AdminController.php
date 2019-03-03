@@ -23,7 +23,7 @@ class AdminController
         $selected_category = null;
        include __DIR__."/../view/adminPage.php";
 //        } else {
-//            require_once __DIR__ .'/../view/'.'Login.html';
+//            require_once __DIR__ .'/../view/'.'Login.php';
 //        }
 
     }
