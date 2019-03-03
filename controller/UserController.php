@@ -52,6 +52,27 @@ echo "opa";
         return true;
     }
 
+    public function editProfile(){
+        $validator=new UserValidator();
+        if ($validator->validateEditProfileData($_POST)){
+           $user=new User();
+            $user->setEmail($_POST['email']);
+            $user->setPassword(password_hash($_POST['password'],PASSWORD_BCRYPT));
+            $user->setFirstName($_POST['first_name']);
+            $user->setLastName($_POST['last_name']);
+            $user->setGender($_POST['gender']);
+            $user->setAge($_POST['age']);
+
+            $userDao = new UserDao();
+            $userDao->updateData($user);
+        }
+
+
+
+    }
+
+
+
 
     public function loginView()
     {
@@ -62,9 +83,9 @@ echo "opa";
         require_once __DIR__ . '\..\view\Register.html';
     }
 
-    public function editProfile(){
-        $validator=new UserValidator();
-    }
+//    public function editProfile(){
+//        $validator=new UserValidator();
+//    }
 
 
 }

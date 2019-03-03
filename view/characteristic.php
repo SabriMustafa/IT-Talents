@@ -1,10 +1,10 @@
 <?php
-require_once "../model/AbstractDao.php";
-require_once "../model/ProductDao.php";
-$id = $_GET["productID"];
-$characteristics = new \model\ProductDao();
-$allCharacteristics = $characteristics->getProductSpecification($id);
-$productModel = $characteristics->getProductModel($id);
+//require_once "../model/AbstractDao.php";
+//require_once "../model/ProductDao.php";
+//$id = $_GET["productID"];
+//$characteristics = new \model\ProductDao();
+//$allCharacteristics = $characteristics->getProductSpecification($id);
+//$productModel = $characteristics->getProductModel($id);
 
 
 ?>
@@ -37,7 +37,9 @@ $productModel = $characteristics->getProductModel($id);
         <div class="characteristic">
 
 
-                <?php foreach ($allCharacteristics as $char){ ?>
+                <?php
+
+                foreach ($allCharacteristics as $char){ ?>
 
                    <p> <?php echo $char["performance"] .PHP_EOL; ?>  </p>
 

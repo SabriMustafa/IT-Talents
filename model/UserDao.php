@@ -55,13 +55,33 @@ class UserDao{
         $result = $pstmt->fetch(PDO::FETCH_OBJ);
 
         return empty($result) ? null : new User($result->id, $result->first_name,
-
             $result->last_name,
             $result->email,
             $result->password,
             $result->gender,
             $result->age
         );
+    }
+    public function updateData(User $user){
+
+$sql="UPDATE users SET email = ?, 
+                      password = ?, 
+                      first_name = ?, 
+                      last_name = ?, 
+                        gender = ?, 
+                        age = ? where id=?;";
+$id= $_SESSION["user"]["id"];
+
+        $pstmt = $this->db->prepare($sql);
+        $pstmt->execute([$user->getEmail(),
+            $user->getPassword(),
+            $user->getFirstName(),
+            $user->getLastName(),
+            $user->getGender(),
+            $user->getAge(),
+            $id]);
+        //session_destroy();
+        return true;
     }
 
     public function getAll(){

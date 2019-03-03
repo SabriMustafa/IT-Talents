@@ -5,7 +5,7 @@ namespace model;
 use PDO;
 use PDOException;
 class AbstractDao {
-    const DB_NAME = 'tehnomarket';
+    const DB_NAME = 'technomarket';
     const DB_HOST = '127.0.0.1';
     const DB_PORT = 3306;
     const DB_USERNAME = 'root';

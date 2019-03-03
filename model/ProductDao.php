@@ -2,7 +2,8 @@
 
 namespace model;
 
-class ProductDao{
+class ProductDao
+{
     /**
      * @var PDO|null
      */
@@ -21,7 +22,6 @@ class ProductDao{
             $stmtdb = $this->db;
             $stmtdb->beginTransaction();
 
-
             $sql = "INSERT INTO products (  
                     name,
                     price,
@@ -37,13 +37,13 @@ class ProductDao{
                 $product->getQuantity(),
                 $product->getSubCategoriesId(),
                 $product->getBrandId()]);
-
-
-            $sql2 = "INSERT INTO images(first_url,product_id) VALUES (?,?)";
-            $pstmt = $this->db->prepare($sql2);
-            $pstmt->execute([$product->getFirstImg(),
-                $this->db->lastInsertId()
-                ]);
+            $prodId = $this->db->lastInsertId();
+            $images = $product->getImages();
+            foreach ($images as $image) {
+                $sql2 = "INSERT INTO images(product_url,product_id) VALUES (?,?)";
+                $pstmt = $this->db->prepare($sql2);
+                $pstmt->execute([$image,$prodId]);
+            }
 
 
             $stmtdb->commit();
@@ -71,7 +71,8 @@ class ProductDao{
 
     }
 
-    public function getAllCategories(){
+    public function getAllCategories()
+    {
 
         $sql = "SELECT id,name from categories";
         $pstmt = $this->db->prepare($sql);
@@ -82,9 +83,10 @@ class ProductDao{
     }
 
 
-    public function getAllSubCategories(){
+    public function getAllSubCategories()
+    {
 
-        $sql="SELECT id,name,categories_id from sub_categories";
+        $sql = "SELECT id,name,categories_id from sub_categories";
         $pstmt = $this->db->prepare($sql);
         $pstmt->execute();
         $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -92,9 +94,10 @@ class ProductDao{
         return $result;
     }
 
-    public function getSubCategoriesById($id){
+    public function getSubCategoriesById($id)
+    {
 
-        $sql="SELECT id,name from sub_categories where categories_id=?";
+        $sql = "SELECT id,name from sub_categories where categories_id=?";
         $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$id]);
         $result = $pstmt->fetch(\PDO::FETCH_ASSOC);
@@ -104,39 +107,41 @@ class ProductDao{
     }
 
 
-    public function getProductsBySubID($id){
+    public function getProductsBySubID($id)
+    {
 
-        $sql="SELECT p.id, p.name as category,p.price ,b.name,p.model  as model 
+        $sql = "SELECT p.id, p.name as category,p.price ,b.name,p.model  as model 
           FROM products as p
           join brands as b
             on b.id = p.brand_id
           where sub_categories_id = ?";
-        $pstmt =$this->db->prepare($sql);
+        $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$id]);
         $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
         return $result;
     }
 
-    public function getProductSpecification($id){
-
-        $sql="SELECT concat(p.name,' ', p.value) as performance ,i.product_url  as images 
+    public function getProductSpecification($id)
+    {
+        $sql = "SELECT concat(p.name,' ', p.value) as performance ,i.product_url  as images 
             FROM product_specifications_value as p 
             inner join images as i
 		     on p.product_id = i.product_id 
             where p.product_id = ?";
-        $pstmt =$this->db->prepare($sql);
+        $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$id]);
         $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
         return $result;
     }
 
-    public function getProductModel($id){
-        $sql="SELECT  concat(p.name,' ',b.name,' ', p.model)  as model, p.price
+    public function getProductModel($id)
+    {
+        $sql = "SELECT  concat(p.name,' ',b.name,' ', p.model)  as model, p.price
               FROM products as p
               join brands as b
                on b.id = p.brand_id
               where  p.id = ?";
-        $pstmt =$this->db->prepare($sql);
+        $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$id]);
         $result = $pstmt->fetch(\PDO::FETCH_ASSOC);
         return $result;

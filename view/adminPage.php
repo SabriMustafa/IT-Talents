@@ -29,8 +29,11 @@
             <td>Category</td>
             <td><select name="category">
             <option value="Choose" >Choose</option>
-            <?php foreach ($subCategories as $subCategory){ ?>
-                <option value="<?= $subCategory["name"] ?>" <?php echo $selected_category == $subCategory["name"] ? "selected " : ""; ?> >
+            <?php
+echo "hdja";
+            var_dump($subCategories);
+            foreach ($subCategories as $subCategory){ ?>
+                <option value="<?= $subCategory["id"] ?>" <?php echo $selected_category == $subCategory["name"] ? "selected " : ""; ?> >
                     <?= $subCategory["name"] ?></option>
             <?php }; ?>
                 </select></td>
@@ -42,7 +45,7 @@
 
                     <option value="Choose-brand" >Choose</option>
                     <?php foreach ($brands as $brand){ ?>
-                        <option value="<?= $brand["name"] ?>" <?php echo $selected_brand == $brand["name"] ? "selected " : ""; ?> >
+                        <option value="<?= $brand["id"] ?>" <?php echo $selected_brand == $brand["name"] ? "selected " : ""; ?> >
                             <?= $brand["name"] ?></option>
                     <?php }; ?>
 

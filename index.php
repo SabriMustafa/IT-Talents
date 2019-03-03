@@ -8,10 +8,11 @@ spl_autoload_register(function ($class) {
 session_start();
 
 $FileNotFound = false;
-$controllerName = isset($_REQUEST["target"]) ? $_REQUEST["target"] : "base";
-$methodName = isset($_REQUEST["action"]) ? $_REQUEST["action"] : "index";
+$controllerName = isset($_GET["target"]) ? $_GET["target"] : "base";
+$methodName = isset($_GET["action"]) ? $_GET["action"] : "index";
 try{
     $controllerClassName = '\\controller\\' . ucfirst($controllerName) . 'Controller';
+//    file_put_contents(__DIR__."/application_log.txt", $controllerClassName . "\n", FILE_APPEND);
 
     if (class_exists($controllerClassName)) {
 

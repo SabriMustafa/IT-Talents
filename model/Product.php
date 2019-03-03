@@ -11,10 +11,7 @@ class Product extends JsonObject {
     private $quantity;
     private $sub_categories_id;
     private $brand_id;
-    private $firstImg;
-    private $secondImg;
-    private $thirdImg;
-    private $fourthImg;
+    private $images;
 
     /**
      * Product constructor.
@@ -25,13 +22,9 @@ class Product extends JsonObject {
      * @param $quantity
      * @param $sub_categories_id
      * @param $brand_id
-     * @param $firstImg
-     * @param $secondImg
-     * @param $thirdImg
-     * @param $fourthImg
+     * @param $images array
      */
-    public function __construct($id, $name, $price, $model, $quantity, $sub_categories_id, $brand_id,
-                                $firstImg, $secondImg=null, $thirdImg=null, $fourthImg=null)
+    public function __construct($id, $name, $price, $model, $quantity, $sub_categories_id, $brand_id, $images)
     {
         $this->id = $id;
         $this->name = $name;
@@ -40,12 +33,17 @@ class Product extends JsonObject {
         $this->quantity = $quantity;
         $this->sub_categories_id = $sub_categories_id;
         $this->brand_id = $brand_id;
-        $this->firstImg = $firstImg;
-        $this->secondImg = $secondImg;
-        $this->thirdImg = $thirdImg;
-        $this->fourthImg = $fourthImg;
+        $this->images = $images;
     }
 
+
+    /**
+     * @param mixed $id
+     */
+    public function setId($id): void
+    {
+        $this->id = $id;
+    }
     /**
      * @return mixed
      */
@@ -56,6 +54,22 @@ class Product extends JsonObject {
     }
     public function setName($name){
 
+    }
+
+    /**
+     * @return array
+     */
+    public function getImages(): array
+    {
+        return $this->images;
+    }
+
+    /**
+     * @param array $images
+     */
+    public function setImages(array $images): void
+    {
+        $this->images = $images;
     }
 
     /**

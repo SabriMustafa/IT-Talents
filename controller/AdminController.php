@@ -21,7 +21,7 @@ class AdminController
         $brands = $productDao->getAllBrands();
         $selected_brand = null;
         $selected_category = null;
-        include __DIR__ . '/../view/adminPage.php';
+       include __DIR__."/../view/adminPage.php";
 //        } else {
 //            require_once __DIR__ .'/../view/'.'Login.html';
 //        }

@@ -18,33 +18,57 @@ class ProductController
 
     public function insertProduct()
     {
+        //print_r($_FILES);
         $validator = new ProductValidator();
-        if (!$validator->validateProduct($_POST)) {
-            return false;
-        }
-        $product = new Product();
-        $product->getName($_POST["name"]);
-        $product->getPrice($_POST["price"]);
-        $product->getModel($_POST["model"]);
-        $product->getSubCategoriesId($_POST["categoties"]);
-        $product->getBrandId($_POST["brand"]);
-        $product->getFourthImg($_POST["first-image"]);
-        $product->getSecondImg($_POST["second-image"]);
-        $product->getThirdImg($_POST["third-image"]);
-        $product->getFourthImg($_POST["fourth-image"]);
 
-        $productDao = new ProductDao();
-        $productDao->addProduct($product);
-        include __DIR__."/../view/adminPage.php";
+        if($validator->validateProduct()){
+            $images = $validator->extractImages();
+            $product = new Product(null,
+                $_POST["name"],
+                $_POST["price"],
+                $_POST["model"],
+                $_POST["quantity"],
+                $_POST["category"],
+                $_POST["brand"],
+                $images
+            );
+
+            $productDao = new ProductDao();
+            $productDao->addProduct($product);
+            header("location: /IT-Talents/index.php?target=admin&action=index");
+        }else{
+            header("location: /IT-Talents/index.php?target=admin&action=index");
+        }
     }
 
-    public function getSubcategory(){
+    public function getSubcategory()
+    {
         $id = $_GET["subcategory"];
         $products = new ProductDao();
         $allProducts = $products->getProductsBySubID($id);
-        $images=new ProductDao();
+        foreach ($allProducts as $key => $product) {
+            $specification = $products->getProductSpecification($product["id"]);
+            $allProducts[$key]["spec"] = $specification;
+        }
+//        var_dump($allProducts);
+        $productDao = new ProductDao();
 
-        include __DIR__."/../view/products.php";
+
+        include __DIR__ . "/../view/products.php";
+    }
+
+    public function getCharactersitics(){
+        $productId=$_GET["productId"];
+        $product = new ProductDao();
+
+        $allCharacteristics=$product->getProductSpecification($productId);
+
+        $productModel = $product->getProductModel($productId);
+
+        include __DIR__ . "/../view/characteristic.php";
+
+
+
     }
 
 

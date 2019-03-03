@@ -39,6 +39,31 @@ class UserValidator
 
     }
 
+    public function validateEditProfileData($data)
+    {
+        if (!isset($data['email']) ||
+            !isset($data['password']) ||
+            !strlen($data['password']) >= 5 ||
+            !isset($data['first_name']) ||
+            !isset($data['last_name']) ||
+            !isset($data['gender']) ||
+            !isset($data['age']) ||
+            !is_numeric($data['age'])
+        ) {
+
+            $messageHandler = MessageHandler::getInstance();
+            $messageHandler->addMessage('Проблем с подадените параметри!', MessageHandler::MESSAGE_TYPE_ERROR);
+            return false;
+
+
+        } else {
+
+            return true;
+        }
+
+
+    }
+
     public function validateLoginUserData(array $data)
     {
         $email = $data["email"];
@@ -48,14 +73,9 @@ class UserValidator
             isset($password) && $password != '') {
 
             $userDao = new UserDao();
-            $user = $userDao;
-
-            if ($user->getByEmail($email)) {
-
-var_dump($user);
-                if (password_verify($password, $user->password)) {
-
-
+            $user = $userDao->getByEmail($email);
+            if ($user) {
+                if (password_verify($password, $user->getPassword())) {
                     return true;
                 } else {
                     echo "try again!!";
@@ -63,7 +83,6 @@ var_dump($user);
                 }
             } else {
                 return false;
-                echo "try again!!";
             }
         } else {
             return false;
