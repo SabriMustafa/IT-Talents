@@ -79,8 +79,8 @@ class ProductController
 
         $allProducts = $product->filterHome($name);
         foreach ($allProducts as $key => $product1) {
-            $specification = $product->getProductSpecification($product1["id"]);
-            $allImg[$key]["spec"] = $specification;
+            $specification = $product->getImgInFilterFunction($product1["id"]);
+            $allProducts[$key]["spec"] = $specification;
         }
         include_once __DIR__."/../view/Home.php";
 
