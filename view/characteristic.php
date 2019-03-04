@@ -27,7 +27,6 @@ require_once "navigation.php";
 
 
         <?php
-
         foreach ($allCharacteristics as $char){ ?>
 
             <p> <?php echo $char["performance"] .PHP_EOL; ?>  </p>
@@ -41,7 +40,7 @@ require_once "navigation.php";
 <article class="char-article">
     <h3>Цена:</h3>
     <h5> <?php echo $productModell["price"]; ?> лв.</h5>
-    <a href="#" class="btn btn-sm btn-primary " style="background-color: red " >Купи</a>
+    <a href="index.php?target=basket&action=pullSession&productId=<?php echo $_GET["productId"] ?>" class="btn btn-sm btn-primary " style="background-color: red " >Купи</a>
 
 </article>
 

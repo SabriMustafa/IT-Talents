@@ -30,6 +30,8 @@ require_once "navigation.php";
     <?php
     foreach ($allProducts as $product){
         $specification = $product["spec"];
+
+
         ?>
         <div class="container" >
             <div class="div-product-img">
