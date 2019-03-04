@@ -59,7 +59,13 @@
 .char-article{
     width: 15%;
     margin-left: 80%;
-    height: 60vh;
+    height: 20vh;
    border: 1px solid grey;
     text-align: center;
 }
+
+.basket-box{
+    width: 50%;
+    height: 20vh;
+}
+
