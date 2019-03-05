@@ -225,6 +225,15 @@ class ProductDao
         $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
         return $result;
     }
+    function getImgInFilterFunction($id){
+
+            $sql = "SELECT product_url FROM technomarket.images where product_id = ?";
+            $pstmt = $this->db->prepare($sql);
+            $pstmt->execute([$id]);
+            $result = $pstmt->fetch(\PDO::FETCH_ASSOC);
+            return $result;
+        }
+
 
 }
 
