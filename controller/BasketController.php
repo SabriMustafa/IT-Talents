@@ -1,38 +1,45 @@
 <?php
 namespace controller;
+use model\Order;
+use model\OrderDao;
 use model\ProductDao;
 
 class BasketController{
-    public function pullSession(){
-        $product = new ProductDao();
+
+    public function addProduct(){
+        $productDao = new ProductDao();
         $productId = $_GET["productId"];
 
-        $arr = [];
-
-        $productModell = $product->getProductModel($productId);
-        $allCharacteristics = $product->getProductSpecification($productId);
+        $product = $productDao->getProductById($productId);
+        $allCharacteristics = $productDao->getProductSpecification($productId);
         foreach ($allCharacteristics as $value){
             $arr["img"] = $value["images"];
         }
-        $arr["productId"] = $productId;
-        $arr["model"] = $productModell["model"] ;
-        $arr["price"] = $productModell["price"] ;
+        $arr["model"] = $product["model"] ;
+        $arr["price"] = $product["price"] ;
         $arr["quantity"] = 1;
-        $_SESSION = $arr;
+        $_SESSION["products"][$productId] = $arr;
 
 
         include __DIR__ . "/../view/basket.php";
     }
 
-    public function buyProductDelQuantity(){
-        $product = new ProductDao();
+    public function deleteProduct(){
         $productId = $_GET["productId"];
-        $quantity = $_GET["quantity"];
-        $result = $product->unsetProductQuantity($quantity,$productId);
+       unset( $_SESSION["products"][$productId]);
+        include __DIR__ . "/../view/basket.php";
+    }
 
-        include __DIR__ . "../view/BoughtProducts.php";
+    public function buy (){
+        $orderDao = new OrderDao();
+        $userId = 1; //shte go vzimame ot sesiqta kato se lognem
 
-
+        foreach ($_SESSION["products"] as $productId => $product){
+            $order = new Order($product["quantity"],$userId,$productId);
+            $orderDao->create($order);
+        }
+        unset( $_SESSION["products"]);
+        include __DIR__ . "/../view/BoughtProducts.php";
 
         }
 

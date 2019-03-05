@@ -97,7 +97,7 @@ class ProductController
 
         $allCharacteristics = $product->getProductSpecification($productId);
 
-        $productModell = $product->getProductModel($productId);
+        $productModell = $product->getProductById($productId);
 
 
         include __DIR__ . "/../view/characteristic.php";

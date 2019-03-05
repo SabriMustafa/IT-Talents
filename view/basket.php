@@ -10,10 +10,6 @@ require "navigation.php";
 </head>
 <body>
 <h1 style="margin-left: 110px">Потребителска кошница</h1>
-<?php
-
-print_r($_SESSION );
-?>
 
 <div class="basket-box">
     <table class="table table-bordered">
@@ -29,19 +25,30 @@ print_r($_SESSION );
         </tr>
         </thead>
         <tbody >
+        <?php foreach ($_SESSION["products"] as $productId => $product){?>
+
         <tr>
             <td >
-                <img src="<?php echo $_SESSION["img"] ?>" style="width: 100px">
-                <?php echo $_SESSION["model"] ?>
+                <img src="<?php echo $product["img"] ?>" style="width: 100px">
+                <?php echo $product["model"] ?>
             </td>
-            <td><?php echo $_SESSION["price"]."лв." ?></td>
-            <td><?php echo $_SESSION["quantity"]."бр." ?></td>
-            <td><?php echo $_SESSION ["price"]."лв." ?>
+            <td><?php echo $product["price"]."лв." ?></td>
+            <td><?php echo $product["quantity"]."бр." ?></td>
+            <td><?php echo $product["price"]."лв." ?>
             </td>
             <td>
                 <button>
                     <a href="
-                           index.php?target=basket&action=buyProductDelQuantity&productId=<?php echo $_SESSION["productId"]?>&quantity=<?php echo $_SESSION["quantity"]?>">Поръчай </a>
+                           index.php?target=basket&action=deleteProduct&productId=<?php echo $productId?>">Изтрий </a>
+                </button>
+            </td>
+        </tr>
+        <?php } ?>
+        <tr>
+            <td>
+                <button>
+                    <a href="
+                           index.php?target=basket&action=buy">Поръчай </a>
                 </button>
             </td>
         </tr>

@@ -1,5 +1,5 @@
 <?php
-include  "navigation.php";
+require  "navigation.php";
 
 ?>
 

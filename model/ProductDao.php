@@ -229,7 +229,7 @@ class ProductDao
         return $result;
     }
 
-    public function getProductModel($id)
+    public function getProductById($id)
     {
         $sql = "SELECT  concat(p.name,' ',b.name,' ', p.model)  as model, p.price
               FROM products as p
