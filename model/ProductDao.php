@@ -14,7 +14,8 @@ class ProductDao
         $this->db = AbstractDao::getDb();
     }
 
-    public function updateProduct(Product $product){
+    public function updateProduct(Product $product)
+    {
         try {
 
             $stmtdb = $this->db;
@@ -38,6 +39,17 @@ class ProductDao
                 $product->getId()]);
             $prodId = $this->db->lastInsertId();
             $images = $product->getImages();
+
+            $sql = "UPDATE product_specifications SET  
+                    name,
+                    value,
+                  product_id
+                VALUE (?,?,?)";
+            $pstmt = $this->db->prepare($sql);
+            $pstmt->execute([$product->getSpecName(),
+                $product->getSpecValue(),
+                $prodId]);
+
             foreach ($images as $image) {
                 $sql2 = "INSERT INTO images(product_url,product_id) VALUES (?,?)";
                 $pstmt = $this->db->prepare($sql2);
@@ -97,10 +109,22 @@ class ProductDao
                 $product->getBrandId()]);
             $prodId = $this->db->lastInsertId();
             $images = $product->getImages();
+
+            $sql = "INSERT INTO product_specifications (  
+                    name,
+                    value,
+                  product_id)
+                VALUE (?,?,?)";
+            $pstmt = $this->db->prepare($sql);
+            $pstmt->execute([$product->getSpecName(),
+                $product->getSpecValue(),
+                $prodId]);
+
+
             foreach ($images as $image) {
                 $sql2 = "INSERT INTO images(product_url,product_id) VALUES (?,?)";
                 $pstmt = $this->db->prepare($sql2);
-                $pstmt->execute([$image,$prodId]);
+                $pstmt->execute([$image, $prodId]);
             }
 
 
@@ -174,11 +198,11 @@ class ProductDao
                  on b.id = p.brand_id
                where sub_categories_id = ?";
 
-        if (isset($_GET["brands"])){
-            if ($_GET["brands"] != "All"){
+        if (isset($_GET["brands"])) {
+            if ($_GET["brands"] != "All") {
                 $here = $_GET["brands"];
                 $sql .= " and b.name = '$here' ";
-            }elseif ($_GET["brands"] == "All"){
+            } elseif ($_GET["brands"] == "All") {
                 $sql = "SELECT p.id, p.name as category,p.price ,b.name,p.model  as model 
                         FROM products as p
                         join brands as b
@@ -195,7 +219,7 @@ class ProductDao
     public function getProductSpecification($id)
     {
         $sql = "SELECT concat(p.name,' ', p.value) as performance ,i.product_url  as images 
-                FROM product_specifications_value as p 
+                FROM product_specifications as p 
                 inner join images as i
 		         on p.product_id = i.product_id 
                 where p.product_id = ?";
@@ -218,38 +242,42 @@ class ProductDao
         return $result;
     }
 
-    public function filterHome ($name){
+    public function filterHome($name)
+    {
 
-        $sql="SELECT p.id, p.name as category,p.price ,b.name,p.model  as model 
+        $sql = "SELECT p.id, p.name as category,p.price ,b.name,p.model  as model 
                 FROM products as p
                 join brands as b
                 on b.id = p.brand_id
                 where b.name = ?";
 
-        $pstmt =$this->db->prepare($sql);
+        $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$name]);
         $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
         return $result;
     }
-   public  function getImgInFilterFunction($id){
 
-            $sql = "SELECT product_url FROM technomarket.images where product_id = ?";
-            $pstmt = $this->db->prepare($sql);
-            $pstmt->execute([$id]);
-            $result = $pstmt->fetch(\PDO::FETCH_ASSOC);
-            return $result;
-        }
+    public function getImgInFilterFunction($id)
+    {
 
-   public function unsetProductQuantity($quantity,$id){
+        $sql = "SELECT product_url FROM technomarket.images where product_id = ?";
+        $pstmt = $this->db->prepare($sql);
+        $pstmt->execute([$id]);
+        $result = $pstmt->fetch(\PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function unsetProductQuantity($quantity, $id)
+    {
         $sql = "UPDATE products
                 SET quantity = quantity - ?
                 WHERE id = ?";
-       $pstmt = $this->db->prepare($sql);
-       $pstmt->execute([$quantity,$id]);
-       $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
+        $pstmt = $this->db->prepare($sql);
+        $pstmt->execute([$quantity, $id]);
+        $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
 
-       return $result;
-   }
+        return $result;
+    }
 
 
 }

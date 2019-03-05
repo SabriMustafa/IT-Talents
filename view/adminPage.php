@@ -52,6 +52,14 @@ require_once "navigation.php";
                     </select></td>
             </tr>
             <tr>
+                <td>Specification name</td>
+                <td><input type="text" name="spec-name"></td>
+            </tr>
+            <tr>
+                <td>Specification value</td>
+                <td><input type="text" name="spec-value"></td>
+            </tr>
+            <tr>
                 <td>Upload images</td>
                 <td><input type="file" name="files[]" multiple/></td>
             </tr>
@@ -115,6 +123,14 @@ require_once "navigation.php";
 
 
                     </select></td>
+            </tr>
+            <tr>
+                <td>Specification name</td>
+                <td><input type="text" name="spec-name"></td>
+            </tr>
+            <tr>
+                <td>Specification value</td>
+                <td><input type="text" name="spec-value"></td>
             </tr>
             <tr>
                 <td>Upload images</td>

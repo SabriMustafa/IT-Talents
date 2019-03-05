@@ -34,6 +34,8 @@ class ProductController
                 trim($_POST["quantity"]),
                 trim($_POST["category"]),
                 trim($_POST["brand"]),
+                trim($_POST["spec-name"]),
+                trim($_POST["spec-value"]),
                 $images);
             $productDao->updateProduct($product);
             header("location: /IT-Talents/index.php?target=admin&action=index");
@@ -58,6 +60,8 @@ class ProductController
                 trim($_POST["quantity"]),
                 trim($_POST["category"]),
                 trim($_POST["brand"]),
+                trim($_POST["spec-name"]),
+                trim($_POST["spec-value"]),
                 $images
             );
 
@@ -122,21 +126,3 @@ class ProductController
 
 
 
-//$name = $_REQUEST["name"];
-//$price = $_REQUEST["price"];
-//$model = $_REQUEST["model"];
-//$quantity = $_REQUEST["quantity"];
-//$subCategoriesId = $_REQUEST["category"];
-//$brand_id = $_REQUEST["brand"];
-//
-//if ($name != ''
-//    && $price != ''
-//    && is_numeric($price) >= "5"
-//    && $model != ''
-//    && $quantity != ''
-//    && $subCategoriesId != ''
-//    && is_numeric($age)) {
-//    $user = new User($firstName, $lastName, $email, password_hash($password, PASSWORD_BCRYPT), $gendar, $age);
-//    $this->userDao->addUser($user);
-//    $_SESSION["user"] = $user;
-//}

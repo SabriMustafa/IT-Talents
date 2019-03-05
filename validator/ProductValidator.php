@@ -7,23 +7,24 @@ use model\Product;
 
 class ProductValidator
 {
-public function validateEditProductData(){
-    if (isset($_POST["id"]) &&
-        isset($_POST["name"]) &&
-        isset($_POST["price"]) &&
-        isset($_POST["model"]) &&
-        isset($_POST["quantity"]) &&
-        isset($_POST["category"]) &&
-        isset($_POST["brand"])) {
-        return true;
-    } else {
-        return false;
+    public function validateEditProductData()
+    {
+        if (isset($_POST["id"]) &&
+            isset($_POST["name"]) &&
+            isset($_POST["price"]) &&
+            isset($_POST["model"]) &&
+            isset($_POST["quantity"]) &&
+            isset($_POST["category"]) &&
+            isset($_POST["brand"]) &&
+            isset($_POST["spec-name"]) &&
+            isset($_POST["spec-value"])) {
+            return true;
+        } else {
+            return false;
+        }
+
+
     }
-
-
-
-
-}
 
     public function validateProduct()
     {
@@ -32,7 +33,9 @@ public function validateEditProductData(){
             isset($_POST["model"]) &&
             isset($_POST["quantity"]) &&
             isset($_POST["category"]) &&
-            isset($_POST["brand"])) {
+            isset($_POST["brand"]) &&
+            isset($_POST["spec-name"]) &&
+            isset($_POST["spec-value"])) {
             return true;
         } else {
             return false;

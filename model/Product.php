@@ -9,8 +9,10 @@ class Product extends JsonObject {
     private $price;
     private $model;
     private $quantity;
-    private $sub_categories_id;
+    private $subCategoriesId;
     private $brand_id;
+    private $specName;
+    private $specValue;
     private $images;
 
     /**
@@ -20,20 +22,55 @@ class Product extends JsonObject {
      * @param $price
      * @param $model
      * @param $quantity
-     * @param $sub_categories_id
+     * @param $subCategoriesId
      * @param $brand_id
      * @param $images array
      */
-    public function __construct($id, $name, $price, $model, $quantity, $sub_categories_id, $brand_id, $images)
+    public function __construct($id, $name, $price, $model, $quantity, $subCategoriesId,
+                                $brand_id,$specName,$specValue ,$images)
     {
         $this->id = $id;
         $this->name = $name;
         $this->price = $price;
         $this->model = $model;
         $this->quantity = $quantity;
-        $this->sub_categories_id = $sub_categories_id;
+        $this->subCategoriesId = $subCategoriesId;
         $this->brand_id = $brand_id;
+        $this->specName=$specName;
+        $this->specValue=$specValue;
         $this->images = $images;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSpecName()
+    {
+        return $this->specName;
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getSpecValue()
+    {
+        return $this->specValue;
+    }
+
+    /**
+     * @param mixed $specName
+     */
+    public function setSpecName($specName): void
+    {
+        $this->specName = $specName;
+    }
+
+    /**
+     * @param mixed $specValue
+     */
+    public function setSpecValue($specValue): void
+    {
+        $this->specValue = $specValue;
     }
 
 
@@ -97,11 +134,11 @@ class Product extends JsonObject {
     }
 
     /**
-     * @param mixed $sub_categories_id
+     * @param mixed $subCategoriesId
      */
-    public function setSubCategoriesId($sub_categories_id): void
+    public function setSubCategoriesId($subCategoriesId): void
     {
-        $this->sub_categories_id = $sub_categories_id;
+        $this->subCategoriesId = $subCategoriesId;
     }
 
     /**
@@ -182,7 +219,7 @@ class Product extends JsonObject {
      */
     public function getSubCategoriesId()
     {
-        return $this->sub_categories_id;
+        return $this->subCategoriesId;
     }
 
     /**
@@ -196,34 +233,7 @@ class Product extends JsonObject {
     /**
      * @return mixed
      */
-    public function getFirstImg()
-    {
-        return $this->firstImg;
-    }
 
-    /**
-     * @return null
-     */
-    public function getSecondImg()
-    {
-        return $this->secondImg;
-    }
-
-    /**
-     * @return null
-     */
-    public function getThirdImg()
-    {
-        return $this->thirdImg;
-    }
-
-    /**
-     * @return null
-     */
-    public function getFourthImg()
-    {
-        return $this->fourthImg;
-    }
 
 
 }
