@@ -168,16 +168,22 @@ class ProductDao
     public function getProductsBySubID($id)
     {
 
-        $sql = "SELECT p.id, p.name as category,p.price ,b.name,p.model  as model 
-          FROM products as p
-          join brands as b
-            on b.id = p.brand_id
-          where sub_categories_id = ?";
+        $sql = "SELECT p.id, p.name as category,p.price,b.name,p.model  as model 
+                FROM products as p
+                join brands as b
+                 on b.id = p.brand_id
+               where sub_categories_id = ?";
 
         if (isset($_GET["brands"])){
             if ($_GET["brands"] != "All"){
                 $here = $_GET["brands"];
                 $sql .= " and b.name = '$here' ";
+            }elseif ($_GET["brands"] == "All"){
+                $sql = "SELECT p.id, p.name as category,p.price ,b.name,p.model  as model 
+                        FROM products as p
+                        join brands as b
+                         on b.id = p.brand_id
+                        where sub_categories_id = ?";
             }
         }
         $pstmt = $this->db->prepare($sql);
@@ -189,10 +195,10 @@ class ProductDao
     public function getProductSpecification($id)
     {
         $sql = "SELECT concat(p.name,' ', p.value) as performance ,i.product_url  as images 
-            FROM product_specifications_value as p 
-            inner join images as i
-		     on p.product_id = i.product_id 
-            where p.product_id = ?";
+                FROM product_specifications_value as p 
+                inner join images as i
+		         on p.product_id = i.product_id 
+                where p.product_id = ?";
         $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$id]);
         $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
@@ -204,7 +210,7 @@ class ProductDao
         $sql = "SELECT  concat(p.name,' ',b.name,' ', p.model)  as model, p.price
               FROM products as p
               join brands as b
-               on b.id = p.brand_id
+                on b.id = p.brand_id
               where  p.id = ?";
         $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$id]);
@@ -215,17 +221,17 @@ class ProductDao
     public function filterHome ($name){
 
         $sql="SELECT p.id, p.name as category,p.price ,b.name,p.model  as model 
-          FROM products as p
-          join brands as b
-            on b.id = p.brand_id
-          where b.name = ?";
+                FROM products as p
+                join brands as b
+                on b.id = p.brand_id
+                where b.name = ?";
 
         $pstmt =$this->db->prepare($sql);
         $pstmt->execute([$name]);
         $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
         return $result;
     }
-    function getImgInFilterFunction($id){
+   public  function getImgInFilterFunction($id){
 
             $sql = "SELECT product_url FROM technomarket.images where product_id = ?";
             $pstmt = $this->db->prepare($sql);
@@ -233,6 +239,17 @@ class ProductDao
             $result = $pstmt->fetch(\PDO::FETCH_ASSOC);
             return $result;
         }
+
+   public function unsetProductQuantity($quantity,$id){
+        $sql = "UPDATE products
+                SET quantity = quantity - ?
+                WHERE id = ?";
+       $pstmt = $this->db->prepare($sql);
+       $pstmt->execute([$quantity,$id]);
+       $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
+
+       return $result;
+   }
 
 
 }

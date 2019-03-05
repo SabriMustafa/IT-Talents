@@ -1,5 +1,5 @@
 <?php
-include_once "navigation.php";
+include  "navigation.php";
 
 ?>
 

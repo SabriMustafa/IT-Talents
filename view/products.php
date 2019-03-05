@@ -55,7 +55,7 @@ require_once "navigation.php";
 <script>
     function filter() {
         var subCategories = document.getElementById("subCategories").value;
-        var brands = document.getElementById("brand").value;
+        var brands = document.getElementById("brands").value;
         window.location = "index.php?target=product&action=getSubcategory&subcategory="+ subCategories +"&brands=" + brands;
 
     }

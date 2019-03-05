@@ -5,7 +5,7 @@ use model\ProductDao;
 class BasketController{
     public function pullSession(){
         $product = new ProductDao();
-        $productId=$_GET["productId"];
+        $productId = $_GET["productId"];
 
         $arr = [];
 
@@ -26,12 +26,14 @@ class BasketController{
 
     public function buyProductDelQuantity(){
         $product = new ProductDao();
-        $id = $_GET["productId"];
+        $productId = $_GET["productId"];
         $quantity = $_GET["quantity"];
+        $result = $product->unsetProductQuantity($quantity,$productId);
 
-        include __DIR__ . "/../view/BoughtProducts.php";
+        include __DIR__ . "../view/BoughtProducts.php";
 
-    }
 
+
+        }
 
 }
