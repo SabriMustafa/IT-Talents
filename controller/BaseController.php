@@ -1,17 +1,37 @@
 <?php
 namespace controller;
-use model\ProductModel;
+use model\ProductDao;
 
-class BaseController{
+class BasketController{
+    public function pullSession(){
+        $product = new ProductDao();
+        $productId=$_GET["productId"];
 
-    public  function index(){
+        $arr = [];
 
-        $productModel = new ProductModel();
+        $productModell = $product->getProductModel($productId);
+        $allCharacteristics = $product->getProductSpecification($productId);
+        foreach ($allCharacteristics as $value){
+            $arr["img"] = $value["images"];
+        }
+        $arr["productId"] = $productId;
+        $arr["model"] = $productModell["model"] ;
+        $arr["price"] = $productModell["price"] ;
+        $arr["quantity"] = 1;
+        $_SESSION = $arr;
 
-        $messageHandler = \Message\MessageHandler::getInstance();
-        $messages = $messageHandler->getMessages();
-        $categories=$productModel->getCategories();
 
-        include __DIR__."/../view/navigation.php";
+        include __DIR__ . "/../view/basket.php";
     }
+
+    public function buyProductDelQuantity(){
+        $product = new ProductDao();
+        $id = $_GET["productId"];
+        $quantity = $_GET["quantity"];
+
+        include __DIR__ . "/../view/BoughtProducts.php";
+
+    }
+
+
 }

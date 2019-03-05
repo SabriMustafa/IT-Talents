@@ -18,7 +18,7 @@ require_once "navigation.php";
 
 </head>
 <body>
-<input type="hidden" id="<?php echo $_GET["subcategory"] ?>" value="<?php echo $_GET["subcategory"] ?>">
+<input type="hidden" id="subCategories" value="<?php echo $_GET["subcategory"] ?>">
 <aside class="aside-products">
     <div>
         <h5>Марки</h5>
@@ -54,10 +54,9 @@ require_once "navigation.php";
 
 <script>
     function filter() {
-        var subCategories= document.getElementById("subCategory").value;
-        var brands = document.getElementById("brands").value;
-
-        window.location = "index.php?target=product&action=getSubcategory&subcategory="+subCategories + "&brands=" + brands;
+        var subCategories = document.getElementById("subCategories").value;
+        var brands = document.getElementById("brand").value;
+        window.location = "index.php?target=product&action=getSubcategory&subcategory="+ subCategories +"&brands=" + brands;
 
     }
 </script>
