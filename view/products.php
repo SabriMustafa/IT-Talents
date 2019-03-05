@@ -7,7 +7,9 @@ require_once "navigation.php";
 
     <input type="hidden" id="<?php echo $_GET["subcategory"] ?>" value="<?php echo $_GET["subcategory"] ?>">
 
+<head>
 
+</head>
 <body>
 <nav class="nav-box">
 

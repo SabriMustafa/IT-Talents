@@ -37,7 +37,7 @@ class UserValidator
             if ($data["password"]!=$data["password2"]){
                 return false;
             }
-            
+
             return true;
         }
 
