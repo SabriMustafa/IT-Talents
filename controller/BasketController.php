@@ -3,23 +3,35 @@ namespace controller;
 use model\ProductDao;
 
 class BasketController{
-   public function pullSession(){
-       $product = new ProductDao();
-       $productId=$_GET["productId"];
-       $i = 0;
-       $_SESSION = [ ];
+    public function pullSession(){
+        $product = new ProductDao();
+        $productId=$_GET["productId"];
 
-       $productModell = $product->getProductModel($productId);
-       $allCharacteristics = $product->getProductSpecification($productId);
-       foreach ($allCharacteristics as $value){
-           $_SESSION["img"] = $value["images"];
-       }
+        $arr = [];
+
+        $productModell = $product->getProductModel($productId);
+        $allCharacteristics = $product->getProductSpecification($productId);
+        foreach ($allCharacteristics as $value){
+            $arr["img"] = $value["images"];
+        }
+        $arr["productId"] = $productId;
+        $arr["model"] = $productModell["model"] ;
+        $arr["price"] = $productModell["price"] ;
+        $arr["quantity"] = 1;
+        $_SESSION = $arr;
 
 
-       $_SESSION["tehnika"] = $productModell;
-       $_SESSION["quantity"] = 1;
-       $i = $i+$i;
+        include __DIR__ . "/../view/basket.php";
+    }
 
-       include __DIR__ . "/../view/basket.php";
-   }
+    public function buyProductDelQuantity(){
+        $product = new ProductDao();
+        $id = $_GET["productId"];
+        $quantity = $_GET["quantity"];
+
+        include __DIR__ . "/../view/BoughtProducts.php";
+
+    }
+
+
 }
