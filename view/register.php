@@ -2,7 +2,7 @@
 require_once "navigation.php";
 ?>
 
-<
+
 <body>
 <form action="/IT-Talents/index.php?target=user&action=register" method="post">
     <input type="hidden" name="target" value="user">
@@ -14,6 +14,11 @@ require_once "navigation.php";
         <tr>
             <td>Password</td>
             <td><input type="password" name="password" ></td>
+        </tr>
+
+        <tr>
+            <td>Repeat Password</td>
+            <td><input type="password" name="password2" ></td>
         </tr>
         <tr>
             <td>First Name</td>

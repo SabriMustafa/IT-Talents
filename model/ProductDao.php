@@ -14,6 +14,64 @@ class ProductDao
         $this->db = AbstractDao::getDb();
     }
 
+    public function updateProduct(Product $product){
+        try {
+
+            $stmtdb = $this->db;
+            $stmtdb->beginTransaction();
+
+            $sql = "UPDATE products SET   
+                    name,
+                    price,
+                    model, 
+                    quantity, 
+                    sub_categories_id,
+                     brand_id
+                VALUE (?,?,?,?,?,?) WHERE id=?";
+            $pstmt = $this->db->prepare($sql);
+            $pstmt->execute([$product->getName(),
+                $product->getPrice(),
+                $product->getModel(),
+                $product->getQuantity(),
+                $product->getSubCategoriesId(),
+                $product->getBrandId(),
+                $product->getId()]);
+            $prodId = $this->db->lastInsertId();
+            $images = $product->getImages();
+            foreach ($images as $image) {
+                $sql2 = "INSERT INTO images(product_url,product_id) VALUES (?,?)";
+                $pstmt = $this->db->prepare($sql2);
+                $pstmt->execute([$image, $prodId]);
+            }
+
+
+            $stmtdb->commit();
+            return true;
+
+        } catch (\Exception $e) {
+            echo "Exception" . $e->getMessage() . PHP_EOL;
+            $stmtdb->rollBack();
+            return false;
+
+        }
+
+
+    }
+
+    public function getImagesById($id)
+    {
+        $sql = "SELECT product_url FROM images WHERE product_id=? ";
+        $pstmt = $this->db->prepare($sql);
+        $pstmt->execute([$id]);
+        $rows = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
+        $images = [];
+        foreach ($rows as $row) {
+            $images[] = $row["product_url"];
+        }
+        return $images;
+
+    }
+
     public function addProduct(Product $product)
     {
 

@@ -12,7 +12,6 @@ $controllerName = isset($_GET["target"]) ? $_GET["target"] : "base";
 $methodName = isset($_GET["action"]) ? $_GET["action"] : "index";
 try{
     $controllerClassName = '\\controller\\' . ucfirst($controllerName) . 'Controller';
-//    file_put_contents(__DIR__."/application_log.txt", $controllerClassName . "\n", FILE_APPEND);
 
     if (class_exists($controllerClassName)) {
 

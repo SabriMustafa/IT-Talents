@@ -34,6 +34,10 @@ class UserValidator
             $messageHandler->addMessage("Потребителят вече съществува ", MessageHandler::MESSAGE_TYPE_ERROR);
             return false;
         } else {
+            if ($data["password"]!=$data["password2"]){
+                return false;
+            }
+            
             return true;
         }
 

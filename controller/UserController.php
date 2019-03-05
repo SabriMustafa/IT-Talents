@@ -1,23 +1,26 @@
 <?php
+
 namespace controller;
+
 use message\MessageHandler;
 use model\UserDao;
 use Validator\UserValidator;
 use model\User;
+
 class UserController
 {
     public function register()
     {
 
         $validator = new UserValidator();
-        if ( !$validator->validateRegisterUserData($_POST)) {
+        if (!$validator->validateRegisterUserData($_POST)) {
 
             return false;
         }
 
         $user = new User();
         $user->setEmail($_POST['email']);
-        $user->setPassword(password_hash($_POST['password'],PASSWORD_BCRYPT));
+        $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
         $user->setFirstName($_POST['first_name']);
         $user->setLastName($_POST['last_name']);
         $user->setGender($_POST['gender']);
@@ -31,33 +34,35 @@ class UserController
         return true;
     }
 
-    public function login(){
+    public function login()
+    {
         $messageHandler = MessageHandler::getInstance();
 
-        $validator=new UserValidator();
-        if (!$validator->validateLoginUserData($_POST)){
+        $validator = new UserValidator();
+        if (!$validator->validateLoginUserData($_POST)) {
             $messageHandler->addMessage(sprintf('Грешни креденшъли!'), MessageHandler::MESSAGE_TYPE_SUCCESS);
             echo "Грешни креденшъли!";
             return false;
         }
 
 
-        $userDao= new UserDao();
-        $user=$userDao->getByEmail($_POST["email"]);
+        $userDao = new UserDao();
+        $user = $userDao->getByEmail($_POST["email"]);
 
-        $_SESSION["user"]=$user;
+        $_SESSION["user"] = $user;
 
 
         $messageHandler->addMessage(sprintf('%s, вие се логнахте успешно!', $user->getFirstName()), MessageHandler::MESSAGE_TYPE_SUCCESS);
         return true;
     }
 
-    public function editProfile(){
-        $validator=new UserValidator();
-        if ($validator->validateEditProfileData($_POST)){
-           $user=new User();
+    public function editProfile()
+    {
+        $validator = new UserValidator();
+        if ($validator->validateEditProfileData($_POST)) {
+            $user = new User();
             $user->setEmail($_POST['email']);
-            $user->setPassword(password_hash($_POST['password'],PASSWORD_BCRYPT));
+            $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
             $user->setFirstName($_POST['first_name']);
             $user->setLastName($_POST['last_name']);
             $user->setGender($_POST['gender']);
@@ -68,10 +73,17 @@ class UserController
         }
 
 
-
     }
 
+    public function getProfileData()
+    {
+        $id = $_SESSION["user"]["id"];
+        $userDao = new UserDao();
+        $orders = $userDao->getAllOrders($id);
+        $favourites = $userDao->getFavourites($id);
 
+        require_once __DIR__.'\..\view\profile.php';
+    }
 
 
     public function loginView()
@@ -79,11 +91,13 @@ class UserController
         require_once __DIR__ . '\..\view\login.php';
     }
 
-    public function registerView(){
+    public function registerView()
+    {
         require_once __DIR__ . '\..\view\register.php';
     }
 
-    public function editProfileView(){
+    public function editProfileView()
+    {
         require_once __DIR__ . '\..\view\editProfile.php';
     }
 
