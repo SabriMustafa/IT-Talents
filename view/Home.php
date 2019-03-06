@@ -10,6 +10,7 @@ require_once "navigation.php";
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Document</title>
     <link rel="stylesheet" href="view/assets/CSS/style.css">
+    <script src="assets/js/script.js"></script>
 </head>
 <body>
 <main class="main-products">

@@ -73,7 +73,7 @@ require_once "navigation.php";
     </form>
 </div>
 <div style="margin-right: 100px;float: right">
-    <form action="/IT-Talents/index.php?target=product&action=insertProduct" method="post"
+    <form action="/IT-Talents/index.php?target=product&action=editProduct" method="post"
           enctype="multipart/form-data">
         <input type="hidden" name="target" value="user">
         <table>

@@ -18,16 +18,23 @@ require_once "navigation.php";
 
 </head>
 <body>
-<input type="hidden" id="subCategories" value="<?php echo $_GET["subcategory"] ?>">
+<input type="hidden" id="subCategories" value="<?php echo $subCategory ?>">
 <aside class="aside-products">
     <div>
         <h5>Марки</h5>
-        <select name="brands" id="brands" onchange="filter()">
+        <select name="brands" id="brands" >
+            <option value="Choose-brand">Choose</option>
+            <?php var_dump($brands); foreach ($brands as $brand) { ?>
 
-            <option value="All">All</option>
-            <option value="Asus">Asus</option>
-            <option value="Dell">Dell</option>
-        </select>
+                <option value="<?= $brand["id"] ?>" <?php echo $selected_brand == $brand["name"] ? "selected " : ""; ?> >
+                    <?= $brand["name"] ?></option>
+            <?php }; ?>
+
+        </select><br><br>
+
+        <input type="checkbox" name="asc" value="asc">Цена по възходящ ред<br><br>
+        <input type="checkbox" name="desc" value="desc">Цена по низходящ ред<br><br>
+        <input type="submit" name="filter" value="Търси">
     </div>
 </aside>
 <main class="main-products">

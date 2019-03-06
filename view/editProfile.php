@@ -9,7 +9,7 @@ require_once "navigation.php";
     <title>Technomarket</title>
 </head>
 <body>
-<form action="../index.php?target=user&action=editProfile" method="post">
+<form action="index.php?target=user&action=editProfile" method="post">
     <input type="hidden" name="target" value="user">
     <table>
         <tr>

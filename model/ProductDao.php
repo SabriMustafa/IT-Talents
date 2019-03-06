@@ -22,13 +22,13 @@ class ProductDao
             $stmtdb->beginTransaction();
 
             $sql = "UPDATE products SET   
-                    name,
-                    price,
-                    model, 
-                    quantity, 
-                    sub_categories_id,
-                     brand_id
-                VALUE (?,?,?,?,?,?) WHERE id=?";
+                    name=?,
+                    price=?,
+                    model=?, 
+                    quantity=?, 
+                    sub_categories_id=?,
+                     brand_id=?
+                WHERE id=?";
             $pstmt = $this->db->prepare($sql);
             $pstmt->execute([$product->getName(),
                 $product->getPrice(),
@@ -41,10 +41,9 @@ class ProductDao
             $images = $product->getImages();
 
             $sql = "UPDATE product_specifications SET  
-                    name,
-                    value,
-                  product_id
-                VALUE (?,?,?)";
+                    name=?,
+                    value=?,
+                  product_id=?";
             $pstmt = $this->db->prepare($sql);
             $pstmt->execute([$product->getSpecName(),
                 $product->getSpecValue(),
@@ -279,7 +278,40 @@ class ProductDao
         return $result;
     }
 
+    public function getFilteredProducts($id = null, $brand = null, $ascending = null, $descending = null)
+    {
 
+        $sql = "SELECT p.id, p.name as category,p.price,b.name,p.model  as model 
+                FROM products as p
+                join brands as b
+                 on b.id = p.brand_id
+               where sub_categories_id = ? ";
+
+        if ($brand != null) {
+            $sql .= " AND b.name=$brand ";
+
+        }
+
+
+        if ($ascending != null && $descending != null) {
+
+        } else {
+            if ($ascending != null) {
+                $sql .= " ORDER BY p.price ASC";
+            }
+            if ($descending != null) {
+                $sql .= " ORDER BY p.price DESC";
+
+            }
+
+        }
+        $pstmt = $this->db->prepare($sql);
+        $pstmt->execute([$id]);
+        $result = $pstmt->fetch(\PDO::FETCH_ASSOC);
+        return $result;
+
+
+    }
 }
 
 

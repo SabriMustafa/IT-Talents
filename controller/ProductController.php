@@ -76,18 +76,32 @@ class ProductController
     public function getSubcategory()
     {
         $id = $_GET["subcategory"];
-        $products = new ProductDao();
-        $allProducts = $products->getProductsBySubID($id);
+        $productDao = new ProductDao();
+        $allProducts = $productDao->getProductsBySubID($id);
+
+
+        $brands = $productDao->getAllBrands();
+        $selected_brand = null;
+        if (isset($_POST["filter"])) {
+            $brand = $_POST["brands"];
+            $ascending = $_POST["asc"];
+            $descending = $_POST["desc"];
+            $allProducts = $productDao->getFilteredProducts($id, $brand, $ascending, $descending);
+        }
         foreach ($allProducts as $key => $product) {
-            $specification = $products->getProductSpecification($product["id"]);
+            $specification = $productDao->getProductSpecification($product["id"]);
             $allProducts[$key]["spec"] = $specification;
 
         }
 
-        $productDao = new ProductDao();
-
 
         include __DIR__ . "/../view/products.php";
+    }
+
+    public function filter($id = null, $brand = null, $ascending = null, $descending = null)
+    {
+
+
     }
 
     public function getCharactersitics()

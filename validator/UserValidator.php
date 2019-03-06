@@ -14,13 +14,13 @@ class UserValidator
         $userDao = new UserDao();
         $user = $userDao;
 
-        if (!isset($data['email']) ||
-            !isset($data['password']) ||
+        if (!isset($data['email']) || $data['email'] == "" ||
+            !isset($data['password']) || $data['password'] == "" ||
             !strlen($data['password']) >= 5 ||
-            !isset($data['first_name']) ||
-            !isset($data['last_name']) ||
-            !isset($data['gender']) ||
-            !isset($data['age']) ||
+            !isset($data['first_name']) || $data['first_name'] == "" ||
+            !isset($data['last_name']) || $data['last_name'] == "" ||
+            !isset($data['gender']) || $data['gender'] == "" ||
+            !isset($data['age']) || $data['age'] == "" ||
             !is_numeric($data['age'])
         ) {
 
@@ -34,7 +34,7 @@ class UserValidator
             $messageHandler->addMessage("Потребителят вече съществува ", MessageHandler::MESSAGE_TYPE_ERROR);
             return false;
         } else {
-            if ($data["password"]!=$data["password2"]){
+            if ($data["password"] != $data["password2"]) {
                 return false;
             }
 
@@ -45,13 +45,13 @@ class UserValidator
 
     public function validateEditProfileData($data)
     {
-        if (!isset($data['email']) ||
-            !isset($data['password']) ||
+        if (!isset($data['email']) ||  $data['email'] == "" ||
+            !isset($data['password']) || $data['password'] == "" ||
             !strlen($data['password']) >= 5 ||
-            !isset($data['first_name']) ||
-            !isset($data['last_name']) ||
-            !isset($data['gender']) ||
-            !isset($data['age']) ||
+            !isset($data['first_name']) || $data['first_name'] == "" ||
+            !isset($data['last_name']) || $data['last_name'] == "" ||
+            !isset($data['gender']) || $data['gender'] == "" ||
+            !isset($data['age']) || $data['age'] == "" ||
             !is_numeric($data['age'])
         ) {
 
