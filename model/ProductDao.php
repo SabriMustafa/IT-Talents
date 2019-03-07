@@ -288,7 +288,7 @@ class ProductDao
                where sub_categories_id = ? ";
 
         if ($brand != null) {
-            $sql .= " AND b.name=$brand ";
+            $sql .= " AND b.id=$brand ";
 
         }
 
@@ -307,7 +307,7 @@ class ProductDao
         }
         $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$id]);
-        $result = $pstmt->fetch(\PDO::FETCH_ASSOC);
+        $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
         return $result;
 
 

@@ -30,7 +30,9 @@ require_once "navigation.php";
         </div>
     <?php } ?>
 </main>
-
+<?php
+require_once "footer.php";
+?>
 </body>
 </html>
 

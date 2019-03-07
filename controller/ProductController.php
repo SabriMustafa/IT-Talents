@@ -72,22 +72,42 @@ class ProductController
             header("location: /IT-Talents/index.php?target=admin&action=index");
         }
     }
+    public function getFilteredSubcategory(){
+
+        $productDao = new ProductDao();
+            $brand = null;
+            $ascending = null;
+            $descending = null;
+
+            $subCategoryId = $_POST["subCategories"];
+            $brand = $_POST["brands"];
+            $ascending = $_POST["asc"];
+            $descending = $_POST["desc"];
+            $allProducts = $productDao->getFilteredProducts($subCategoryId, $brand, $ascending, $descending);
+        $brands = $productDao->getAllBrands();
+        $selected_brand = null;
+        file_put_contents(__DIR__."/application_log.txt", $brand . "\n", FILE_APPEND);
+        foreach ($allProducts as $key => $product) {
+            $specification = $productDao->getProductSpecification($product["id"]);
+            $allProducts[$key]["spec"] = $specification;
+
+        }
+
+
+        include __DIR__ . "/../view/products.php";
+
+    }
 
     public function getSubcategory()
     {
-        $id = $_GET["subcategory"];
+        $subCategoryId = $_GET["subcategory"];
         $productDao = new ProductDao();
-        $allProducts = $productDao->getProductsBySubID($id);
+        $allProducts = $productDao->getProductsBySubID($subCategoryId);
 
 
         $brands = $productDao->getAllBrands();
         $selected_brand = null;
-        if (isset($_POST["filter"])) {
-            $brand = $_POST["brands"];
-            $ascending = $_POST["asc"];
-            $descending = $_POST["desc"];
-            $allProducts = $productDao->getFilteredProducts($id, $brand, $ascending, $descending);
-        }
+
         foreach ($allProducts as $key => $product) {
             $specification = $productDao->getProductSpecification($product["id"]);
             $allProducts[$key]["spec"] = $specification;
@@ -98,11 +118,10 @@ class ProductController
         include __DIR__ . "/../view/products.php";
     }
 
-    public function filter($id = null, $brand = null, $ascending = null, $descending = null)
-    {
 
 
-    }
+
+
 
     public function getCharactersitics()
     {

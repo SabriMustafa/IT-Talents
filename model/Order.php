@@ -16,6 +16,7 @@ class Order extends JsonObject
     private $quantity;
     private $user_id;
     private $product_id;
+    private $price;
 
     /**
      * Order constructor.
@@ -25,11 +26,29 @@ class Order extends JsonObject
      * @param $user_id
      * @param $product_id
      */
-    public function __construct($quantity, $user_id, $product_id)
+    public function __construct($quantity, $price, $user_id, $product_id)
     {
         $this->quantity = $quantity;
         $this->user_id = $user_id;
         $this->product_id = $product_id;
+        $this->price=$price;
+
+    }
+
+    /**
+     * @return mixed
+     */
+    public function getPrice()
+    {
+        return $this->price;
+    }
+
+    /**
+     * @param mixed $price
+     */
+    public function setPrice($price): void
+    {
+        $this->price = $price;
     }
 
     /**

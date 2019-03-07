@@ -23,9 +23,10 @@ class OrderDao {
     public function create(Order $order) {
         try{
             $this->db->beginTransaction();
-            $sql = "INSERT INTO orders(quantity,user_id,product_id) VALUES (?,?,?)";
+            $sql = "INSERT INTO orders(quantity,price,user_id,product_id) VALUES (?,?,?,?)";
             $this->db->prepare($sql)->execute([
                 $order->getQuantity(),
+                $order->getPrice(),
                 $order->getUserId(),
                 $order->getProductId()
                 ]);

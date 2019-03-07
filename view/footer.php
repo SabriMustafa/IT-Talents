@@ -1,9 +1,15 @@
 <?php
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+    <link rel="stylesheet" href="view/assets/CSS/style.css">
+</head>
 
-
-
+<body>
 <footer>
     <div id="footer-left">
         <h2>Контакти</h2>
@@ -36,3 +42,8 @@
 
 
 </footer>
+
+</body>
+
+
+</html>
