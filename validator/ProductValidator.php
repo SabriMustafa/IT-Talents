@@ -42,12 +42,11 @@ class ProductValidator
         }
     }
 
-    public function extractImages()
+    public function uploadImages()
     {
         $txtGalleryName = "view/assets/images";
         $extension = array("jpeg", "jpg", "png", "gif");
         $images = [];
-//        var_dump($_FILES);
         foreach ($_FILES["files"]["tmp_name"] as $key => $tmp_name) {
             $fileName = $_FILES["files"]["name"][$key];
             $ext = pathinfo($fileName, PATHINFO_EXTENSION);

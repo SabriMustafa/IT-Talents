@@ -3,14 +3,17 @@ namespace view;
 use model\ProductModel;
 
 $productModel = new ProductModel();
-
-
 $categories=$productModel->getCategories();
+$user = "Гост";
+if(isset($_SESSION['user'])){
+    $user = $_SESSION['user']->getFirstName();
+}
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
+    <h4>Здравей, <?=$user?></h4>
     <title>Technomarket</title>
 
     <meta charset="utf-8">

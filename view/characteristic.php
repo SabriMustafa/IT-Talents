@@ -40,7 +40,7 @@ require_once "navigation.php";
 <article class="char-article">
     <h3>Цена:</h3>
     <h5> <?php echo $productModell["price"]; ?> лв.</h5>
-    <a href="index.php?target=basket&action=addProduct&productId=<?php echo $_GET["productId"] ?>" class="btn btn-sm btn-primary " style="background-color: red " >Купи</a>
+    <a href="index.php?target=basket&action=addProduct&productId=<?php echo $productId ?>" class="btn btn-sm btn-primary " style="background-color: red " >Купи</a>
 
 </article>
 

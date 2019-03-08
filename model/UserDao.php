@@ -2,6 +2,7 @@
 
 namespace model;
 
+use Message\MessageHandler;
 use PDO;
 
 class UserDao
@@ -126,6 +127,21 @@ class UserDao
             $id]);
         //session_destroy();
         return true;
+    }
+
+    public function insertIntoFavourites($productId)
+    {
+
+        $sql = "INSERT INTO favourites (user_id,product_id) VALUE (?,?)";
+        $pstmt = $this->db->prepare($sql);
+        $userId = $_SESSION["user"]->getId();
+        $result = $pstmt->execute([$userId,$productId]);
+
+        if($result){
+            return json_encode(["success" => true, "msg" => "Could not like product"]);
+        }else{
+            return json_encode(["success" => false, "msg" => "Liked!"]);
+        }
     }
 
     public function getAll()

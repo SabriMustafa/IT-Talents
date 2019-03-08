@@ -20,13 +20,10 @@ class ProductController
         $validator = new ProductValidator();
 
         if ($validator->validateEditProductData()) {
-            $productDao = new ProductDao();
-            $images = $productDao->getImagesById($_POST["id"]);
 
-            foreach ($images as $image) {
-                unlink($image);
-            }
-            $images = $validator->extractImages();
+            $productDao = new ProductDao();
+            $delImages = $productDao->getImagesById($_POST["id"]);
+            $insImages = $validator->uploadImages();
             $product = new Product(trim($_POST["id"]),
                 trim($_POST["name"]),
                 trim($_POST["price"]),
@@ -36,13 +33,18 @@ class ProductController
                 trim($_POST["brand"]),
                 trim($_POST["spec-name"]),
                 trim($_POST["spec-value"]),
-                $images);
-            $productDao->updateProduct($product);
-            header("location: /IT-Talents/index.php?target=admin&action=index");
-        } else {
-            header("location: /IT-Talents/index.php?target=admin&action=index");
+                null);
+            $isUpdated = $productDao->updateProduct($product, $delImages, $insImages);
+
+            if($isUpdated){
+                foreach ($delImages as $image) {
+                    var_dump($image);
+                    unlink(__DIR__ . "/../" .$image['url']);
+                }
+            }
         }
 
+        // header("location: /IT-Talents/index.php?target=admin&action=index");
 
     }
 
@@ -52,7 +54,8 @@ class ProductController
         $validator = new ProductValidator();
 
         if ($validator->validateProduct()) {
-            $images = $validator->extractImages();
+            echo "minava validacia" . PHP_EOL;
+            $images = $validator->uploadImages();
             $product = new Product(null,
                 trim($_POST["name"]),
                 trim($_POST["price"]),
@@ -67,33 +70,36 @@ class ProductController
 
             $productDao = new ProductDao();
             $productDao->addProduct($product);
-            header("location: /IT-Talents/index.php?target=admin&action=index");
+
         } else {
-            header("location: /IT-Talents/index.php?target=admin&action=index");
+            echo "Ne minava validacia" . PHP_EOL;
+
         }
+        header("location: /IT-Talents/index.php?target=admin&action=index");
     }
-    public function getFilteredSubcategory(){
+
+    public function getFilteredSubcategory()
+    {
 
         $productDao = new ProductDao();
-            $brand = null;
-            $ascending = null;
-            $descending = null;
+        $brand = null;
+        $ascending = null;
+        $descending = null;
 
-            $subCategoryId = $_POST["subCategories"];
-            $brand = $_POST["brands"];
-            $ascending = $_POST["asc"];
-            $descending = $_POST["desc"];
-            $allProducts = $productDao->getFilteredProducts($subCategoryId, $brand, $ascending, $descending);
+        if (isset($_POST["subCategories"])) $subCategoryId = $_POST["subCategories"];
+        if (isset($_POST["brands"])) $brand = $_POST["brands"];
+        if (isset($_POST["asc"])) $ascending = $_POST["asc"];
+        if (isset($_POST["desc"])) $descending = $_POST["desc"];
+
+        $allProducts = $productDao->getFilteredProducts($subCategoryId, $brand, $ascending, $descending);
         $brands = $productDao->getAllBrands();
         $selected_brand = null;
-        file_put_contents(__DIR__."/application_log.txt", $brand . "\n", FILE_APPEND);
+        // file_put_contents(__DIR__."/application_log.txt", $brand . "\n", FILE_APPEND);
         foreach ($allProducts as $key => $product) {
             $specification = $productDao->getProductSpecification($product["id"]);
             $allProducts[$key]["spec"] = $specification;
 
         }
-
-
         include __DIR__ . "/../view/products.php";
 
     }
@@ -117,10 +123,6 @@ class ProductController
 
         include __DIR__ . "/../view/products.php";
     }
-
-
-
-
 
 
     public function getCharactersitics()

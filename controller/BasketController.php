@@ -32,10 +32,10 @@ class BasketController{
 
     public function buy (){
         $orderDao = new OrderDao();
-        $userId = $_SESSION["user"]->getId(); //shte go vzimame ot sesiqta kato se lognem
+        $userId = $_SESSION["user"]->getId();
 
         foreach ($_SESSION["products"] as $productId => $product){
-            $order = new Order($product["quantity"],$userId,$productId);
+            $order = new Order($product["quantity"],$product['price'],$userId,$productId);
             $orderDao->create($order);
         }
         unset( $_SESSION["products"]);

@@ -31,11 +31,12 @@ class OrderDao {
                 $order->getProductId()
                 ]);
             $productDao = new ProductDao();
-            $productDao->decreaseQuantity($order->getProductId(), $order->getQuantity());
+            $productDao->unsetProductQuantity($order->getProductId(), $order->getQuantity());
             $this->db->commit();
             return true;
 
         }catch (\PDOException $e){
+
             echo "Exception" . $e->getMessage() . PHP_EOL;
             $this->db->rollBack();
             return false;

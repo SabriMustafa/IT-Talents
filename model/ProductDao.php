@@ -14,7 +14,7 @@ class ProductDao
         $this->db = AbstractDao::getDb();
     }
 
-    public function updateProduct(Product $product)
+    public function updateProduct(Product $product, $delImages, $insImages)
     {
         try {
 
@@ -37,47 +37,58 @@ class ProductDao
                 $product->getSubCategoriesId(),
                 $product->getBrandId(),
                 $product->getId()]);
-            $prodId = $this->db->lastInsertId();
-            $images = $product->getImages();
 
-            $sql = "UPDATE product_specifications SET  
-                    name=?,
-                    value=?,
-                  product_id=?";
-            $pstmt = $this->db->prepare($sql);
-            $pstmt->execute([$product->getSpecName(),
-                $product->getSpecValue(),
-                $prodId]);
+            $prodId = $product->getId();
 
-            foreach ($images as $image) {
-                $sql2 = "INSERT INTO images(product_url,product_id) VALUES (?,?)";
-                $pstmt = $this->db->prepare($sql2);
-                $pstmt->execute([$image, $prodId]);
+            if($delImages && count($delImages) > 0){
+                $deleteImages = [];
+                foreach ($delImages as $img){
+                    $deleteImages[] = $img["id"];
+                }
+                $ids = implode(',', $deleteImages);
+                $deleteImagesSql = "DELETE FROM images WHERE id IN ($ids)";
+                $stmtdb->exec($deleteImagesSql);
             }
 
+            if($insImages && count($insImages) > 0){
+                $insertImageSql = "INSERT INTO images (product_url,product_id) VALUE (?,?)";
+                $pstmt = $stmtdb->prepare($insertImageSql);
+
+                foreach ($insImages as $imgDestination){
+                    $pstmt->execute([$imgDestination, $prodId]);
+                }
+            }
+
+            $deleteSpecSql = "DELETE FROM product_specifications WHERE product_id=?";
+            $pstmt = $this->db->prepare($deleteSpecSql);
+            $pstmt->execute([$prodId]);
 
             $stmtdb->commit();
             return true;
 
         } catch (\Exception $e) {
-            echo "Exception" . $e->getMessage() . PHP_EOL;
             $stmtdb->rollBack();
             return false;
-
         }
 
 
     }
 
+    public function insertNewSpecification($prodId, $specName, $specValue){
+        $stmtdb = $this->db;
+        $sql = "INSERT INTO product_specifications (name, value, product_id) VALUE (?,?,?)";
+        $pstmt = $this->db->prepare($sql);
+        $pstmt->execute([$specName, $specValue, $prodId]);
+    }
     public function getImagesById($id)
     {
-        $sql = "SELECT product_url FROM images WHERE product_id=? ";
+        $sql = "SELECT id, product_url FROM images WHERE product_id=? ";
         $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$id]);
         $rows = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
         $images = [];
         foreach ($rows as $row) {
-            $images[] = $row["product_url"];
+            $images[] = ["id" => $row["id"], "url" => $row["product_url"]];
         }
         return $images;
 
@@ -133,7 +144,9 @@ class ProductDao
         } catch (\Exception $e) {
             echo "Exception" . $e->getMessage() . PHP_EOL;
             $stmtdb->rollBack();
+
             return false;
+
 
         }
 
@@ -243,7 +256,6 @@ class ProductDao
 
     public function filterHome($name)
     {
-
         $sql = "SELECT p.id, p.name as category,p.price ,b.name,p.model  as model 
                 FROM products as p
                 join brands as b
@@ -273,9 +285,6 @@ class ProductDao
                 WHERE id = ?";
         $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$quantity, $id]);
-        $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
-
-        return $result;
     }
 
     public function getFilteredProducts($id = null, $brand = null, $ascending = null, $descending = null)
@@ -291,10 +300,8 @@ class ProductDao
             $sql .= " AND b.id=$brand ";
 
         }
-
-
         if ($ascending != null && $descending != null) {
-
+            //nothing to do
         } else {
             if ($ascending != null) {
                 $sql .= " ORDER BY p.price ASC";

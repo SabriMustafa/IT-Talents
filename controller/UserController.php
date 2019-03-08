@@ -71,10 +71,7 @@ class UserController
 
             $userDao = new UserDao();
             $userDao->updateData($user);
-
         }
-
-
     }
 
     public function getProfileData()
@@ -87,6 +84,32 @@ class UserController
         $favourites = $userDao->getFavourites($id);
 
         require_once __DIR__ . '\..\view\profile.php';
+    }
+
+
+    public function addToFavourites(){
+        $body = file_get_contents("php://input");
+        $param = json_decode($body, true);
+
+        $action = "";
+        if(isset($param['action'])){
+            $action = trim($param['action']);
+
+        }
+
+        if($action == "add"){
+            $productId=$param["productId"];
+            $userDao=new UserDao();
+            $likeResult = $userDao->insertIntoFavourites($productId);
+            echo $likeResult;
+        }elseif($action == "remove"){
+            $productId=$param["productId"];
+            $userDao=new UserDao();
+            $removeResult = $userDao->removeFromFavourites($productId);
+            echo $removeResult;
+        }else{
+            echo json_encode(["success" => false, "msg" => "unsupported action!"]);
+        }
     }
 
 
