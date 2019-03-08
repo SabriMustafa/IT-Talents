@@ -36,16 +36,29 @@ class ProductController
                 null);
             $isUpdated = $productDao->updateProduct($product, $delImages, $insImages);
 
-            if($isUpdated){
+            if ($isUpdated) {
                 foreach ($delImages as $image) {
                     var_dump($image);
-                    unlink(__DIR__ . "/../" .$image['url']);
+                    unlink(__DIR__ . "/../" . $image['url']);
                 }
             }
         }
 
         // header("location: /IT-Talents/index.php?target=admin&action=index");
 
+    }
+
+    public function insertSpecification()
+    {
+//        if (isset($_POST["name"]) && $_POST["name"] != "" &&
+//            isset($_POST["id"]) && $_POST["id"] != "" &&
+//            isset($_POST["value"]) && $_POST["value"] != "") {
+            $productDao = new ProductDao();
+            $productDao->insertNewSpecification($_POST["id"], $_POST["name"], $_POST["value"]);
+            echo "vliza li";
+     // }
+
+        include __DIR__ . "/../view/adminPage.php";
     }
 
     public function insertProduct()
@@ -116,6 +129,7 @@ class ProductController
 
         foreach ($allProducts as $key => $product) {
             $specification = $productDao->getProductSpecification($product["id"]);
+
             $allProducts[$key]["spec"] = $specification;
 
         }

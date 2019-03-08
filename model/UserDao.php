@@ -54,21 +54,24 @@ class UserDao
 
     public function addUser(User $user)
     {
+        echo "dada";
         $sql = "INSERT INTO users (  
                     email,
                     password,
                     first_name, 
                     last_name, 
                     gender,
-                     age)
-                VALUE (?,?,?,?,?,?)";
+                     age,
+                     is_admin)
+                VALUE (?,?,?,?,?,?,?)";
         $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$user->getEmail(),
             $user->getPassword(),
             $user->getFirstName(),
             $user->getLastName(),
             $user->getGender(),
-            $user->getAge()
+            $user->getAge(),
+            $user->getIsAdmin()
         ]);
     }
 
@@ -86,8 +89,8 @@ class UserDao
                   first_name, 
                   last_name, 
                   gender, 
-                  is_admin,
-                  age 
+                  age,
+                  is_admin 
               FROM 
                   users 
               WHERE 
@@ -101,7 +104,8 @@ class UserDao
             $result->email,
             $result->password,
             $result->gender,
-            $result->age
+            $result->age,
+            $result->is_admin
         );
     }
 

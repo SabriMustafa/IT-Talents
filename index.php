@@ -33,8 +33,7 @@ try{
         echo "target or action invalid: target= " . $controllerName . "and action= " . $methodName;
     }
 }catch (Exception $e){
-    date_default_timezone_set('Europe/Sofia');
-    $date = date('m/d/Y h:i:s a', time());
-    file_put_contents(__DIR__."/application_log.txt", $date . " " . $e->getMessage() . "\n", FILE_APPEND);
+
+    file_put_contents(__DIR__."/application_log.txt",  $e->getMessage() . "\n", FILE_APPEND);
 }
 

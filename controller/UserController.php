@@ -25,7 +25,8 @@ class UserController
         $user->setLastName($_POST['last_name']);
         $user->setGender($_POST['gender']);
         $user->setAge($_POST['age']);
-
+        $user->setIsAdmin(0);
+        var_dump($user);
         $userDao = new UserDao();
         $userDao->addUser($user);
         $user = $userDao->getByEmail($_POST['email']);
@@ -54,7 +55,7 @@ class UserController
 
 
         $messageHandler->addMessage(sprintf('%s, вие се логнахте успешно!', $user->getFirstName()), MessageHandler::MESSAGE_TYPE_SUCCESS);
-        return true;
+        header("location: index.php");
     }
 
     public function editProfile()
@@ -87,27 +88,28 @@ class UserController
     }
 
 
-    public function addToFavourites(){
+    public function addToFavourites()
+    {
         $body = file_get_contents("php://input");
         $param = json_decode($body, true);
 
         $action = "";
-        if(isset($param['action'])){
+        if (isset($param['action'])) {
             $action = trim($param['action']);
 
         }
 
-        if($action == "add"){
-            $productId=$param["productId"];
-            $userDao=new UserDao();
+        if ($action == "add") {
+            $productId = $param["productId"];
+            $userDao = new UserDao();
             $likeResult = $userDao->insertIntoFavourites($productId);
             echo $likeResult;
-        }elseif($action == "remove"){
-            $productId=$param["productId"];
-            $userDao=new UserDao();
+        } elseif ($action == "remove") {
+            $productId = $param["productId"];
+            $userDao = new UserDao();
             $removeResult = $userDao->removeFromFavourites($productId);
             echo $removeResult;
-        }else{
+        } else {
             echo json_encode(["success" => false, "msg" => "unsupported action!"]);
         }
     }
@@ -115,19 +117,26 @@ class UserController
 
     public function loginView()
     {
-        require_once __DIR__ . '\..\view\login.php';
+        require_once __DIR__ . '/../view/login.php';
     }
 
     public function registerView()
     {
-        require_once __DIR__ . '\..\view\register.php';
+        require_once __DIR__ . '/../view/register.php';
     }
 
     public function editProfileView()
     {
-        require_once __DIR__ . '\..\view\editProfile.php';
+        require_once __DIR__ . '/../view/editProfile.php';
     }
+public function profileView(){
+    require_once __DIR__ . '/../view/profile.php';
 
+}
+public  function exitProfile(){
+        session_destroy();
+    require_once __DIR__ . '/../view/login.php';
+}
 
 }
 

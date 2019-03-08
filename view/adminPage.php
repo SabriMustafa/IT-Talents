@@ -1,12 +1,13 @@
 <?php
 require_once "navigation.php";
+
 ?>
 
 <body>
 <div style="margin-left: 100px;float: left">
     <form action="/IT-Talents/index.php?target=product&action=insertProduct" method="post"
           enctype="multipart/form-data">
-        <input type="hidden" name="target" value="user">
+
         <table>
             <tr>
                 <td>Product Name</td>
@@ -30,7 +31,7 @@ require_once "navigation.php";
                         <option value="Choose">Choose</option>
                         <?php
 
-                        var_dump($subCategories);
+
                         foreach ($subCategories as $subCategory) { ?>
                             <option value="<?= $subCategory["id"] ?>" <?php echo $selected_category == $subCategory["name"] ? "selected " : ""; ?> >
                                 <?= $subCategory["name"] ?></option>
@@ -75,12 +76,9 @@ require_once "navigation.php";
 <div style="margin-right: 100px;float: right">
     <form action="/IT-Talents/index.php?target=product&action=editProduct" method="post"
           enctype="multipart/form-data">
-        <input type="hidden" name="target" value="user">
+        <input type="hidden" name="id" value="<?=$productId?>">
         <table>
-            <tr>
-                <td>Product Id</td>
-                <td><input type="text" name="id"></td>
-            </tr>
+
             <tr>
                 <td>Product Name</td>
                 <td><input type="text" name="name"></td>
@@ -103,7 +101,7 @@ require_once "navigation.php";
                         <option value="Choose">Choose</option>
                         <?php
 
-                        var_dump($subCategories);
+
                         foreach ($subCategories as $subCategory) { ?>
                             <option value="<?= $subCategory["id"] ?>" <?php echo $selected_category == $subCategory["name"] ? "selected " : ""; ?> >
                                 <?= $subCategory["name"] ?></option>
@@ -124,15 +122,7 @@ require_once "navigation.php";
 
                     </select></td>
             </tr>
-            <tr>
-                <td>Specification name</td>
-                <td><input type="text" name="spec-name"></td>
-            </tr>
-            <tr>
-                <td>Specification value</td>
-                <td><input type="text" name="spec-value"></td>
-            </tr>
-            <tr>
+
                 <td>Upload images</td>
                 <td><input type="file" name="files[]" multiple/></td>
             </tr>
@@ -143,7 +133,28 @@ require_once "navigation.php";
                 </td>
             </tr>
         </table>
+    </form >
+    <form action="/IT-Talents/index.php?target=product&action=insertSpecification" method="post">
+    <div>
+        <input type="hidden" name="id" value="<?=$productId?>">
+        <table>
+        <tr>
+            <td>Specification name</td>
+            <td><input type="text" name="name"></td>
+        </tr>
+        <tr>
+            <td>Specification value</td>
+            <td><input type="text" name="value"></td>
+        </tr>
+        <tr>
+        <td>
+            <input type="submit" name="actionn" value="Add Specifications">
+        </td>
+        </tr>
+        </table>
+    </div>
     </form>
     <div>
+
 </body>
 </html>

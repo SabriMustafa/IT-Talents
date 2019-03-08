@@ -238,6 +238,7 @@ class ProductDao
         $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$id]);
         $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
+        var_dump($result);
         return $result;
     }
 

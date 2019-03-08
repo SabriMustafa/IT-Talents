@@ -42,7 +42,7 @@ require_once "navigation.php";
     </div>
 </aside>
 <main class="main-products">
-    <?php
+    <?php var_dump($specification[0]["images"]);
     foreach ($allProducts as $product) {
         $specification = $product["spec"];
         ?>
@@ -62,6 +62,14 @@ require_once "navigation.php";
                         onclick="addToFavourites(<?= $product["id"] ?>, 'add')">
                     Добави в любими
                 </button>
+                <?php $isAdmin= $_SESSION["user"]->getIsAdmin();
+
+                if (isset($_SESSION["user"]) && $isAdmin == 1) { ?>
+                <form action="index.php?target=admin&action=index" method="post" ">
+                    <input type="hidden" name="productId" value="<?= $product["id"] ?>">
+                    <input type="submit" name="edit" value="Редактирай продукт">
+                </form>
+                <?php } ?>
             </div>
         </div>
     <?php } ?>

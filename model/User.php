@@ -9,7 +9,7 @@ class User
     private $password;
     private $gender;
     private $age;
-
+    private $is_admin;
     /**
      * User constructor.
      * @param $id
@@ -19,8 +19,10 @@ class User
      * @param $password
      * @param $gender
      * @param $age
+     * @param $is_admin
      */
-    public function __construct($id = null, $first_name = null, $last_name = null, $email = null, $password = null, $gender = null, $age = null)
+    public function __construct($id = null, $first_name = null, $last_name = null,
+                                $email = null, $password = null, $gender = null, $age = null,$is_admin=0)
     {
         $this->id = $id;
         $this->first_name = $first_name;
@@ -29,7 +31,29 @@ class User
         $this->password = $password;
         $this->gender = $gender;
         $this->age = $age;
+        $this->is_admin=$is_admin;
     }
+
+    /**
+     * @return int
+     */
+    public function getIsAdmin(): int
+    {
+        return $this->is_admin;
+    }
+
+    /**
+     * @param int $is_admin
+     */
+    public function setIsAdmin(int $is_admin): void
+    {
+        $this->is_admin = $is_admin;
+    }
+
+
+
+
+
 
 
     public function setId($id){

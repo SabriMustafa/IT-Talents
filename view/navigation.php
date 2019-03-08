@@ -27,10 +27,26 @@ if(isset($_SESSION['user'])){
 
 <img src="https://cdn.technomarket.bg/uploads/BG/tm-logo.png" width="500px" style="margin-left: 450px">
 
-<div class="form-group has-search">
+<div  class="form-group has-search">
     <form action="index.php?target=product&action=searchHome" method="post">
         <input type="text" class="form-control" placeholder="Search" style="width: 200px" name="searchValue">
         <input type="submit" name="search" value="Search">
+    </form>
+</div>
+<div >
+    <form action="index.php?target=user&action=registerView" method="post">
+        <input type="submit" value="Register">
+    </form>
+    <form action="index.php?target=user&action=loginView" method="post">
+        <input type="submit" value="Login">
+    </form>
+    <?php if (isset($_SESSION["user"])){ ?>
+    <form action="index.php?target=user&action=profileView" method="post">
+        <input type="submit" value="Profile">
+    </form>
+    <?php } ?>
+    <form action="index.php?target=user&action=exitProfile" method="post">
+        <input type="submit" value="Exit">
     </form>
 </div>
 
