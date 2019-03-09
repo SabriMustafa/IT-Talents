@@ -7,9 +7,11 @@ require_once "navigation.php";
 
 <body>
 <aside>
-    <button onclick="myFavourites()">My favourites</button><br><br>
+    <button onclick="myFavourites()">My favourites</button>
+    <br><br>
 
-    <button onclick="myOrders()">My orders</button><br><br>
+    <button onclick="myOrders()">My orders</button>
+    <br><br>
 
     <form action="/IT-Talents/index.php?target=user&action=editProfileView" method="post">
         <input type="submit" name="edit" value="Edit profile">
@@ -44,15 +46,22 @@ require_once "navigation.php";
             <th>Price</th>
 
         </tr>
-        <?php foreach ($favourites as $favourite) { ?>
+        <?php if ($favourites != null) {
+        foreach ($favourites as $favourite) { ?>
             <tr>
                 <td><?= $favourite["name"] ?></td>
                 <td><?= $favourite["model"] ?></td>
                 <td><?= $favourite["price"] ?></td>
             </tr>
-        <?php } ?>
+        <?php }
+        ?>
     </table>
+    <?php
+    } else {
+        echo "You don't have any favoutite products";
 
+    }
+    ?>
 
 </div>
 <script>
@@ -65,6 +74,7 @@ require_once "navigation.php";
             orders.style.display = "none";
         }
     }
+
     function myFavourites() {
 
         var fav = document.getElementById("favourites");

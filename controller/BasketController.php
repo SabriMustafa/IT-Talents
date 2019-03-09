@@ -1,22 +1,27 @@
 <?php
+
 namespace controller;
+
 use model\Order;
 use model\OrderDao;
 use model\ProductDao;
+use model\UserDao;
 
-class BasketController{
+class BasketController
+{
 
-    public function addProduct(){
+    public function addProduct()
+    {
         $productDao = new ProductDao();
         $productId = $_GET["productId"];
 
         $product = $productDao->getProductById($productId);
         $allCharacteristics = $productDao->getProductSpecification($productId);
-        foreach ($allCharacteristics as $value){
+        foreach ($allCharacteristics as $value) {
             $arr["img"] = $value["images"];
         }
-        $arr["model"] = $product["model"] ;
-        $arr["price"] = $product["price"] ;
+        $arr["model"] = $product["model"];
+        $arr["price"] = $product["price"];
         $arr["quantity"] = 1;
         $_SESSION["products"][$productId] = $arr;
 
@@ -24,23 +29,29 @@ class BasketController{
         include __DIR__ . "/../view/basket.php";
     }
 
-    public function deleteProduct(){
+    public function deleteProduct()
+    {
         $productId = $_GET["productId"];
-       unset( $_SESSION["products"][$productId]);
+        unset($_SESSION["products"][$productId]);
         include __DIR__ . "/../view/basket.php";
     }
 
-    public function buy (){
+    public function buy()
+    {
         $orderDao = new OrderDao();
         $userId = $_SESSION["user"]->getId();
-
-        foreach ($_SESSION["products"] as $productId => $product){
-            $order = new Order($product["quantity"],$product['price'],$userId,$productId);
+        $spentMoney = 0;
+        foreach ($_SESSION["products"] as $productId => $product) {
+            $order = new Order($product["quantity"], $product['price'], $userId, $productId);
             $orderDao->create($order);
+            $spentMoney += $product['price'];
         }
-        unset( $_SESSION["products"]);
+        $userDao = new UserDao();
+        $userDao->totalSum($spentMoney,$userId);
+
+        unset($_SESSION["products"]);
         include __DIR__ . "/../view/BoughtProducts.php";
 
-        }
+    }
 
 }

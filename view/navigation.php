@@ -1,11 +1,12 @@
 <?php
 namespace view;
+
 use model\ProductModel;
 
 $productModel = new ProductModel();
-$categories=$productModel->getCategories();
+$categories = $productModel->getCategories();
 $user = "Гост";
-if(isset($_SESSION['user'])){
+if (isset($_SESSION['user'])) {
     $user = $_SESSION['user']->getFirstName();
 }
 
@@ -13,7 +14,7 @@ if(isset($_SESSION['user'])){
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <h4>Здравей, <?=$user?></h4>
+    <h4>Здравей, <?= $user ?></h4>
     <title>Technomarket</title>
 
     <meta charset="utf-8">
@@ -27,23 +28,38 @@ if(isset($_SESSION['user'])){
 
 <img src="https://cdn.technomarket.bg/uploads/BG/tm-logo.png" width="500px" style="margin-left: 450px">
 
-<div  class="form-group has-search">
+<div class="form-group has-search">
     <form action="index.php?target=product&action=searchHome" method="post">
         <input type="text" class="form-control" placeholder="Search" style="width: 200px" name="searchValue">
         <input type="submit" name="search" value="Search">
     </form>
 </div>
-<div >
-    <form action="index.php?target=user&action=registerView" method="post">
-        <input type="submit" value="Register">
-    </form>
-    <form action="index.php?target=user&action=loginView" method="post">
-        <input type="submit" value="Login">
-    </form>
-    <?php if (isset($_SESSION["user"])){ ?>
-    <form action="index.php?target=user&action=profileView" method="post">
-        <input type="submit" value="Profile">
-    </form>
+<div>
+    <?php
+    if (isset($_SESSION["user"])) {
+        $isAdmin = $_SESSION["user"]->getIsAdmin();
+    }
+    if (isset($_SESSION["user"]) && $isAdmin == 1) { ?>
+        <form action="index.php?target=admin&action=index" method="post">
+            <input type="submit" value="Insert products">
+        </form>
+    <?php }
+
+    if (!isset($_SESSION["user"])) {
+
+        ?>
+        <form action="index.php?target=user&action=registerView" method="post">
+            <input type="submit" value="Register">
+        </form>
+        <form action="index.php?target=user&action=loginView" method="post">
+            <input type="submit" value="Login">
+        </form>
+        <?php
+    }
+    if (isset($_SESSION["user"])) { ?>
+        <form action="index.php?target=user&action=getProfileData" method="post">
+            <input type="submit" value="Profile">
+        </form>
     <?php } ?>
     <form action="index.php?target=user&action=exitProfile" method="post">
         <input type="submit" value="Exit">
@@ -61,7 +77,7 @@ if(isset($_SESSION['user'])){
             foreach ($categories as $category) {
                 ?>
                 <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown"><?= $category["name"] ?><span
-                            class="caret"></span></a>
+                                class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <?php
                         foreach ($category['subcategories'] as $sub) {

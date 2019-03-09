@@ -38,7 +38,7 @@ class ProductController
 
             if ($isUpdated) {
                 foreach ($delImages as $image) {
-                    var_dump($image);
+
                     unlink(__DIR__ . "/../" . $image['url']);
                 }
             }
@@ -58,16 +58,16 @@ class ProductController
             echo "vliza li";
      // }
 
-        include __DIR__ . "/../view/adminPage.php";
+        include __DIR__ . "/../view/adminUpdate.php";
     }
 
     public function insertProduct()
     {
-        //print_r($_FILES);
+
         $validator = new ProductValidator();
 
         if ($validator->validateProduct()) {
-            echo "minava validacia" . PHP_EOL;
+
             $images = $validator->uploadImages();
             $product = new Product(null,
                 trim($_POST["name"]),
@@ -85,7 +85,7 @@ class ProductController
             $productDao->addProduct($product);
 
         } else {
-            echo "Ne minava validacia" . PHP_EOL;
+
 
         }
         header("location: /IT-Talents/index.php?target=admin&action=index");
@@ -107,7 +107,7 @@ class ProductController
         $allProducts = $productDao->getFilteredProducts($subCategoryId, $brand, $ascending, $descending);
         $brands = $productDao->getAllBrands();
         $selected_brand = null;
-        // file_put_contents(__DIR__."/application_log.txt", $brand . "\n", FILE_APPEND);
+
         foreach ($allProducts as $key => $product) {
             $specification = $productDao->getProductSpecification($product["id"]);
             $allProducts[$key]["spec"] = $specification;

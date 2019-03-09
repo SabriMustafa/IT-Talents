@@ -33,7 +33,7 @@ class UserController
         $_SESSION['user'] = $user;
         $messageHandler = MessageHandler::getInstance();
         $messageHandler->addMessage(sprintf('%s, вие се регистрирахте успешно!', $user->getFirstName()), MessageHandler::MESSAGE_TYPE_SUCCESS);
-        return true;
+        header("location: index.php");
     }
 
     public function login()
@@ -77,14 +77,16 @@ class UserController
 
     public function getProfileData()
     {
-
+echo "aaa";
         $id = $_SESSION["user"]->getId();
 
         $userDao = new UserDao();
         $orders = $userDao->getAllOrders($id);
         $favourites = $userDao->getFavourites($id);
 
-        require_once __DIR__ . '\..\view\profile.php';
+
+        require_once __DIR__ . '/../view/profile.php';
+
     }
 
 

@@ -35,9 +35,12 @@ class UserDao
             $row = $pstm->fetch(PDO::FETCH_ASSOC);
             $favourites[] = $row;
 
-        }
-
+        }if (!empty($favourites)){
         return $favourites;
+
+    }
+
+
 
     }
 
@@ -142,10 +145,22 @@ class UserDao
         $result = $pstmt->execute([$userId,$productId]);
 
         if($result){
-            return json_encode(["success" => true, "msg" => "Could not like product"]);
+            return json_encode(["success" => true, "msg" => "Liked"]);
         }else{
-            return json_encode(["success" => false, "msg" => "Liked!"]);
+            return json_encode(["success" => false, "msg" => "Could not like product!"]);
         }
+    }
+ public function totalSum($spentMoney,$userId){
+
+     $sql = "INSERT INTO orders_history (date,money,user_id) VALUE (NOW(),?,?)";
+     $pstmt = $this->db->prepare($sql);
+     $userId = $_SESSION["user"]->getId();
+     $result = $pstmt->execute([$spentMoney,$userId]);
+     if($result){
+         return json_encode(["success" => true, "msg" => "Inserted successfully"]);
+     }else{
+         return json_encode(["success" => false, "msg" => "Could not insert into orders history!"]);
+     }
     }
 
     public function getAll()

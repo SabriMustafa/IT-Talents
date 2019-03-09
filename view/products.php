@@ -42,7 +42,7 @@ require_once "navigation.php";
     </div>
 </aside>
 <main class="main-products">
-    <?php var_dump($specification[0]["images"]);
+    <?php
     foreach ($allProducts as $product) {
         $specification = $product["spec"];
         ?>
@@ -65,7 +65,7 @@ require_once "navigation.php";
                 <?php $isAdmin= $_SESSION["user"]->getIsAdmin();
 
                 if (isset($_SESSION["user"]) && $isAdmin == 1) { ?>
-                <form action="index.php?target=admin&action=index" method="post" ">
+                <form action="index.php?target=admin&action=update" method="post" ">
                     <input type="hidden" name="productId" value="<?= $product["id"] ?>">
                     <input type="submit" name="edit" value="Редактирай продукт">
                 </form>
@@ -77,14 +77,7 @@ require_once "navigation.php";
 
 </article>
 
-<script>
-    function filter() {
-        var subCategories = document.getElementById("subCategories").value;
-        var brands = document.getElementById("brands").value;
-        window.location = "index.php?target=product&action=getSubcategory&subcategory=" + subCategories + "&brands=" + brands;
 
-    }
-</script>
 
 <?php
 //require_once "footer.php";
