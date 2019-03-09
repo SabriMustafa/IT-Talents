@@ -20,7 +20,6 @@ try{
 
             $controller = new $controller();
             $controller->$methodName();
-
         } else {
             $fileNotFound = true;
         }

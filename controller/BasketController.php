@@ -38,6 +38,10 @@ class BasketController
 
     public function buy()
     {
+        if (! isset($_SESSION["user"])) {
+            include __DIR__ . "/../view/BoughtProducts.php";
+            return;
+        }
         $orderDao = new OrderDao();
         $userId = $_SESSION["user"]->getId();
         $spentMoney = 0;
@@ -55,7 +59,6 @@ class BasketController
     }
     public function basketView(){
         include __DIR__ . "/../view/basket.php";
-
     }
 
 

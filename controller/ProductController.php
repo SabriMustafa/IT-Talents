@@ -172,18 +172,20 @@ class ProductController
 
     public function searchHome()
     {
-
-        $name = $_POST["searchValue"];
+        $name = $_GET["searchValue"];
+        $page = isset($_GET['page']) ? $_GET['page'] : 1;
+        $count = 4;
+        $from = $page === 1 ? 0 : ($page - 1) * $count;
         $product = new ProductDao();
 
-        $allProducts = $product->filterHome($name);
+        $allProducts = $product->filterHome($name, $from, $count);
         foreach ($allProducts as $key => $product1) {
             $specification = $product->getImgInFilterFunction($product1["id"]);
             $allProducts[$key]["spec"] = $specification;
         }
+
+        $pages = ceil($product->countResults($name) / $count);
         include_once __DIR__ . "/../view/Home.php";
-
-
     }
 
 

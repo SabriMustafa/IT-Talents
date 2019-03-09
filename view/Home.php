@@ -28,7 +28,14 @@ require_once "navigation.php";
                 <a href="index.php?target=product&action=getCharactersitics&productId= <?php echo $product["id"] ?>" class="btn btn-sm btn-primary ">Виж</a>
             </div>
         </div>
-    <?php } ?>
+    <?php }
+    $searchValue = $_GET['searchValue'] ? $_GET['searchValue'] : '';
+    $pages = (int) $pages;
+    for ($i=0; $pages > $i; $i++) {
+        $page = $i + 1;
+    ?>
+     <a href="index.php?searchValue=<?= $searchValue; ?>&target=product&action=searchHome&page=<?= $page ?>"><?= $page ?></a>
+<?php } ?>
 </main>
 <?php
 require_once "footer.php";

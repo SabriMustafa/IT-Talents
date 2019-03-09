@@ -4,6 +4,7 @@ namespace controller;
 
 use message\MessageHandler;
 use model\UserDao;
+use model\UserModel;
 use Validator\UserValidator;
 use model\User;
 
@@ -60,24 +61,41 @@ class UserController
 
     public function editProfile()
     {
+        $messageHandler = MessageHandler::getInstance();
         $validator = new UserValidator();
         if ($validator->validateEditProfileData($_POST)) {
             $user = new User();
-            $user->setEmail($_POST['email']);
-            $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
+
+            if ($_POST['new-password'] === '' && $_POST['repeat-password'] === '') {
+                $user->setPassword($_SESSION['user']->getPassword());
+            } else {
+                $user->setPassword(password_hash($_POST['new-password'], PASSWORD_BCRYPT));
+            }
+            $user->setEmail($_SESSION['user']->getEmail());
             $user->setFirstName($_POST['first_name']);
             $user->setLastName($_POST['last_name']);
             $user->setGender($_POST['gender']);
             $user->setAge($_POST['age']);
-
+            $user->setIsAdmin($_SESSION['user']->getIsAdmin());
             $userDao = new UserDao();
             $userDao->updateData($user);
+            $_SESSION['user'] = $user;
+
+            $messageHandler->addMessage('Успешно редактирахте профила си!');
         }
+
+        foreach ($messageHandler->getMessages() as $message) {
+            if ($message['type'] === MessageHandler::MESSAGE_TYPE_ERROR) {
+                $this->editProfileView();
+                return;
+            }
+        }
+
+        $this->getProfileData();
     }
 
     public function getProfileData()
     {
-echo "aaa";
         $id = $_SESSION["user"]->getId();
 
         $userDao = new UserDao();
@@ -129,16 +147,30 @@ echo "aaa";
 
     public function editProfileView()
     {
+        if (! isset($_SESSION['user'])) {
+            header('location:index.php');
+        }
+        $userDao = new UserDao();
+        $userData = $userDao->getByEmail($_SESSION['user']->getEmail());
+        if ($userData === null) {
+            $messageHandler = MessageHandler::getInstance();
+            $messageHandler->addMessage('Не е открит потребител с емайл' . $_SESSION['user']->getEmail(), MessageHandler::MESSAGE_TYPE_ERROR);
+        }
         require_once __DIR__ . '/../view/editProfile.php';
+        return;
     }
-public function profileView(){
-    require_once __DIR__ . '/../view/profile.php';
 
-}
-public  function exitProfile(){
+    public function profileView()
+    {
+        if (! isset($_SESSION['user'])) {
+            header('location:index.php');
+        }
+        require_once __DIR__ . '/../view/profile.php';
+    }
+
+    public function exitProfile()
+    {
         session_destroy();
-    require_once __DIR__ . '/../view/login.php';
+        require_once __DIR__ . '/../view/login.php';
+    }
 }
-
-}
-

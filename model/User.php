@@ -50,12 +50,6 @@ class User
         $this->is_admin = $is_admin;
     }
 
-
-
-
-
-
-
     public function setId($id){
         $this->id = $id;
     }

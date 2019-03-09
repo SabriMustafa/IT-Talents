@@ -11,9 +11,6 @@ class MessageHandler
     CONST MESSAGE_TYPE_NEUTRAL = 'neutral';
 
     private $message = [];
-    private $error = [];
-    private $neutral = [];
-    private $success = [];
 
     private function __construct()
     {
@@ -30,7 +27,7 @@ class MessageHandler
         return self::$messageHandler;
     }
 
-    public function addMessage($message, $type)
+    public function addMessage($message, $type = MessageHandler::MESSAGE_TYPE_SUCCESS)
     {
         $this->message[] = [
             'message' => $message,
@@ -41,43 +38,5 @@ class MessageHandler
     public function getMessages()
     {
         return $this->message;
-    }
-    public function setError($message)
-    {
-        $this->error[] = $message;
-    }
-
-    public function getError()
-    {
-        return $this->error;
-    }
-
-    public function setNeutral($message)
-    {
-        $this->neutral[] = $message;
-    }
-
-    public function getNeutral()
-    {
-        return $this->neutral;
-    }
-
-    public function setSuccess($message)
-    {
-        $this->success[] = $message;
-    }
-
-    public function getSuccess()
-    {
-        return $this->success;
-    }
-
-    public function getAllMessages()
-    {
-        return [
-            'error' => $this->error,
-            'neutral' => $this->neutral,
-            'success' => $this->success,
-        ];
     }
 }

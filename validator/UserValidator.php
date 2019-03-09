@@ -45,27 +45,23 @@ class UserValidator
 
     public function validateEditProfileData($data)
     {
-        if (!isset($data['email']) ||  $data['email'] == "" ||
-            !isset($data['password']) || $data['password'] == "" ||
-            !strlen($data['password']) >= 5 ||
-            !isset($data['first_name']) || $data['first_name'] == "" ||
+        $messageHandler = MessageHandler::getInstance();
+        if (!isset($data['first_name']) || $data['first_name'] == "" ||
             !isset($data['last_name']) || $data['last_name'] == "" ||
             !isset($data['gender']) || $data['gender'] == "" ||
             !isset($data['age']) || $data['age'] == "" ||
             !is_numeric($data['age'])
         ) {
-
-            $messageHandler = MessageHandler::getInstance();
             $messageHandler->addMessage('Проблем с подадените параметри!', MessageHandler::MESSAGE_TYPE_ERROR);
             return false;
-
-
-        } else {
-
-            return true;
         }
-
-
+        if (isset($data['new-password']) && isset($data['repeat-password']) && $data['new-password'] !== '' || $data['repeat-password'] !== '') {
+            if (($data['new-password'] !== $data['repeat-password']) || ! strlen($data['new-password']) >= 5) {
+                $messageHandler->addMessage('Паролата ви не отговаря на изискванията!', MessageHandler::MESSAGE_TYPE_ERROR);
+                return false;
+            }
+        }
+        return true;
     }
 
     public function validateLoginUserData(array $data)

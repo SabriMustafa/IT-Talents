@@ -51,10 +51,12 @@ require "navigation.php";
         }?>
         <tr>
             <td>
+                <?php if (isset($_SESSION['user'])) {?>
                 <button>
                     <a href="
                            index.php?target=basket&action=buy">Поръчай </a>
                 </button>
+                <?php }; ?>
             </td>
         </tr>
         </tbody>

@@ -5,11 +5,8 @@ namespace model;
 use Message\MessageHandler;
 use Validator\UserValidator;
 
-class UserModel extends JsonObject {
-
-
-
-
+class UserModel extends JsonObject
+{
     public function login(array $data)
     {
         $messageHandler = MessageHandler::getInstance();
@@ -32,6 +29,11 @@ class UserModel extends JsonObject {
         return true;
     }
 
+    public function getUserDataByEmail($userId)
+    {
+        $userDao= new UserDao();
+        return $userDao->getById($userId);
+    }
 }
 
 

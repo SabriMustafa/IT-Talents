@@ -255,23 +255,36 @@ class ProductDao
         return $result;
     }
 
-    public function filterHome($name)
+    public function filterHome($name, $from, $count)
     {
         $sql = "SELECT p.id, p.name as category,p.price ,b.name,p.model  as model 
                 FROM products as p
                 join brands as b
                 on b.id = p.brand_id
-                where b.name = ?";
+                where b.name LIKE ? order by b.name DESC LIMIT " . $from . ',' . $count;
 
         $pstmt = $this->db->prepare($sql);
-        $pstmt->execute([$name]);
+        $pstmt->execute(['%' . $name . '%']);
         $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
+        return $result;
+    }
+
+    public function countResults($name)
+    {
+        $sql = "SELECT count(products.id) 
+                FROM products 
+                join brands b 
+                on products.brand_id = b.id 
+                where b.name LIKE ?";
+
+        $pstmt = $this->db->prepare($sql);
+        $pstmt->execute(['%' . $name . '%']);
+        $result = $pstmt->fetchColumn();
         return $result;
     }
 
     public function getImgInFilterFunction($id)
     {
-
         $sql = "SELECT product_url FROM technomarket.images where product_id = ?";
         $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$id]);
