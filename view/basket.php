@@ -25,25 +25,30 @@ require "navigation.php";
         </tr>
         </thead>
         <tbody >
-        <?php foreach ($_SESSION["products"] as $productId => $product){?>
 
-        <tr>
-            <td >
-                <img src="<?php echo $product["img"] ?>" style="width: 100px">
-                <?php echo $product["model"] ?>
-            </td>
-            <td><?php echo $product["price"]."лв." ?></td>
-            <td><?php echo $product["quantity"]."бр." ?></td>
-            <td><?php echo $product["price"]."лв." ?>
-            </td>
-            <td>
-                <button>
-                    <a href="
-                           index.php?target=basket&action=deleteProduct&productId=<?php echo $productId?>">Изтрий </a>
-                </button>
-            </td>
-        </tr>
-        <?php } ?>
+        <?php
+        if (isset($_SESSION["products"])) {
+            foreach ($_SESSION["products"] as $productId => $product) {
+                ?>
+
+                <tr>
+                    <td>
+                        <img src="<?php echo $product["img"] ?>" style="width: 100px">
+                        <?php echo $product["model"] ?>
+                    </td>
+                    <td><?php echo $product["price"] . "лв." ?></td>
+                    <td><?php echo $product["quantity"] . "бр." ?></td>
+                    <td><?php echo $product["price"] . "лв." ?>
+                    </td>
+                    <td>
+                        <button>
+                            <a href="
+                           index.php?target=basket&action=deleteProduct&productId=<?php echo $productId ?>">Изтрий </a>
+                        </button>
+                    </td>
+                </tr>
+            <?php }
+        }?>
         <tr>
             <td>
                 <button>

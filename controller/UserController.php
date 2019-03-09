@@ -26,7 +26,7 @@ class UserController
         $user->setGender($_POST['gender']);
         $user->setAge($_POST['age']);
         $user->setIsAdmin(0);
-        var_dump($user);
+
         $userDao = new UserDao();
         $userDao->addUser($user);
         $user = $userDao->getByEmail($_POST['email']);

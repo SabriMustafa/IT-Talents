@@ -37,7 +37,12 @@ if (isset($_SESSION['user'])) {
 <div>
     <?php
     if (isset($_SESSION["user"])) {
-        $isAdmin = $_SESSION["user"]->getIsAdmin();
+        $isAdmin = $_SESSION["user"]->getIsAdmin();?>
+        <form action="index.php?target=basket&action=basketView" method="post">
+            <input type="submit" value="Количка">
+        </form>
+
+     <?php
     }
     if (isset($_SESSION["user"]) && $isAdmin == 1) { ?>
         <form action="index.php?target=admin&action=index" method="post">

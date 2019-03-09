@@ -53,5 +53,10 @@ class BasketController
         include __DIR__ . "/../view/BoughtProducts.php";
 
     }
+    public function basketView(){
+        include __DIR__ . "/../view/basket.php";
+
+    }
+
 
 }

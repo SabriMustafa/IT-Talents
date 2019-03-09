@@ -50,13 +50,13 @@ class ProductController
 
     public function insertSpecification()
     {
-//        if (isset($_POST["name"]) && $_POST["name"] != "" &&
-//            isset($_POST["id"]) && $_POST["id"] != "" &&
-//            isset($_POST["value"]) && $_POST["value"] != "") {
+        if (isset($_POST["name"]) && $_POST["name"] != "" &&
+            isset($_POST["id"]) && $_POST["id"] != "" &&
+            isset($_POST["value"]) && $_POST["value"] != "") {
             $productDao = new ProductDao();
             $productDao->insertNewSpecification($_POST["id"], $_POST["name"], $_POST["value"]);
-            echo "vliza li";
-     // }
+
+      }
 
         include __DIR__ . "/../view/adminUpdate.php";
     }
@@ -151,6 +151,22 @@ class ProductController
 
         include __DIR__ . "/../view/characteristic.php";
 
+
+    }
+    public function getCategories()
+    {
+        $productDao = new ProductDao();
+        $categories = $productDao->getAllCategories();
+        $subCategories = $productDao->getAllSubCategories();
+        foreach ($categories as $key => $category) {
+            foreach ($subCategories as $subCategory) {
+                if ($category["id"] == $subCategory["categories_id"]) {
+                    $categories[$key]['subcategories'][] = ['id'=>$subCategory['id'], 'name' =>$subCategory['name']];
+                }
+            }
+
+        }
+        return $categories;
 
     }
 

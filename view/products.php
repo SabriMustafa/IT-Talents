@@ -62,13 +62,15 @@ require_once "navigation.php";
                         onclick="addToFavourites(<?= $product["id"] ?>, 'add')">
                     Добави в любими
                 </button>
-                <?php $isAdmin= $_SESSION["user"]->getIsAdmin();
-
+                <?php
+                if (isset($_SESSION["user"])) {
+                    $isAdmin = $_SESSION["user"]->getIsAdmin();
+                }
                 if (isset($_SESSION["user"]) && $isAdmin == 1) { ?>
-                <form action="index.php?target=admin&action=update" method="post" ">
+                    <form action="index.php?target=admin&action=update" method="post" ">
                     <input type="hidden" name="productId" value="<?= $product["id"] ?>">
                     <input type="submit" name="edit" value="Редактирай продукт">
-                </form>
+                    </form>
                 <?php } ?>
             </div>
         </div>
@@ -76,7 +78,6 @@ require_once "navigation.php";
 </main>
 
 </article>
-
 
 
 <?php
@@ -101,7 +102,7 @@ require_once "navigation.php";
                 likeButton = document.getElementById("like_" + productId);
                 likeButton.innerHTML = "Премахни от любими";
                 likeButton.setAttribute("onClick", "addToFavourites(" + productId + ",'remove')");
-                likeButton.onclick = function() {
+                likeButton.onclick = function () {
                     return false;
                 }
                 likeButton.onclick = addToFavourites(productId, 'remove');

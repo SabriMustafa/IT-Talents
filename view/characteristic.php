@@ -41,7 +41,16 @@ require_once "navigation.php";
     <h3>Цена:</h3>
     <h5> <?php echo $productModell["price"]; ?> лв.</h5>
     <a href="index.php?target=basket&action=addProduct&productId=<?php echo $productId ?>" class="btn btn-sm btn-primary " style="background-color: red " >Купи</a>
-
+    <?php
+    if (isset($_SESSION["user"])) {
+        $isAdmin = $_SESSION["user"]->getIsAdmin();
+    }
+    if (isset($_SESSION["user"]) && $isAdmin == 1) { ?>
+    <form action="index.php?target=admin&action=update" method="post" ">
+    <input type="hidden" name="productId" value="<?= $productId ?>">
+    <input type="submit" name="edit" value="Редактирай продукт">
+    </form>
+    <?php }?>
 </article>
 
 </body>
