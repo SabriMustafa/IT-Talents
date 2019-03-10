@@ -25,6 +25,7 @@ require_once "navigation.php";
     <main class="main-products">
 
         <?php
+        if (isset($allProducts)) {
         foreach ($allProducts as $product){
             $specification = $product["spec"];
             ?>
@@ -76,8 +77,16 @@ require_once "navigation.php";
                 <span class="carousel-control-next-icon"></span>
             </a>
         </div>
-<?php } ?>
-
+    <?php }
+    $searchValue = $_GET['searchValue'] ? $_GET['searchValue'] : '';
+    $pages = (int) $pages;
+    for ($i=0; $pages > $i; $i++) {
+        $page = $i + 1;
+    ?>
+     <a href="index.php?searchValue=<?= $searchValue; ?>&target=product&action=searchHome&page=<?= $page ?>"><?= $page ?></a>
+<?php }
+    }?>
+</main>
 <?php
 require_once "footer.php";
 ?>

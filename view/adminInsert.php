@@ -8,25 +8,25 @@ require_once "navigation.php";
 
         <table>
             <tr>
-                <td>Product Name</td>
+                <td>Име на Продукт</td>
                 <td><input type="text" name="name"></td>
             </tr>
             <tr>
-                <td>Price</td>
+                <td>Цена</td>
                 <td><input type="text" name="price"></td>
             </tr>
             <tr>
-                <td>Product Model</td>
+                <td>Модел</td>
                 <td><input type="text" name="model"></td>
             </tr>
             <tr>
-                <td>Quantity</td>
+                <td>Количество</td>
                 <td><input type="text" name="quantity"></td>
             </tr>
             <tr>
-                <td>Category</td>
+                <td>Категория</td>
                 <td><select name="category">
-                        <option value="Choose">Choose</option>
+                        <option value="Choose">Избери</option>
                         <?php
 
 
@@ -37,11 +37,11 @@ require_once "navigation.php";
                     </select></td>
             </tr>
             <tr>
-                <td>Brand</td>
+                <td>Марка</td>
                 <td><select name="brand">
 
 
-                        <option value="Choose-brand">Choose</option>
+                        <option value="Choose-brand">Избери</option>
                         <?php foreach ($brands as $brand) { ?>
                             <option value="<?= $brand["id"] ?>" <?php echo $selected_brand == $brand["name"] ? "selected " : ""; ?> >
                                 <?= $brand["name"] ?></option>
@@ -51,21 +51,21 @@ require_once "navigation.php";
                     </select></td>
             </tr>
             <tr>
-                <td>Specification name</td>
+                <td>Име на спецификация </td>
                 <td><input type="text" name="spec-name"></td>
             </tr>
             <tr>
-                <td>Specification value</td>
+                <td>Стойност на спецификация</td>
                 <td><input type="text" name="spec-value"></td>
             </tr>
             <tr>
-                <td>Upload images</td>
+                <td>Качи снимки</td>
                 <td><input type="file" name="files[]" multiple/></td>
             </tr>
 
             <tr>
                 <td>
-                    <input type="submit" name="action" value="Upload Product">
+                    <input type="submit" name="action" value="Запиши продукт">
                 </td>
             </tr>
         </table>

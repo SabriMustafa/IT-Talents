@@ -47,11 +47,9 @@ require_once "navigation.php";
 </div>
 </body>
 </html>
-<<<<<<< HEAD
 <?php
 require_once "footer.php ";
 ?>
-=======
 
 <?php
 $messageHandler = \Message\MessageHandler::getInstance();
@@ -63,4 +61,3 @@ foreach ($messageHandler->getMessages() as $message) {
     echo "<p style=$style>" . $message['message'] . "</p>";
 }
 ?>
->>>>>>> fa636f0ab158e9d2fcfafd688eab9e655e7d3867

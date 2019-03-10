@@ -35,12 +35,9 @@ require_once "navigation.php";
 </div>
 </body>
 </html>
-<<<<<<< HEAD
 <?php
 require_once "footer.php";
 ?>
-=======
-
 
 <?php
 $messageHandler = \Message\MessageHandler::getInstance();

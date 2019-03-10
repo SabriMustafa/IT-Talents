@@ -146,7 +146,7 @@ class UserController
         $userData = $userDao->getByEmail($_SESSION['user']->getEmail());
         if ($userData === null) {
             $messageHandler = MessageHandler::getInstance();
-            $messageHandler->addMessage('Не е открит потребител с емайл' . $_SESSION['user']->getEmail(), MessageHandler::MESSAGE_TYPE_ERROR);
+            $messageHandler->addMessage('Не е открит потребител с имейл' . $_SESSION['user']->getEmail(), MessageHandler::MESSAGE_TYPE_ERROR);
         }
         require_once __DIR__ . '/../view/editProfile.php';
         return;

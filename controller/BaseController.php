@@ -1,17 +1,17 @@
 <?php
 namespace controller;
-use model\ProductModel;
+
 
 class BaseController{
 
     public  function index(){
 
-        $productModel = new ProductModel();
+        $productController = new ProductController();
 
         $messageHandler = \Message\MessageHandler::getInstance();
         $messages = $messageHandler->getMessages();
-        $categories=$productModel->getCategories();
+        $categories=$productController->getCategories();
 
-        include __DIR__."/../view/home.php";
+        include __DIR__."/../view/Home.php";
     }
 }

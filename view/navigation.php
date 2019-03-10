@@ -1,10 +1,10 @@
 <?php
 namespace view;
 
-use model\ProductModel;
+use controller\ProductController;
 
-$productModel = new ProductModel();
-$categories = $productModel->getCategories();
+$productController = new ProductController();
+$categories = $productController->getCategories();
 $user = "Гост";
 if (isset($_SESSION['user'])) {
     $user = $_SESSION['user']->getFirstName();
@@ -49,7 +49,7 @@ if (isset($_SESSION['user'])) {
     }
     if (isset($_SESSION["user"]) && $isAdmin == 1) { ?>
         <form action="index.php?target=admin&action=index" method="post">
-            <input type="submit" value="Insert products">
+            <input type="submit" value="Добави продукти">
         </form>
     <?php }
 
@@ -69,10 +69,10 @@ if (isset($_SESSION['user'])) {
     }
     if (isset($_SESSION["user"])) { ?>
         <form action="index.php?target=user&action=getProfileData" method="post">
-            <input type="submit" value="Profile">
+            <input type="submit" value="Профил">
         </form>
     <form action="index.php?target=user&action=exitProfile" method="post">
-        <input type="submit" value="Exit">
+        <input type="submit" value="Изход">
     </form>
     <?php } ?>
 </div>
