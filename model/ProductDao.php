@@ -39,7 +39,6 @@ class ProductDao
                 $product->getId()]);
 
             $prodId = $product->getId();
-
             if($delImages && count($delImages) > 0){
                 $deleteImages = [];
                 foreach ($delImages as $img){
@@ -51,6 +50,7 @@ class ProductDao
             }
 
             if($insImages && count($insImages) > 0){
+
                 $insertImageSql = "INSERT INTO images (product_url,product_id) VALUE (?,?)";
                 $pstmt = $stmtdb->prepare($insertImageSql);
 
@@ -230,16 +230,26 @@ class ProductDao
 
     public function getProductSpecification($id)
     {
-        $sql = "SELECT concat(p.name,' ', p.value) as performance ,i.product_url  as images 
+        $sql = "SELECT concat(p.name,' ', p.value) as performance
                 FROM product_specifications as p 
-                inner join images as i
-		         on p.product_id = i.product_id 
-                where p.product_id = ?";
+                WHERE p.product_id = ?";
         $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$id]);
         $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
-
         return $result;
+    }
+
+    public function getProductImages($id)
+    {
+        $sql = "SELECT product_url FROM images WHERE product_id = ?";
+        $pstmt = $this->db->prepare($sql);
+        $pstmt->execute([$id]);
+        $result = $pstmt->fetchAll(\PDO::FETCH_ASSOC);
+        $images = [];
+        foreach ($result as $img) {
+            $images[] = $img['product_url'];
+        }
+        return $images;
     }
 
     public function getProductById($id)
@@ -300,6 +310,16 @@ class ProductDao
         $pstmt = $this->db->prepare($sql);
         $pstmt->execute([$quantity, $id]);
     }
+
+    public function getProductDataById($id)
+    {
+        $sql = "SELECT name,price,model,quantity from products WHERE id=?";
+        $pstmt = $this->db->prepare($sql);
+        $pstmt->execute([$id]);
+        $result = $pstmt->fetch(\PDO::FETCH_ASSOC);
+        return $result;
+    }
+
 
     public function getFilteredProducts($id = null, $brand = null, $ascending = null, $descending = null)
     {

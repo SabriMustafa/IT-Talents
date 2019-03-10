@@ -10,7 +10,7 @@ class UserValidator
 {
     public function validateRegisterUserData(array $data)
     {
-
+        $messageHandler = MessageHandler::getInstance();
         $userDao = new UserDao();
         $user = $userDao;
 
@@ -24,17 +24,18 @@ class UserValidator
             !is_numeric($data['age'])
         ) {
 
-            $messageHandler = MessageHandler::getInstance();
+
             $messageHandler->addMessage('Проблем с подадените параметри!', MessageHandler::MESSAGE_TYPE_ERROR);
             return false;
         } elseif ($user->getByEmail($data['email'])) {
-            var_dump($user);
             echo "\"Потребителят вече съществува \"";
-            $messageHandler = MessageHandler::getInstance();
+
             $messageHandler->addMessage("Потребителят вече съществува ", MessageHandler::MESSAGE_TYPE_ERROR);
             return false;
         } else {
             if ($data["password"] != $data["password2"]) {
+
+                $messageHandler->addMessage("Потребителят вече съществува ", MessageHandler::MESSAGE_TYPE_ERROR);
                 return false;
             }
 
@@ -66,6 +67,7 @@ class UserValidator
 
     public function validateLoginUserData(array $data)
     {
+        $messageHandler = MessageHandler::getInstance();
         $email = $data["email"];
         $password = $data["password"];
         if (isset($email) &&
@@ -76,15 +78,18 @@ class UserValidator
             $user = $userDao->getByEmail($email);
             if ($user) {
                 if (password_verify($password, $user->getPassword())) {
+                    $messageHandler->addMessage(sprintf('%s, вие се логнахте успешно!', $user->getFirstName()), MessageHandler::MESSAGE_TYPE_SUCCESS);
                     return true;
                 } else {
-                    echo "try again!!";
+                    $messageHandler->addMessage('Грешна парола!', MessageHandler::MESSAGE_TYPE_ERROR);
                     return false;
                 }
             } else {
+                $messageHandler->addMessage('Потребителят не съществува!', MessageHandler::MESSAGE_TYPE_ERROR);
                 return false;
             }
         } else {
+            $messageHandler->addMessage('Проблем с подадените параметри!', MessageHandler::MESSAGE_TYPE_ERROR);
             return false;
         }
 

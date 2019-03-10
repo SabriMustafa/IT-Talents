@@ -13,19 +13,19 @@ require_once "navigation.php";
 
             <tr>
                 <td>Product Name</td>
-                <td><input type="text" name="name"></td>
+                <td><input type="text" name="name" value="<?=$productData["name"]?>"></td>
             </tr>
             <tr>
                 <td>Price</td>
-                <td><input type="text" name="price"></td>
+                <td><input type="text" name="price" value="<?=$productData["price"]?>"></td>
             </tr>
             <tr>
                 <td>Product Model</td>
-                <td><input type="text" name="model"></td>
+                <td><input type="text" name="model" value="<?=$productData["model"]?>"></td>
             </tr>
             <tr>
                 <td>Quantity</td>
-                <td><input type="text" name="quantity"></td>
+                <td><input type="text" name="quantity" value="<?=$productData["quantity"]?>"></td>
             </tr>
             <tr>
                 <td>Category</td>

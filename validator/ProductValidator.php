@@ -15,11 +15,12 @@ class ProductValidator
             isset($_POST["model"]) &&
             isset($_POST["quantity"]) &&
             isset($_POST["category"]) &&
-            isset($_POST["brand"]) &&
-            isset($_POST["spec-name"]) &&
-            isset($_POST["spec-value"])) {
+            isset($_POST["brand"]))
+            {
+
             return true;
         } else {
+
             return false;
         }
 

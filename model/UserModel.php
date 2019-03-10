@@ -14,7 +14,6 @@ class UserModel extends JsonObject
         $validator=new UserValidator();
         if (!$validator->validateLoginUserData($data)){
             $messageHandler->addMessage(sprintf('Грешни креденшъли!'), MessageHandler::MESSAGE_TYPE_SUCCESS);
-            var_dump($validator);
             return false;
         }
 

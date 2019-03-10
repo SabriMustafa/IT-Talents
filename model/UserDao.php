@@ -19,14 +19,7 @@ class UserDao
 
     public function getFavourites($id)
     {
-        $sql = "SELECT product_id FROM favourites WHERE user_id=?";
-        $pstm = $this->db->prepare($sql);
-        $pstm->execute([$id]);
-        $rows = $pstm->fetchAll(PDO::FETCH_ASSOC);
-        $productIds = [];
-        foreach ($rows as $row) {
-            $productIds[] = $row["product_id"];
-        }
+        $productIds = $this->getFavouritesIds($id);
         foreach ($productIds as $productId) {
 
             $sql = "SELECT name,model,price FROM products WHERE id=?";
@@ -35,13 +28,22 @@ class UserDao
             $row = $pstm->fetch(PDO::FETCH_ASSOC);
             $favourites[] = $row;
 
-        }if (!empty($favourites)){
-        return $favourites;
-
+        }
+        if (!empty($favourites)) {
+            return $favourites;
+        }
     }
 
-
-
+    function getFavouritesIds($userId){
+        $sql = "SELECT product_id FROM favourites WHERE user_id=?";
+        $pstm = $this->db->prepare($sql);
+        $pstm->execute([$userId]);
+        $rows = $pstm->fetchAll(PDO::FETCH_ASSOC);
+        $productIds = [];
+        foreach ($rows as $row) {
+            $productIds[] = $row["product_id"];
+        }
+        return $productIds;
     }
 
     public function getAllOrders($id)
@@ -142,25 +144,41 @@ class UserDao
         $sql = "INSERT INTO favourites (user_id,product_id) VALUE (?,?)";
         $pstmt = $this->db->prepare($sql);
         $userId = $_SESSION["user"]->getId();
-        $result = $pstmt->execute([$userId,$productId]);
+        $result = $pstmt->execute([$userId, $productId]);
 
-        if($result){
+        if ($result) {
             return json_encode(["success" => true, "msg" => "Liked"]);
-        }else{
+        } else {
             return json_encode(["success" => false, "msg" => "Could not like product!"]);
         }
     }
- public function totalSum($spentMoney,$userId){
 
-     $sql = "INSERT INTO orders_history (date,money,user_id) VALUE (NOW(),?,?)";
-     $pstmt = $this->db->prepare($sql);
-     $userId = $_SESSION["user"]->getId();
-     $result = $pstmt->execute([$spentMoney,$userId]);
-     if($result){
-         return json_encode(["success" => true, "msg" => "Inserted successfully"]);
-     }else{
-         return json_encode(["success" => false, "msg" => "Could not insert into orders history!"]);
-     }
+    public function removeFromFavourites($productId)
+    {
+        $sql = "DELETE FROM favourites WHERE user_id=? AND product_id=?";
+        $pstmt = $this->db->prepare($sql);
+        $userId = $_SESSION["user"]->getId();
+        $result = $pstmt->execute([$userId, $productId]);
+        if ($result) {
+            return json_encode(["success" => true, "msg" => "Unlike"]);
+        } else {
+            return json_encode(["success" => false, "msg" => "Could not unlike product!"]);
+        }
+    }
+
+
+    public function totalSum($spentMoney, $userId)
+    {
+
+        $sql = "INSERT INTO orders_history (date,money,user_id) VALUE (NOW(),?,?)";
+        $pstmt = $this->db->prepare($sql);
+        $userId = $_SESSION["user"]->getId();
+        $result = $pstmt->execute([$spentMoney, $userId]);
+        if ($result) {
+            return json_encode(["success" => true, "msg" => "Inserted successfully"]);
+        } else {
+            return json_encode(["success" => false, "msg" => "Could not insert into orders history!"]);
+        }
     }
 
     public function getAll()

@@ -47,6 +47,20 @@ require_once "navigation.php";
 </div>
 </body>
 </html>
+<<<<<<< HEAD
 <?php
 require_once "footer.php ";
 ?>
+=======
+
+<?php
+$messageHandler = \Message\MessageHandler::getInstance();
+foreach ($messageHandler->getMessages() as $message) {
+    $style = 'color:green';
+    if ($message['type'] === \Message\MessageHandler::MESSAGE_TYPE_ERROR) {
+        $style = 'color:red';
+    }
+    echo "<p style=$style>" . $message['message'] . "</p>";
+}
+?>
+>>>>>>> fa636f0ab158e9d2fcfafd688eab9e655e7d3867
