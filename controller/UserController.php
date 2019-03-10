@@ -43,20 +43,13 @@ class UserController
 
         $validator = new UserValidator();
         if (!$validator->validateLoginUserData($_POST)) {
-            $messageHandler->addMessage(sprintf('Грешни креденшъли!'), MessageHandler::MESSAGE_TYPE_SUCCESS);
-            echo "Грешни креденшъли!";
-            return false;
+            require_once __DIR__ . '/../view/login.php';
+        }else{
+            $userDao = new UserDao();
+            $user = $userDao->getByEmail($_POST["email"]);
+            $_SESSION["user"] = $user;
+            header("location: index.php");
         }
-
-
-        $userDao = new UserDao();
-        $user = $userDao->getByEmail($_POST["email"]);
-
-        $_SESSION["user"] = $user;
-
-
-        $messageHandler->addMessage(sprintf('%s, вие се логнахте успешно!', $user->getFirstName()), MessageHandler::MESSAGE_TYPE_SUCCESS);
-        header("location: index.php");
     }
 
     public function editProfile()
@@ -108,7 +101,7 @@ class UserController
     }
 
 
-    public function addToFavourites()
+    public function favourites()
     {
         $body = file_get_contents("php://input");
         $param = json_decode($body, true);
@@ -116,7 +109,6 @@ class UserController
         $action = "";
         if (isset($param['action'])) {
             $action = trim($param['action']);
-
         }
 
         if ($action == "add") {
@@ -171,6 +163,6 @@ class UserController
     public function exitProfile()
     {
         session_destroy();
-        require_once __DIR__ . '/../view/login.php';
+        header('location:index.php?target=user&action=loginView');
     }
 }

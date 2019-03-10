@@ -40,11 +40,14 @@ class AdminController
             $productId = null;
             if (isset($_POST["productId"])) {
                 $productId = $_POST["productId"];
+            }elseif(isset($_SESSION['adminUpdateProdId'])){
+                $productId = $_SESSION['adminUpdateProdId'];
             }
 
             $productDao = new \model\ProductDao();
             $subCategories = $productDao->getAllSubCategories();
 
+            $productData=$productDao->getProductDataById($productId);
             $productDao = new \model\ProductDao();
             $brands = $productDao->getAllBrands();
             $selected_brand = null;

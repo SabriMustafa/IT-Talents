@@ -45,10 +45,11 @@ require_once "navigation.php";
     <?php
     foreach ($allProducts as $product) {
         $specification = $product["spec"];
+        $images = $product['images'];
         ?>
         <div class="container">
             <div class="div-product-img">
-                <img src="<?php echo $specification[0]["images"] ?>" alt="">
+                <img src="<?php echo $images[0] ?>" alt="">
             </div>
             <div style="text-align: center">
                 <h4 class="title"><?php echo $product["category"] ?> </h4>
@@ -59,8 +60,20 @@ require_once "navigation.php";
                    class="btn btn-sm btn-primary ">Виж</a>
                 <button class="btn btn-sm btn-primary"
                         id="like_<?= $product["id"] ?>"
-                        onclick="addToFavourites(<?= $product["id"] ?>, 'add')">
-                    Добави в любими
+                    <?php
+                    if (in_array($product["id"], $likedProducts)){
+                    ?>
+                        onclick="removeFromFavourites(<?=$product["id"]?>)">
+                    Премахни от любими
+                    <?php
+                    } else {
+                        ?>
+                        onclick="addToFavourites(<?= $product["id"] ?>)">
+                        Добави в любими
+                        <?php
+                    }
+                    ?>
+
                 </button>
                 <?php
                 if (isset($_SESSION["user"])) {
@@ -87,12 +100,12 @@ require_once "navigation.php";
 </html>
 
 <script>
-    function addToFavourites(productId, action) {
-        fetch("http://localhost/IT-Talents/index.php?target=user&action=addToFavourites", {
+    function addToFavourites(productId) {
+        fetch("http://localhost/IT-Talents/index.php?target=user&action=favourites", {
             method: "POST",
             body: JSON.stringify({
                 productId: productId,
-                action: action
+                action: 'add'
             })
         }).then(function (response) {
             return response.json();
@@ -101,11 +114,29 @@ require_once "navigation.php";
             if (json.success) {
                 likeButton = document.getElementById("like_" + productId);
                 likeButton.innerHTML = "Премахни от любими";
-                likeButton.setAttribute("onClick", "addToFavourites(" + productId + ",'remove')");
-                likeButton.onclick = function () {
-                    return false;
-                }
-                likeButton.onclick = addToFavourites(productId, 'remove');
+
+            } else {
+                console.log("Could not like!");
+            }
+        });
+    }
+
+    function removeFromFavourites(productId) {
+        fetch("http://localhost/IT-Talents/index.php?target=user&action=favourites", {
+            method: "POST",
+            body: JSON.stringify({
+                productId: productId,
+                action: 'remove'
+            })
+        }).then(function (response) {
+            return response.json();
+        }).then(function (json) {
+            console.log(json);
+            if (json.success) {
+                likeButton = document.getElementById("like_" + productId);
+                likeButton.innerHTML = "Добави в любими";
+                // likeButton.setAttribute("onClick", "addToFavourites(" + productId + ")");
+                // likeButton.onclick = addToFavourites(productId);
             } else {
                 console.log("Could not like!");
             }

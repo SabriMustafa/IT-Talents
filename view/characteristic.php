@@ -18,7 +18,7 @@ require_once "navigation.php";
 <div class="bodyCharacteristic">
     <div  class="img-char">
         <h4> <?php echo $productModell["model"]; ?></h4>
-        <img  src=" <?php echo $allCharacteristics["0"]["images"]; ?>" alt="">
+        <img  src=" <?=$images[0]?>" alt="">
     </div>
 
 
@@ -37,6 +37,16 @@ require_once "navigation.php";
     </div>
 
 </div>
+<div class="">
+    <?php
+    foreach ($images as $img){
+        ?>
+        <img width="50px"  src="<?=$img?>">
+        <?php
+    }
+    ?>
+</div>
+
 <article class="char-article">
     <h3>Цена:</h3>
     <h5> <?php echo $productModell["price"]; ?> лв.</h5>

@@ -11,6 +11,7 @@ namespace controller;
 
 use model\Product;
 use model\ProductDao;
+use model\UserDao;
 use Validator\ProductValidator;
 
 class ProductController
@@ -31,20 +32,22 @@ class ProductController
                 trim($_POST["quantity"]),
                 trim($_POST["category"]),
                 trim($_POST["brand"]),
-                trim($_POST["spec-name"]),
-                trim($_POST["spec-value"]),
+                null,
+                null,
                 null);
             $isUpdated = $productDao->updateProduct($product, $delImages, $insImages);
 
             if ($isUpdated) {
                 foreach ($delImages as $image) {
-
-                    unlink(__DIR__ . "/../" . $image['url']);
+                    $path  = __DIR__ . "/../" . $image['url'];
+                    if(is_file($path)){
+                        unlink($path);
+                    }
                 }
             }
-        }
-
-        // header("location: /IT-Talents/index.php?target=admin&action=index");
+      }
+        $_SESSION['adminUpdateProdId']=$_POST["id"];
+         header("location: /IT-Talents/index.php?target=admin&action=update");
 
     }
 
@@ -56,9 +59,9 @@ class ProductController
             $productDao = new ProductDao();
             $productDao->insertNewSpecification($_POST["id"], $_POST["name"], $_POST["value"]);
 
-      }
-
-        include __DIR__ . "/../view/adminUpdate.php";
+        }
+        $_SESSION['adminUpdateProdId']=$_POST["id"];
+        header("location: /IT-Talents/index.php?target=admin&action=update");
     }
 
     public function insertProduct()
@@ -95,6 +98,7 @@ class ProductController
     {
 
         $productDao = new ProductDao();
+        $userDao = new UserDao();
         $brand = null;
         $ascending = null;
         $descending = null;
@@ -107,7 +111,7 @@ class ProductController
         $allProducts = $productDao->getFilteredProducts($subCategoryId, $brand, $ascending, $descending);
         $brands = $productDao->getAllBrands();
         $selected_brand = null;
-
+        $likedProducts = $userDao->getFavouritesIds($_SESSION['user']->getId());
         foreach ($allProducts as $key => $product) {
             $specification = $productDao->getProductSpecification($product["id"]);
             $allProducts[$key]["spec"] = $specification;
@@ -121,17 +125,19 @@ class ProductController
     {
         $subCategoryId = $_GET["subcategory"];
         $productDao = new ProductDao();
+        $userDao = new UserDao();
+
         $allProducts = $productDao->getProductsBySubID($subCategoryId);
 
-
+        $likedProducts = $userDao->getFavouritesIds($_SESSION['user']->getId());
         $brands = $productDao->getAllBrands();
         $selected_brand = null;
 
         foreach ($allProducts as $key => $product) {
             $specification = $productDao->getProductSpecification($product["id"]);
-
+            $images = $productDao->getProductImages($product["id"]);
             $allProducts[$key]["spec"] = $specification;
-
+            $allProducts[$key]["images"] = $images;
         }
 
 
@@ -145,7 +151,7 @@ class ProductController
         $product = new ProductDao();
 
         $allCharacteristics = $product->getProductSpecification($productId);
-
+        $images = $product->getProductImages($productId);
         $productModell = $product->getProductById($productId);
 
 
@@ -153,6 +159,7 @@ class ProductController
 
 
     }
+
     public function getCategories()
     {
         $productDao = new ProductDao();
@@ -161,7 +168,7 @@ class ProductController
         foreach ($categories as $key => $category) {
             foreach ($subCategories as $subCategory) {
                 if ($category["id"] == $subCategory["categories_id"]) {
-                    $categories[$key]['subcategories'][] = ['id'=>$subCategory['id'], 'name' =>$subCategory['name']];
+                    $categories[$key]['subcategories'][] = ['id' => $subCategory['id'], 'name' => $subCategory['name']];
                 }
             }
 
