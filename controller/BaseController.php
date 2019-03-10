@@ -12,6 +12,6 @@ class BaseController{
         $messages = $messageHandler->getMessages();
         $categories=$productModel->getCategories();
 
-        include __DIR__."/../view/navigation.php";
+        include __DIR__."/../view/home.php";
     }
 }

@@ -41,7 +41,7 @@ require "navigation.php";
                     <td><?php echo $product["price"] . "лв." ?>
                     </td>
                     <td>
-                        <button>
+                        <button class="btn btn-outline-primary">
                             <a href="
                            index.php?target=basket&action=deleteProduct&productId=<?php echo $productId ?>">Изтрий </a>
                         </button>
@@ -52,7 +52,7 @@ require "navigation.php";
         <tr>
             <td>
                 <?php if (isset($_SESSION['user'])) {?>
-                <button>
+                <button class="btn btn-danger">
                     <a href="
                            index.php?target=basket&action=buy">Поръчай </a>
                 </button>

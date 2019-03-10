@@ -6,22 +6,27 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="view/assets/CSS/style.css">
+    <link rel="stylesheet" href="assets/CSS/style.css">
 </head>
 
 <body>
 <footer>
     <div id="footer-left">
-        <h2>Контакти</h2>
-        <p>Йордан Михайлов</p><br>
-        <p> 0883465672</p><br>
-        <p>Сабри Мустафа</p><br>
-        <p> 0888888888</p><br>
+        <h3>Контакти</h3>
+        <p>Йордан Михайлов</p
+        <p> 0883465672</p>
+        <br>
+        <p>Сабри Мустафа</p>
+        <p> 0895334146</p>
     </div>
     <div  id="footer-midle">
-        <h2>Партньори</h2><br>
-        <p>Софийска Вода АД</p><br>
-        <p> Теленор </p><br>
+
+        <h3>Партньори</h3><br>
+        <p>ИТ Таланти</p>
+        <br>
+        <p>Софийска Вода АД</p>
+        <br>
+        <p> Теленор ЕАД</p>
     </div>
     <div  id="footer-right">
         <h2>Карта</h2>

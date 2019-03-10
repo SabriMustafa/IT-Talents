@@ -56,7 +56,7 @@ class UserController
 
 
         $messageHandler->addMessage(sprintf('%s, вие се логнахте успешно!', $user->getFirstName()), MessageHandler::MESSAGE_TYPE_SUCCESS);
-        header("location: index.php");
+        header("location: index.php ");
     }
 
     public function editProfile()

@@ -19,6 +19,7 @@ if (isset($_SESSION['user'])) {
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
@@ -33,7 +34,7 @@ if (isset($_SESSION['user'])) {
         <input type="text" class="form-control" placeholder="Search" style="width: 200px" name="searchValue">
         <input type="hidden" name="target" value="product">
         <input type="hidden" name="action" value="searchHome">
-        <input type="submit" name="search" value="Search">
+        <input type="submit" name="search" value="Search" class="btn btn-danger">
     </form>
 </div>
 <div>
@@ -53,14 +54,17 @@ if (isset($_SESSION['user'])) {
     <?php }
 
     if (!isset($_SESSION["user"])) {
-
         ?>
-        <form action="index.php?target=user&action=registerView" method="post">
-            <input type="submit" value="Register">
-        </form>
-        <form action="index.php?target=user&action=loginView" method="post">
-            <input type="submit" value="Login">
-        </form>
+      <div class="login-button" ">
+          <form action="index.php?target=user&action=loginView" method="post">
+              <input type="submit" value="Login" class="btn btn-danger">
+          </form>
+      </div>
+        <div class="register-button">
+            <form action="index.php?target=user&action=registerView" method="post">
+                <input type="submit" value="Register" class="btn btn-danger">
+            </form>
+        </div>
         <?php
     }
     if (isset($_SESSION["user"])) { ?>
@@ -103,4 +107,5 @@ if (isset($_SESSION['user'])) {
         </ul>
     </div>
 </nav>
+</body>
 

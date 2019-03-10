@@ -37,7 +37,7 @@ require_once "navigation.php";
 
             <input type="checkbox" name="asc" value="asc">Цена по възходящ ред<br><br>
             <input type="checkbox" name="desc" value="desc">Цена по низходящ ред<br><br>
-            <input type="submit" name="filter" value="Търси">
+            <input type="submit" name="filter" value="Търси" class="btn btn-danger">
         </form>
     </div>
 </aside>
@@ -56,7 +56,7 @@ require_once "navigation.php";
                 <p class="desc"><?php echo $product["price"] . " лв." ?> </p>
 
                 <a href="index.php?target=product&action=getCharactersitics&productId=<?= $product["id"] ?>"
-                   class="btn btn-sm btn-primary ">Виж</a>
+                   class="btn btn-danger">Виж</a>
                 <button class="btn btn-sm btn-primary"
                         id="like_<?= $product["id"] ?>"
                         onclick="addToFavourites(<?= $product["id"] ?>, 'add')">
