@@ -76,14 +76,14 @@ require_once "navigation.php";
                     ?>
 
                 </button>
-                <?php}
+                <?php }
                 if (isset($_SESSION["user"])) {
                     $isAdmin = $_SESSION["user"]->getIsAdmin();
                 }
                 if (isset($_SESSION["user"]) && $isAdmin == 1) { ?>
                     <form action="index.php?target=admin&action=update" method="post" ">
                     <input type="hidden" name="productId" value="<?= $product["id"] ?>">
-                    <input type="submit" name="edit" value="Редактирай продукт">
+                    <input type="submit" name="edit" value="Редактирай продукт" class="btn btn-warning">
                     </form>
                 <?php } ?>
             </div>
@@ -95,7 +95,7 @@ require_once "navigation.php";
 
 
 <?php
-//require_once "footer.php";
+require_once "footer.php";
 ?>
 </body>
 </html>

@@ -37,19 +37,19 @@ if (isset($_SESSION['user'])) {
         <input type="submit" name="search" value="Search" class="btn btn-danger">
     </form>
 </div>
-<div>
+<div class="navigation-button">
     <?php
     if (isset($_SESSION["user"])) {
         $isAdmin = $_SESSION["user"]->getIsAdmin();?>
         <form action="index.php?target=basket&action=basketView" method="post">
-            <input type="submit" value="Количка">
+            <input type="submit" value="Количка" class="btn btn-danger">
         </form>
 
      <?php
     }
     if (isset($_SESSION["user"]) && $isAdmin == 1) { ?>
         <form action="index.php?target=admin&action=index" method="post">
-            <input type="submit" value="Добави продукти">
+            <input type="submit" value="Добави продукти" class="btn btn-warning">
         </form>
     <?php }
 
@@ -69,10 +69,10 @@ if (isset($_SESSION['user'])) {
     }
     if (isset($_SESSION["user"])) { ?>
         <form action="index.php?target=user&action=getProfileData" method="post">
-            <input type="submit" value="Профил">
+            <input type="submit" value="Профил" class="btn btn-danger">
         </form>
     <form action="index.php?target=user&action=exitProfile" method="post">
-        <input type="submit" value="Изход">
+        <input type="submit" value="Изход" class="btn btn-danger">
     </form>
     <?php } ?>
 </div>

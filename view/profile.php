@@ -6,37 +6,38 @@ require_once "navigation.php";
 
 
 <body>
-<aside>
-    <button onclick="myFavourites()">My favourites</button>
+<aside style="float: left;width: 20%; ">
+    <button onclick="myFavourites()" class="btn btn-danger">Любими продукти</button>
     <br><br>
 
-    <button onclick="myOrders()">My orders</button>
+    <button onclick="myOrders()" class="btn btn-danger">Моите поръчки</button>
     <br><br>
 
     <form action="/IT-Talents/index.php?target=user&action=editProfileView" method="post">
-        <input type="submit" name="edit" value="Edit profile">
+        <input type="submit" name="edit" value="Редактирай профил" class="btn btn-danger">
     </form>
 
 </aside>
-<div id="orders" style="display: none">
-    <table>
-        <tr>
-            <th>Date</th>
-            <th>Spent Money</th>
+<div id="orders" style="display: none;width: 20%;float: left" >
+    <table class="table-profile">
+        <tr  class="table-profile">
+            <th  class="table-profile">Дата</th>
+            <th >Обща сума</th>
 
         </tr>
         <?php
 
         foreach ($orders as $order) { ?>
             <tr>
-                <td><?= $order["date"] ?></td>
-                <td><?= $order["money"] ?></td>
+                <td class="table-profile"><?= $order["date"] ?></td>
+                <td><?= $order["money"]."лв." ?></td>
             </tr>
         <?php } ?>
     </table>
 
 
 </div>
+
 <div id="messages">
     <?php
     $messageHandler = \Message\MessageHandler::getInstance();
@@ -49,20 +50,20 @@ require_once "navigation.php";
     }
     ?>
 </div>
-<div id="favourites" style="display: none">
-    <table>
+<div id="favourites" style="display: none;width: 20%;float: left">
+    <table class="table-profile">
         <tr>
-            <th>Product Name</th>
-            <th>Model</th>
-            <th>Price</th>
+            <th class="table-profile">Име на продукт</th>
+            <th class="table-profile">Модел</th>
+            <th class="table-profile">Цена</th>
 
         </tr>
         <?php if ($favourites != null) {
         foreach ($favourites as $favourite) { ?>
             <tr>
-                <td><?= $favourite["name"] ?></td>
+                <td class="table-profile"><?= $favourite["name"] ?></td>
                 <td><?= $favourite["model"] ?></td>
-                <td><?= $favourite["price"] ?></td>
+                <td class="table-profile"><?= $favourite["price"] ?></td>
             </tr>
         <?php }
         ?>

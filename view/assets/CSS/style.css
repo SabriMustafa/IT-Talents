@@ -112,3 +112,14 @@ footer{
     text-align: center;
     float: left;
 }
+.navigation-button{
+    margin-left: 90%;
+}
+.form-group has-search{
+   float: left;
+}
+.table-profile{
+    border: 1px solid black;
+    text-align: center;
+
+}

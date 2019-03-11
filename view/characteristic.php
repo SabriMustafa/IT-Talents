@@ -37,15 +37,6 @@ require_once "navigation.php";
     </div>
 
 </div>
-<div class="">
-    <?php
-    foreach ($images as $img){
-        ?>
-        <img width="50px"  src="<?=$img?>">
-        <?php
-    }
-    ?>
-</div>
 
 <article class="char-article">
     <h3>Цена:</h3>
@@ -58,10 +49,24 @@ require_once "navigation.php";
     if (isset($_SESSION["user"]) && $isAdmin == 1) { ?>
     <form action="index.php?target=admin&action=update" method="post" ">
     <input type="hidden" name="productId" value="<?= $productId ?>">
-    <input type="submit" name="edit" value="Редактирай продукт">
+    <input type="submit" name="edit" value="Редактирай продукт" class="btn btn-warning">
     </form>
     <?php }?>
 </article>
 
+<br><br><br><br><br><br><br><br>
+<div >
+    <?php
+    foreach ($images as $img){
+        ?>
+        <img width="150px"  src="<?=$img?>">
+        <?php
+    }
+    ?>
+</div>
+<?php
+require_once "footer.php";
+?>
 </body>
+
 </html>

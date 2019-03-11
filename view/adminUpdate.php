@@ -5,7 +5,7 @@ require_once "navigation.php";
 
 <body>
 
-<div style="margin-right: 100px;float: right">
+<div  >
     <form action="/IT-Talents/index.php?target=product&action=editProduct" method="post"
           enctype="multipart/form-data">
         <input type="hidden" name="id" value="<?=$productId?>">

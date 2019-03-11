@@ -56,7 +56,7 @@ require_once "navigation.php";
                 <li data-target="#demo" data-slide-to="1"></li>
                 <li data-target="#demo" data-slide-to="2"></li>
             </ul>
-            <
+
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img src="https://cdn.technomarket.bg/uploads/BG/2019/2-february/1440x500/the-champions-are-here.png" alt="Los Angeles" width="1100" height="500">

@@ -63,5 +63,11 @@ require "navigation.php";
         </tbody>
     </table>
 </div>
+<br>
+<br>
+
 </body>
 </html>
+<?php
+require_once "footer.php";
+?>
