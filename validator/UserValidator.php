@@ -68,8 +68,8 @@ class UserValidator
     public function validateLoginUserData(array $data)
     {
         $messageHandler = MessageHandler::getInstance();
-        $email = $data["email"];
-        $password = $data["password"];
+        $email = trim($data["email"]);
+        $password =trim( $data["password"]);
         if (isset($email) &&
             $email != '' &&
             isset($password) && $password != '') {

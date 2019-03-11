@@ -58,6 +58,7 @@ require_once "navigation.php";
 
                 <a href="index.php?target=product&action=getCharactersitics&productId=<?= $product["id"] ?>"
                    class="btn btn-danger">Виж</a>
+                <?php if (isset($_SESSION["user"])){ ?>
                 <button class="btn btn-sm btn-primary"
                         id="like_<?= $product["id"] ?>"
                     <?php
@@ -75,7 +76,7 @@ require_once "navigation.php";
                     ?>
 
                 </button>
-                <?php
+                <?php}
                 if (isset($_SESSION["user"])) {
                     $isAdmin = $_SESSION["user"]->getIsAdmin();
                 }

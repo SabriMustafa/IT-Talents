@@ -13,7 +13,7 @@ require_once "navigation.php";
 </head>
 <body>
 <div class="container-login">
-<form action="/finalProject/index.php?target=user&action=login" method="post" >
+<form action="/IT-Talents/index.php?target=user&action=login" method="post" >
     <table>
         <tr>
             <th>Email</th>

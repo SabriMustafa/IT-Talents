@@ -39,15 +39,15 @@ class ProductController
 
             if ($isUpdated) {
                 foreach ($delImages as $image) {
-                    $path  = __DIR__ . "/../" . $image['url'];
-                    if(is_file($path)){
+                    $path = __DIR__ . "/../" . $image['url'];
+                    if (is_file($path)) {
                         unlink($path);
                     }
                 }
             }
-      }
-        $_SESSION['adminUpdateProdId']=$_POST["id"];
-         header("location: /IT-Talents/index.php?target=admin&action=update");
+        }
+        $_SESSION['adminUpdateProdId'] = $_POST["id"];
+        header("location: /IT-Talents/index.php?target=admin&action=update");
 
     }
 
@@ -60,7 +60,7 @@ class ProductController
             $productDao->insertNewSpecification($_POST["id"], $_POST["name"], $_POST["value"]);
 
         }
-        $_SESSION['adminUpdateProdId']=$_POST["id"];
+        $_SESSION['adminUpdateProdId'] = $_POST["id"];
         header("location: /IT-Talents/index.php?target=admin&action=update");
     }
 
@@ -111,11 +111,15 @@ class ProductController
         $allProducts = $productDao->getFilteredProducts($subCategoryId, $brand, $ascending, $descending);
         $brands = $productDao->getAllBrands();
         $selected_brand = null;
-        $likedProducts = $userDao->getFavouritesIds($_SESSION['user']->getId());
+        if (isset($_SESSION["user"])) {
+            $likedProducts = $userDao->getFavouritesIds($_SESSION['user']->getId());
+        }
         foreach ($allProducts as $key => $product) {
+
+            $images = $productDao->getProductImages($product["id"]);
             $specification = $productDao->getProductSpecification($product["id"]);
             $allProducts[$key]["spec"] = $specification;
-
+            $allProducts[$key]["images"] = $images;
         }
         include __DIR__ . "/../view/products.php";
 
@@ -128,8 +132,11 @@ class ProductController
         $userDao = new UserDao();
 
         $allProducts = $productDao->getProductsBySubID($subCategoryId);
+        if (isset($_SESSION["user"])) {
 
-        $likedProducts = $userDao->getFavouritesIds($_SESSION['user']->getId());
+
+            $likedProducts = $userDao->getFavouritesIds($_SESSION['user']->getId());
+        }
         $brands = $productDao->getAllBrands();
         $selected_brand = null;
 

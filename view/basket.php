@@ -29,11 +29,12 @@ require "navigation.php";
         <?php
         if (isset($_SESSION["products"])) {
             foreach ($_SESSION["products"] as $productId => $product) {
+
                 ?>
 
                 <tr>
                     <td>
-                        <img src="<?php echo $product["img"] ?>" style="width: 100px">
+                        <img src="<?php echo $product["image"] ?>" style="width: 100px">
                         <?php echo $product["model"] ?>
                     </td>
                     <td><?php echo $product["price"] . "лв." ?></td>

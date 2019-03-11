@@ -17,9 +17,9 @@ class BasketController
 
         $product = $productDao->getProductById($productId);
         $allCharacteristics = $productDao->getProductSpecification($productId);
-        foreach ($allCharacteristics as $value) {
-            $arr["img"] = $value["images"];
-        }
+        $productImages=$productDao->getProductImages($productId);
+
+        $arr["image"]=$productImages[0];
         $arr["model"] = $product["model"];
         $arr["price"] = $product["price"];
         $arr["quantity"] = 1;

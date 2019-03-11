@@ -21,7 +21,7 @@ require_once "navigation.php";
     </style>
 </head>
 <body>
-<?php if (isset($_GET["searchValue"])){?>
+
     <main class="main-products">
 
         <?php
@@ -49,13 +49,14 @@ require_once "navigation.php";
         <?php } ?>
     </main>
 <?php }
-    else{ ?>
+     ?>
         <div id="demo" class="carousel slide" data-ride="carousel">
             <ul class="carousel-indicators">
                 <li data-target="#demo" data-slide-to="0" class="active"></li>
                 <li data-target="#demo" data-slide-to="1"></li>
                 <li data-target="#demo" data-slide-to="2"></li>
             </ul>
+            <
             <div class="carousel-inner">
                 <div class="carousel-item active">
                     <img src="https://cdn.technomarket.bg/uploads/BG/2019/2-february/1440x500/the-champions-are-here.png" alt="Los Angeles" width="1100" height="500">
@@ -77,7 +78,10 @@ require_once "navigation.php";
                 <span class="carousel-control-next-icon"></span>
             </a>
         </div>
-    <?php }
+    <?php
+    if (isset($_GET["searchValue"])){
+
+
     $searchValue = $_GET['searchValue'] ? $_GET['searchValue'] : '';
     $pages = (int) $pages;
     for ($i=0; $pages > $i; $i++) {
@@ -85,7 +89,7 @@ require_once "navigation.php";
     ?>
      <a href="index.php?searchValue=<?= $searchValue; ?>&target=product&action=searchHome&page=<?= $page ?>"><?= $page ?></a>
 <?php }
-    }?>
+    } ;?>
 </main>
 <?php
 require_once "footer.php";
