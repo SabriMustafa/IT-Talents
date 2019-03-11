@@ -9,19 +9,19 @@ require_once "navigation.php";
         <table>
             <tr>
                 <td>Име на Продукт</td>
-                <td><input type="text" name="name"></td>
+                <td><input type="text" name="name"  class="form-control"></td>
             </tr>
             <tr>
                 <td>Цена</td>
-                <td><input type="text" name="price"></td>
+                <td><input type="text" name="price"  class="form-control"></td>
             </tr>
             <tr>
                 <td>Модел</td>
-                <td><input type="text" name="model"></td>
+                <td><input type="text" name="model"  class="form-control"></td>
             </tr>
             <tr>
                 <td>Количество</td>
-                <td><input type="text" name="quantity"></td>
+                <td><input type="text" name="quantity"  class="form-control"></td>
             </tr>
             <tr>
                 <td>Категория</td>
@@ -52,11 +52,11 @@ require_once "navigation.php";
             </tr>
             <tr>
                 <td>Име на спецификация </td>
-                <td><input type="text" name="spec-name"></td>
+                <td><input type="text" name="spec-name"  class="form-control"></td>
             </tr>
             <tr>
                 <td>Стойност на спецификация</td>
-                <td><input type="text" name="spec-value"></td>
+                <td><input type="text" name="spec-value"  class="form-control"></td>
             </tr>
             <tr>
                 <td>Качи снимки</td>
@@ -65,7 +65,7 @@ require_once "navigation.php";
 
             <tr>
                 <td>
-                    <input type="submit" name="action" value="Запиши продукт">
+                    <input type="submit" name="action" value="Запиши продукт" class="btn btn-danger">
                 </td>
             </tr>
         </table>

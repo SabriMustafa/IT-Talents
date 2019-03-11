@@ -20,6 +20,10 @@ require  "navigation.php";
 
                 <p>e-mail: <a href="mailto:sabrimustafa46@gmail.com">sabrimustafa46@gmail.com</a></p>
 
+                <p>0888 88 88 88</p>
+
+                <p>e-mail: <a href="mailto:sabrimustafa46@gmail.com">iordanMihailov@gmail.com</a></p>
+
                 <p><strong>Адрес:</strong></p>
 
                 <p>бул. България 69, ет. 14, 1404 София</p>

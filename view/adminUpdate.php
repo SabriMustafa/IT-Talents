@@ -13,19 +13,19 @@ require_once "navigation.php";
 
             <tr>
                 <td>Име на продукт</td>
-                <td><input type="text" name="name" value="<?=$productData["name"]?>"></td>
+                <td><input type="text" name="name" value="<?=$productData["name"]?>" class="form-control"></td>
             </tr>
             <tr>
                 <td>Цена</td>
-                <td><input type="text" name="price" value="<?=$productData["price"]?>"></td>
+                <td><input type="text" name="price" value="<?=$productData["price"]?>" class="form-control"></td>
             </tr>
             <tr>
                 <td>Модел</td>
-                <td><input type="text" name="model" value="<?=$productData["model"]?>"></td>
+                <td><input type="text" name="model" value="<?=$productData["model"]?>" class="form-control"></td>
             </tr>
             <tr>
                 <td>Количество</td>
-                <td><input type="text" name="quantity" value="<?=$productData["quantity"]?>"></td>
+                <td><input type="text" name="quantity" value="<?=$productData["quantity"]?>" class="form-control"></td>
             </tr>
             <tr>
                 <td>Категория</td>
@@ -61,7 +61,7 @@ require_once "navigation.php";
 
             <tr>
                 <td>
-                    <input type="submit" name="action" value="Промени">
+                    <input type="submit" name="action" value="Промени" class="btn btn-danger">
                 </td>
             </tr>
         </table>
@@ -72,15 +72,15 @@ require_once "navigation.php";
         <table>
         <tr>
             <td>Име на спецификация</td>
-            <td><input type="text" name="name"></td>
+            <td><input type="text" name="name" class="form-control"></td>
         </tr>
         <tr>
             <td>Стойност на спецификация</td>
-            <td><input type="text" name="value"></td>
+            <td><input type="text" name="value" class="form-control"></td>
         </tr>
         <tr>
         <td>
-            <input type="submit" name="actionn" value="Добави спецификация">
+            <input type="submit" name="actionn" value="Добави спецификация" class="btn btn-danger">
         </td>
         </tr>
         </table>

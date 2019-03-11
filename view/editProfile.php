@@ -42,7 +42,7 @@ require_once "navigation.php";
         </tr>
         <tr>
             <td>
-                <input type="submit" name="action" value="Edit">
+                <input type="submit" name="action" value="Edit"  class="btn btn-danger">
             </td>
         </tr>
     </table>
