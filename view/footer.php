@@ -6,7 +6,7 @@
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
-    <link rel="stylesheet" href="assets/CSS/style.css">
+    <link rel="stylesheet" href="view/assets/CSS/style.css">
 </head>
 
 <body>
@@ -30,7 +30,7 @@
     </div>
     <div  id="footer-right">
         <h2>Карта</h2>
-        <div id="googleMap" style="width:100%;height:400px;"><div class="mapouter"><div class="gmap_canvas"><iframe width="324" height="107" id="gmap_canvas" src="https://maps.google.com/maps?q=it%20talents&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.jetzt-drucken-lassen.de">jetzt-drucken-lassen.de</a></div><style>.mapouter{text-align:right;height:107px;width:324px;}.gmap_canvas {overflow:hidden;background:none!important;height:107px;width:324px;}</style>Google Maps by <a href="https://www.embedgooglemap.net" rel="nofollow" target="_blank">Embedgooglemap.net</a></div></div>
+        <div id="googleMap" style="width:100%"><div class="mapouter"><div class="gmap_canvas"><iframe width="324" height="107" id="gmap_canvas" src="https://maps.google.com/maps?q=it%20talents&t=&z=13&ie=UTF8&iwloc=&output=embed" frameborder="0" scrolling="no" marginheight="0" marginwidth="0"></iframe><a href="https://www.jetzt-drucken-lassen.de">jetzt-drucken-lassen.de</a></div><style>.mapouter{text-align:right;height:107px;width:324px;}.gmap_canvas {overflow:hidden;background:none!important;height:107px;width:324px;}</style>Google Maps by <a href="https://www.embedgooglemap.net" rel="nofollow" target="_blank">Embedgooglemap.net</a></div></div>
 
         <script>
             function myMap() {

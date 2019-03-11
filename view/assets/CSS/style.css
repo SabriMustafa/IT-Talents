@@ -113,7 +113,7 @@ footer{
     float: left;
 }
 .navigation-button{
-    margin-left: 90%;
+    margin-left: 87%;
 }
 .form-group has-search{
    float: left;
@@ -122,4 +122,7 @@ footer{
     border: 1px solid black;
     text-align: center;
 
+}
+#myCarousel{
+    margin-bottom: 2em;
 }
