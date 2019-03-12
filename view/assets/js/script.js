@@ -40,3 +40,32 @@ function removeFromFavourites(productId) {
         }
     })
 }
+
+
+function myOrders() {
+    document.getElementById("favourites").style.display="none";
+    var orders = document.getElementById("orders");
+    var messages = document.getElementById('messages');
+    if (messages.style.display !== "none") {
+        messages.style.display = "none";
+    }
+    if (orders.style.display === "none") {
+        orders.style.display = "block";
+    } else {
+        orders.style.display = "none";
+    }
+}
+
+function myFavourites() {
+    document.getElementById("orders").style.display="none";
+    var fav = document.getElementById("favourites");
+    var messages = document.getElementById('messages');
+    if (messages.style.display !== "none") {
+        messages.style.display = "none";
+    }
+    if (fav.style.display === "none") {
+        fav.style.display = "block";
+    } else {
+        fav.style.display = "none";
+    }
+}
