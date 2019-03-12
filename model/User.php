@@ -1,6 +1,6 @@
 <?php
 namespace model;
-class User
+class User extends JsonObject
 {
     private $id;
     private $first_name;

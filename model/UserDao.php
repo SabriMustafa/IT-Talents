@@ -181,9 +181,6 @@ class UserDao
         }
     }
 
-    public function getAll()
-    {
-        // return array of Users object
-    }
+
 
 }

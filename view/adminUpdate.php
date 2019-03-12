@@ -87,6 +87,8 @@ require_once "navigation.php";
     </div>
     </form>
     <div>
-
+        <?php
+        require_once "footer.php";
+        ?>
 </body>
 </html>

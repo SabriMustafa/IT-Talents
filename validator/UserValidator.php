@@ -14,28 +14,29 @@ class UserValidator
         $userDao = new UserDao();
         $user = $userDao;
 
+
         if (!isset($data['email']) || $data['email'] == "" ||
             !isset($data['password']) || $data['password'] == "" ||
-            !strlen($data['password']) >= 5 ||
-            !isset($data['first_name']) || $data['first_name'] == "" ||
-            !isset($data['last_name']) || $data['last_name'] == "" ||
-            !isset($data['gender']) || $data['gender'] == "" ||
+            strlen($data['password']) < 5 ||
+            !isset($data['first_name']) || $data['first_name'] == "" || strlen($data['first_name'])>100 ||
+            !isset($data['last_name']) || $data['last_name'] == "" ||  strlen($data['last_name'])>100 ||
+            !isset($data['gender']) || $data['gender'] == "" || strlen($data['gender'])>100 ||
             !isset($data['age']) || $data['age'] == "" ||
-            !is_numeric($data['age'])
+            !is_numeric($data['age']) || $data['age']<5 || $data['age']>150
         ) {
 
 
             $messageHandler->addMessage('Проблем с подадените параметри!', MessageHandler::MESSAGE_TYPE_ERROR);
             return false;
         } elseif ($user->getByEmail($data['email'])) {
-            echo "\"Потребителят вече съществува \"";
+
 
             $messageHandler->addMessage("Потребителят вече съществува ", MessageHandler::MESSAGE_TYPE_ERROR);
             return false;
         } else {
             if ($data["password"] != $data["password2"]) {
 
-                $messageHandler->addMessage("Потребителят вече съществува ", MessageHandler::MESSAGE_TYPE_ERROR);
+                $messageHandler->addMessage("Паролите не съвпадат ", MessageHandler::MESSAGE_TYPE_ERROR);
                 return false;
             }
 
@@ -47,17 +48,17 @@ class UserValidator
     public function validateEditProfileData($data)
     {
         $messageHandler = MessageHandler::getInstance();
-        if (!isset($data['first_name']) || $data['first_name'] == "" ||
-            !isset($data['last_name']) || $data['last_name'] == "" ||
-            !isset($data['gender']) || $data['gender'] == "" ||
-            !isset($data['age']) || $data['age'] == "" ||
+        if (!isset($data['first_name']) || $data['first_name'] == "" || strlen($data['first_name'])>100 ||
+            !isset($data['last_name']) || $data['last_name'] == "" || strlen($data['last_name'])>100 ||
+            !isset($data['gender']) || $data['gender'] == "" || strlen($data['gender'])>100 ||
+            !isset($data['age']) || $data['age'] == "" || $data['age']<5 || $data['age']>150 ||
             !is_numeric($data['age'])
         ) {
             $messageHandler->addMessage('Проблем с подадените параметри!', MessageHandler::MESSAGE_TYPE_ERROR);
             return false;
         }
         if (isset($data['new-password']) && isset($data['repeat-password']) && $data['new-password'] !== '' || $data['repeat-password'] !== '') {
-            if (($data['new-password'] !== $data['repeat-password']) || ! strlen($data['new-password']) >= 5) {
+            if (($data['new-password'] !== $data['repeat-password']) ||  strlen($data['new-password']) < 5) {
                 $messageHandler->addMessage('Паролата ви не отговаря на изискванията!', MessageHandler::MESSAGE_TYPE_ERROR);
                 return false;
             }

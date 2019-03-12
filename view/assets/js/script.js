@@ -1,21 +1,42 @@
 
+function addToFavourites(productId) {
+    fetch("http://localhost/IT-Talents/index.php?target=user&action=favourites", {
+        method: "POST",
+        body: JSON.stringify({
+            productId: productId,
+            action: 'add'
+        })
+    }).then(function (response) {
+        return response.json();
+    }).then(function (json) {
+        console.log(json);
+        if (json.success) {
+            likeButton = document.getElementById("like_" + productId);
+            likeButton.innerHTML = "Премахни от любими";
 
-
-
-function myOrders() {
-    var orders = document.getElementById("orders");
-    if (orders.style.display === "none") {
-        orders.style.display = "block";
-    } else {
-        orders.style.display = "none";
-    }
+        } else {
+            console.log("Could not like!");
+        }
+    })
 }
-function myFavourites() {
-    alert("jaja");
-    var fav = document.getElementById("favourites");
-    if (fav.style.display === "none") {
-        fav.style.display = "block";
-    } else {
-        fav.style.display = "none";
-    }
+
+function removeFromFavourites(productId) {
+    fetch("http://localhost/IT-Talents/index.php?target=user&action=favourites", {
+        method: "POST",
+        body: JSON.stringify({
+            productId: productId,
+            action: 'remove'
+        })
+    }).then(function (response) {
+        return response.json();
+    }).then(function (json) {
+        console.log(json);
+        if (json.success) {
+            likeButton = document.getElementById("like_" + productId);
+            likeButton.innerHTML = "Добави в любими";
+
+        } else {
+            console.log("Could not like!");
+        }
+    })
 }

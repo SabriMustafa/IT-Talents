@@ -15,7 +15,6 @@ require_once "navigation.php";
         <meta http-equiv="X-UA-Compatible" content="ie=edge">
         <title>Document</title>
         <link rel="stylesheet" href="view/assets/CSS/style.css">
-
     </head>
 <body>
 
@@ -41,108 +40,66 @@ require_once "navigation.php";
         </form>
     </div>
 </aside>
-<main class="main-products">
-    <?php
-    foreach ($allProducts as $product) {
-        $specification = $product["spec"];
-        $images = $product['images'];
-        ?>
-        <div class="container">
-            <div class="div-product-img">
-                <img src="<?php echo $images[0] ?>" alt="">
-            </div>
-            <div style="text-align: center">
-                <h4 class="title"><?php echo $product["category"] ?> </h4>
-                <p class="desc"><?php echo $product["name"] . " " . $product["model"] ?> </p>
-                <p class="desc"><?php echo $product["price"] . " лв." ?> </p>
+<div>
+    <main class="main-products">
+        <?php
+        foreach ($allProducts as $product) {
+            $specification = $product["spec"];
+            $images = $product['images'];
+            ?>
+            <div class="container">
+                <div class="div-product-img">
+                    <img src="<?php echo $images[0] ?>" alt="">
+                </div>
+                <div style="text-align: center">
+                    <h4 class="title"><?php echo $product["category"] ?> </h4>
+                    <p class="desc"><?php echo $product["name"] . " " . $product["model"] ?> </p>
+                    <p class="desc"><?php echo $product["price"] . " лв." ?> </p>
 
-                <a href="index.php?target=product&action=getCharactersitics&productId=<?= $product["id"] ?>"
-                   class="btn btn-danger">Виж</a>
-                <?php if (isset($_SESSION["user"])){ ?>
-                <button class="btn btn-sm btn-primary"
-                        id="like_<?= $product["id"] ?>"
-                    <?php
-                    if (in_array($product["id"], $likedProducts)){
-                    ?>
-                        onclick="removeFromFavourites(<?=$product["id"]?>)">
-                    Премахни от любими
-                    <?php
-                    } else {
-                        ?>
-                        onclick="addToFavourites(<?= $product["id"] ?>)">
-                        Добави в любими
-                        <?php
+                    <a href="index.php?target=product&action=getCharactersitics&productId=<?= $product["id"] ?>"
+                       class="btn btn-danger">Виж</a>
+                    <?php if (isset($_SESSION["user"])) { ?>
+                        <button class="btn btn-sm btn-primary"
+                                id="like_<?= $product["id"] ?>"
+                            <?php
+                            if (in_array($product["id"], $likedProducts)){
+                            ?>
+                                onclick="removeFromFavourites(<?= $product["id"] ?>)">
+                            Премахни от любими
+                            <?php
+                            } else {
+                                ?>
+                                onclick="addToFavourites(<?= $product["id"] ?>)">
+                                Добави в любими
+                                <?php
+                            }
+                            ?>
+
+                        </button>
+                    <?php }
+                    if (isset($_SESSION["user"])) {
+                        $isAdmin = $_SESSION["user"]->getIsAdmin();
                     }
-                    ?>
-
-                </button>
-                <?php }
-                if (isset($_SESSION["user"])) {
-                    $isAdmin = $_SESSION["user"]->getIsAdmin();
-                }
-                if (isset($_SESSION["user"]) && $isAdmin == 1) { ?>
-                    <form action="index.php?target=admin&action=update" method="post" ">
-                    <input type="hidden" name="productId" value="<?= $product["id"] ?>">
-                    <input type="submit" name="edit" value="Редактирай продукт" class="btn btn-warning">
-                    </form>
-                <?php } ?>
+                    if (isset($_SESSION["user"]) && $isAdmin == 1) { ?>
+                        <form action="index.php?target=admin&action=update" method="post" ">
+                        <input type="hidden" name="productId" value="<?= $product["id"] ?>">
+                        <input type="submit" name="edit" value="Редактирай продукт" class="btn btn-warning">
+                        </form>
+                    <?php } ?>
+                </div>
             </div>
-        </div>
-    <?php } ?>
-</main>
+        <?php } ?>
+    </main>
+</div>
 
-</article>
+
+<div style="padding-top: 20px">
 
 
 <?php
 require_once "footer.php";
 ?>
+</div>
+
 </body>
 </html>
-
-<script>
-    function addToFavourites(productId) {
-        fetch("http://localhost/IT-Talents/index.php?target=user&action=favourites", {
-            method: "POST",
-            body: JSON.stringify({
-                productId: productId,
-                action: 'add'
-            })
-        }).then(function (response) {
-            return response.json();
-        }).then(function (json) {
-            console.log(json);
-            if (json.success) {
-                likeButton = document.getElementById("like_" + productId);
-                likeButton.innerHTML = "Премахни от любими";
-
-            } else {
-                console.log("Could not like!");
-            }
-        });
-    }
-
-    function removeFromFavourites(productId) {
-        fetch("http://localhost/IT-Talents/index.php?target=user&action=favourites", {
-            method: "POST",
-            body: JSON.stringify({
-                productId: productId,
-                action: 'remove'
-            })
-        }).then(function (response) {
-            return response.json();
-        }).then(function (json) {
-            console.log(json);
-            if (json.success) {
-                likeButton = document.getElementById("like_" + productId);
-                likeButton.innerHTML = "Добави в любими";
-                // likeButton.setAttribute("onClick", "addToFavourites(" + productId + ")");
-                // likeButton.onclick = addToFavourites(productId);
-            } else {
-                console.log("Could not like!");
-            }
-        });
-    }
-
-
-</script>

@@ -330,7 +330,7 @@ class ProductDao
                  on b.id = p.brand_id
                where sub_categories_id = ? ";
 
-        if ($brand != null) {
+        if ($brand != null && strtolower($brand) !="choose-brand") {
             $sql .= " AND b.id=$brand ";
 
         }

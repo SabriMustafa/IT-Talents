@@ -13,11 +13,21 @@ require_once "navigation.php";
 </head>
 <body>
 <div class="container-login">
+    <?php
+    $messageHandler = \Message\MessageHandler::getInstance();
+    foreach ($messageHandler->getMessages() as $message) {
+        $style = 'color:green';
+        if ($message['type'] === \Message\MessageHandler::MESSAGE_TYPE_ERROR) {
+            $style = 'color:red';
+        }
+        echo "<p style=$style>" . $message['message'] . "</p>";
+    }
+    ?>
 <form action="/IT-Talents/index.php?target=user&action=login" method="post" >
     <table>
         <tr>
             <th>Email</th>
-            <td><input type="text" name="email" class="form-control"></td>
+            <td><input type="text" name="email" class="form-control" ></td>
         </tr>
         <tr>
             <th>Password</th>
@@ -37,15 +47,4 @@ require_once "navigation.php";
 </html>
 <?php
 require_once "footer.php";
-?>
-
-<?php
-$messageHandler = \Message\MessageHandler::getInstance();
-foreach ($messageHandler->getMessages() as $message) {
-    $style = 'color:green';
-    if ($message['type'] === \Message\MessageHandler::MESSAGE_TYPE_ERROR) {
-        $style = 'color:red';
-    }
-    echo "<p style=$style>" . $message['message'] . "</p>";
-}
 ?>

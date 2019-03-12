@@ -14,27 +14,30 @@ class UserController
     {
 
         $validator = new UserValidator();
-        if (!$validator->validateRegisterUserData($_POST)) {
+        if (!$validator->validateRegisterUserData($_POST)){
+            require_once __DIR__ . '/../view/register.php';
+        }else{
 
-            return false;
+            $user = new User();
+            $user->setEmail(trim($_POST['email']));
+            $user->setPassword(password_hash(trim($_POST['password']), PASSWORD_BCRYPT));
+            $user->setFirstName(trim($_POST['first_name']));
+            $user->setLastName(trim($_POST['last_name']));
+            $user->setGender(trim($_POST['gender']));
+            $user->setAge(trim($_POST['age']));
+            $user->setIsAdmin(0);
+
+            $userDao = new UserDao();
+            $userDao->addUser($user);
+            $user = $userDao->getByEmail($_POST['email']);
+            $_SESSION['user'] = $user;
+            $messageHandler = MessageHandler::getInstance();
+            $messageHandler->addMessage(sprintf('%s, вие се регистрирахте успешно!', $user->getFirstName()), MessageHandler::MESSAGE_TYPE_SUCCESS);
+            header("location: index.php");
+
         }
 
-        $user = new User();
-        $user->setEmail($_POST['email']);
-        $user->setPassword(password_hash($_POST['password'], PASSWORD_BCRYPT));
-        $user->setFirstName($_POST['first_name']);
-        $user->setLastName($_POST['last_name']);
-        $user->setGender($_POST['gender']);
-        $user->setAge($_POST['age']);
-        $user->setIsAdmin(0);
 
-        $userDao = new UserDao();
-        $userDao->addUser($user);
-        $user = $userDao->getByEmail($_POST['email']);
-        $_SESSION['user'] = $user;
-        $messageHandler = MessageHandler::getInstance();
-        $messageHandler->addMessage(sprintf('%s, вие се регистрирахте успешно!', $user->getFirstName()), MessageHandler::MESSAGE_TYPE_SUCCESS);
-        header("location: index.php");
     }
 
     public function login()
@@ -44,7 +47,7 @@ class UserController
         $validator = new UserValidator();
         if (!$validator->validateLoginUserData($_POST)) {
             require_once __DIR__ . '/../view/login.php';
-        }else{
+        } else {
             $userDao = new UserDao();
             $user = $userDao->getByEmail($_POST["email"]);
             $_SESSION["user"] = $user;
@@ -64,6 +67,7 @@ class UserController
             } else {
                 $user->setPassword(password_hash($_POST['new-password'], PASSWORD_BCRYPT));
             }
+            $user->setId($_SESSION["user"]->getId());
             $user->setEmail($_SESSION['user']->getEmail());
             $user->setFirstName($_POST['first_name']);
             $user->setLastName($_POST['last_name']);
@@ -95,9 +99,7 @@ class UserController
         $orders = $userDao->getAllOrders($id);
         $favourites = $userDao->getFavourites($id);
 
-
         require_once __DIR__ . '/../view/profile.php';
-
     }
 
 
@@ -139,7 +141,7 @@ class UserController
 
     public function editProfileView()
     {
-        if (! isset($_SESSION['user'])) {
+        if (!isset($_SESSION['user'])) {
             header('location:index.php');
         }
         $userDao = new UserDao();
@@ -154,7 +156,7 @@ class UserController
 
     public function profileView()
     {
-        if (! isset($_SESSION['user'])) {
+        if (!isset($_SESSION['user'])) {
             header('location:index.php');
         }
         require_once __DIR__ . '/../view/profile.php';

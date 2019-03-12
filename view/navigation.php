@@ -1,6 +1,5 @@
 <?php
 namespace view;
-
 use controller\ProductController;
 
 $productController = new ProductController();
@@ -24,17 +23,22 @@ if (isset($_SESSION['user'])) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="view/assets/CSS/style.css">
+    <link rel="stylesheet" href="view/assets/CSS/style.css">
+    <script src="view/assets/js/script.js"></script>
+
 </head>
 <body>
 
-<img src="https://cdn.technomarket.bg/uploads/BG/tm-logo.png" width="500px" style="margin-left: 450px">
+<a href="/IT-Talents/index.php">
+    <img src="https://cdn.technomarket.bg/uploads/BG/tm-logo.png" width="500px" style="margin-left: 450px">
+</a>
 
 <div class="form-group has-search">
     <form action="index.php" method="get">
-        <input type="text" class="form-control" placeholder="Search" style="width: 200px" name="searchValue">
+        <input type="text" class="form-control" placeholder="Търси..." style="width: 200px" name="searchValue">
         <input type="hidden" name="target" value="product">
         <input type="hidden" name="action" value="searchHome">
-        <input type="submit" name="search" value="Search" class="btn btn-danger">
+        <input type="submit" name="search" value="Търси" class="btn btn-danger">
     </form>
 </div>
 
@@ -89,14 +93,14 @@ if (isset($_SESSION['user'])) {
                 </li>
             <?php
             } else { ?>
-                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Login/Register<span
+                <li class="dropdown"><a class="dropdown-toggle" data-toggle="dropdown">Вход/Регистрация<span
                                 class="caret"></span></a>
                     <ul class="dropdown-menu">
                         <li>
-                            <a href="index.php?target=user&action=loginView">Login</a>
+                            <a href="index.php?target=user&action=loginView">Вход</a>
                         </li>
                         <li>
-                            <a href="index.php?target=user&action=registerView">Register</a>
+                            <a href="index.php?target=user&action=registerView">Регистрация</a>
                         </li>
                     </ul>
                 </li>
