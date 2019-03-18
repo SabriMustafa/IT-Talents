@@ -13,16 +13,7 @@ require_once "navigation.php";
 </head>
 <body>
 <div class="container-login">
-    <?php
-    $messageHandler = \Message\MessageHandler::getInstance();
-    foreach ($messageHandler->getMessages() as $message) {
-        $style = 'color:green';
-        if ($message['type'] === \Message\MessageHandler::MESSAGE_TYPE_ERROR) {
-            $style = 'color:red';
-        }
-        echo "<p style=$style>" . $message['message'] . "</p>";
-    }
-    ?>
+
 <form action="/IT-Talents/index.php?target=user&action=login" method="post" >
     <table>
         <tr>

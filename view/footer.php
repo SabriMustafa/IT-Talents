@@ -1,5 +1,6 @@
 <?php
 
+\Message\MessageHandler::printMessages();
 ?>
 
 <footer>

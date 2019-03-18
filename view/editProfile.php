@@ -48,16 +48,7 @@ require_once "navigation.php";
     </table>
 </form>
 <div>
-<?php
- $messageHandler = \Message\MessageHandler::getInstance();
- foreach ($messageHandler->getMessages() as $message) {
-     $style = 'color:green';
-     if ($message['type'] === \Message\MessageHandler::MESSAGE_TYPE_ERROR) {
-         $style = 'color:red';
-     }
-     echo "<p style=$style>" . $message['message'] . "</p>";
- }
-?>
+
 </div>
 <?php
 require_once "footer.php";

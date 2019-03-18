@@ -19,7 +19,8 @@ class MessageHandler
     /**
      * @return MessageHandler
      */
-    public static function getInstance() {
+    public static function getInstance()
+    {
         if (self::$messageHandler === null) {
             self::$messageHandler = new MessageHandler();
         }
@@ -39,4 +40,17 @@ class MessageHandler
     {
         return $this->message;
     }
+
+    public static function printMessages()
+    {
+        $msgHandler = self::getInstance();
+        foreach ($msgHandler->getMessages() as $message) {
+            $style = 'color:green';
+            if ($message['type'] === \Message\MessageHandler::MESSAGE_TYPE_ERROR) {
+                $style = 'color:red';
+            }
+            echo "<p style=$style>" . $message['message'] . "</p>";
+        }
+    }
+
 }
